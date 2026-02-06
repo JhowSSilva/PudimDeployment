@@ -25,6 +25,11 @@ class User extends Authenticatable
         'email',
         'password',
         'current_team_id',
+        'github_id',
+        'github_username',
+        'github_token',
+        'github_token_expires_at',
+        'github_refresh_token',
     ];
 
     /**
@@ -35,6 +40,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'github_token',
+        'github_refresh_token',
     ];
 
     /**
@@ -47,6 +54,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'github_token_expires_at' => 'datetime',
         ];
     }
 
@@ -66,6 +74,26 @@ class User extends Authenticatable
     public function servers(): HasMany
     {
         return $this->hasMany(Server::class);
+    }
+
+    public function githubRepositories(): HasMany
+    {
+        return $this->hasMany(GitHubRepository::class);
+    }
+
+    public function hasGitHubConnected(): bool
+    {
+        return !empty($this->github_token);
+    }
+
+    public function getGitHubToken(): ?string
+    {
+        return $this->github_token ? decrypt($this->github_token) : null;
+    }
+
+    public function setGitHubToken(?string $token): void
+    {
+        $this->github_token = $token ? encrypt($token) : null;
     }
 
     public function currentTeam(): ?Team

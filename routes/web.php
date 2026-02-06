@@ -165,4 +165,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/invitations/{invitation}', [TeamInvitationController::class, 'cancel'])->name('invitations.cancel');
 });
 
+// GitHub Integration Routes
+require __DIR__.'/github.php';
+
 require __DIR__.'/auth.php';

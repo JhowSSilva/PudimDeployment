@@ -8,12 +8,14 @@
     "require": {
         "php": "^8.2",
         "aws/aws-sdk-php": "^3.369",
+        "knplabs/github-api": "^3.16",
         "laravel/framework": "^11.31",
         "laravel/horizon": "*",
         "laravel/passport": "^13.4",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^4.1",
         "livewire/volt": "^1.10",
+        "php-http/guzzle7-adapter": "^1.1",
         "phpseclib/phpseclib": "~3.0",
         "predis/predis": "*",
         "spatie/laravel-activitylog": "*"
