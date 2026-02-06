@@ -16,7 +16,7 @@ class QueueWorkerController extends Controller
      */
     public function globalIndex()
     {
-        $currentTeam = Auth::user()->currentTeam();
+        $currentTeam = Auth::user()->getCurrentTeam();
         
         $servers = $currentTeam->servers()
             ->with('queueWorkers')

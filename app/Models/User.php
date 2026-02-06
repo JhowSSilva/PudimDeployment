@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -96,10 +97,21 @@ class User extends Authenticatable
         $this->github_token = $token ? encrypt($token) : null;
     }
 
-    public function currentTeam(): ?Team
+    /**
+     * Get the current team relationship.
+     */
+    public function currentTeam(): BelongsTo
+    {
+        return $this->belongsTo(Team::class, 'current_team_id');
+    }
+
+    /**
+     * Get the current team instance with fallback.
+     */
+    public function getCurrentTeam(): ?Team
     {
         if ($this->current_team_id) {
-            return Team::find($this->current_team_id);
+            return $this->currentTeam;
         }
         return $this->teams()->first() ?? $this->ownedTeams()->where('personal_team', true)->first();
     }

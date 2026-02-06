@@ -29,7 +29,7 @@ class SetCurrentTeam
 
             // Share current team with all views
             if ($request->user()->current_team_id) {
-                view()->share('currentTeam', $request->user()->currentTeam());
+                view()->share('currentTeam', $request->user()->getCurrentTeam());
             }
         }
 

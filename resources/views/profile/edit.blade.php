@@ -240,4 +240,22 @@
     <style>
         [x-cloak] { display: none !important; }
     </style>
+
+    <script>
+        // Detectar hash na URL e ativar a aba correspondente
+        document.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash.substring(1); // Remove o #
+            if (hash && ['profile', 'password', 'teams'].includes(hash)) {
+                // Atualizar Alpine.js activeTab
+                const tabContainer = document.querySelector('[x-data*="activeTab"]');
+                if (tabContainer) {
+                    // Trigger click no botão da aba
+                    const tabButton = document.querySelector(`button[\\@click*="${hash}"]`);
+                    if (tabButton) {
+                        tabButton.click();
+                    }
+                }
+            }
+        });
+    </script>
 </x-layout>

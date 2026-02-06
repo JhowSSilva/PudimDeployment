@@ -11,6 +11,21 @@ use Illuminate\Support\Facades\Log;
 class TerminalController extends Controller
 {
     /**
+     * List all servers for terminal access
+     */
+    public function index()
+    {
+        $servers = Server::query()
+            ->when(auth()->user()->getCurrentTeam(), function ($query, $team) {
+                $query->where('team_id', $team->id);
+            })
+            ->orderBy('name')
+            ->get();
+
+        return view('terminal.index', compact('servers'));
+    }
+
+    /**
      * Show terminal page
      */
     public function show(Server $server)

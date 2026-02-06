@@ -40,7 +40,7 @@ class ActivityLog extends Model
     public static function log(string $action, string $description, $subject = null, array $properties = []): self
     {
         return static::create([
-            'team_id' => auth()->user()?->currentTeam()?->id,
+            'team_id' => auth()->user()?->currentTeam?->id,
             'user_id' => auth()->id(),
             'action' => $action,
             'subject_type' => $subject ? get_class($subject) : null,

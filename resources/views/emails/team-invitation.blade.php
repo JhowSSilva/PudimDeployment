@@ -76,7 +76,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="logo">⚡ Agile'sDeployment</div>
+        <div class="logo">⚡ Pudim Deployment</div>
         
         <div class="content">
             <h1>Você foi convidado!</h1>

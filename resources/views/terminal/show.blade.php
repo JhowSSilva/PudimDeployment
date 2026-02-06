@@ -105,7 +105,7 @@
 
         // Welcome message
         term.writeln('\x1b[1;33m╔════════════════════════════════════════════════════════════╗\x1b[0m');
-        term.writeln('\x1b[1;33m║\x1b[0m         \x1b[1;36mAgile\'sDeployment SSH Terminal\x1b[0m                    \x1b[1;33m║\x1b[0m');
+        term.writeln('\x1b[1;33m║\x1b[0m         \x1b[1;36mPudim Deployment SSH Terminal\x1b[0m                     \x1b[1;33m║\x1b[0m');
         term.writeln('\x1b[1;33m╚════════════════════════════════════════════════════════════╝\x1b[0m');
         term.writeln('');
         term.writeln('\x1b[1;32mServer:\x1b[0m   {{ $server->name }}');

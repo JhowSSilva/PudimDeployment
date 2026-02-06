@@ -10,7 +10,7 @@ class DigitalOceanCredentialController extends Controller
 {
     public function index()
     {
-        $credentials = Auth::user()->currentTeam()->digitalOceanCredentials()->latest()->get();
+        $credentials = Auth::user()->currentTeam->digitalOceanCredentials()->latest()->get();
         
         return view('digitalocean-credentials.index', compact('credentials'));
     }
@@ -51,10 +51,10 @@ class DigitalOceanCredentialController extends Controller
             }
         }
 
-        $validated['team_id'] = auth()->user()->currentTeam()->id;
+        $validated['team_id'] = auth()->user()->currentTeam->id;
         $credential = DigitalOceanCredential::create($validated);
 
-        if (auth()->user()->currentTeam()->digitalOceanCredentials()->count() === 1) {
+        if (auth()->user()->currentTeam->digitalOceanCredentials()->count() === 1) {
             $credential->update(['is_default' => true]);
         }
 
@@ -96,7 +96,7 @@ class DigitalOceanCredentialController extends Controller
         $digitaloceanCredential->update($validated);
 
         if ($request->has('is_default') && $request->is_default) {
-            Auth::user()->currentTeam()->digitalOceanCredentials()
+            Auth::user()->currentTeam->digitalOceanCredentials()
                 ->where('id', '!=', $digitaloceanCredential->id)
                 ->update(['is_default' => false]);
         }

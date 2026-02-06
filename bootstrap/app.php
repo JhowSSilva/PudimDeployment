@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
             Route::middleware('api')
                 ->prefix('api')
                 ->group(base_path('routes/api-enhanced.php'));
+            
+            // SSH Routes
+            Route::middleware('web')
+                ->group(base_path('routes/ssh.php'));
         }
     )
     ->withProviders([

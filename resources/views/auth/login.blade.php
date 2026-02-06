@@ -32,27 +32,23 @@
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
+                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-amber-600 shadow-sm focus:ring-amber-500" name="remember">
                 <span class="ms-2 text-sm text-gray-600">Lembrar de mim</span>
             </label>
         </div>
 
         <div class="mt-6">
-            <x-primary-button class="w-full justify-center">
+            <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200">
                 Entrar
-            </x-primary-button>
+            </button>
         </div>
 
         @if (Route::has('password.request'))
             <div class="mt-4 text-center">
-                <a class="text-sm text-indigo-600 hover:text-indigo-500" href="{{ route('password.request') }}">
+                <a class="text-sm text-amber-600 hover:text-amber-700 font-medium" href="{{ route('password.request') }}">
                     Esqueceu sua senha?
                 </a>
             </div>
         @endif
     </form>
-
-    <div class="mt-6 text-center text-sm text-gray-500">
-        <p>Credenciais de teste: admin@example.com / password</p>
-    </div>
 </x-guest-layout>

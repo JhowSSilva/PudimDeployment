@@ -10,7 +10,7 @@ class AzureCredentialController extends Controller
 {
     public function index()
     {
-        $credentials = Auth::user()->currentTeam()->azureCredentials()->latest()->get();
+        $credentials = Auth::user()->currentTeam->azureCredentials()->latest()->get();
         
         return view('azure-credentials.index', compact('credentials'));
     }
@@ -58,11 +58,11 @@ class AzureCredentialController extends Controller
             }
         }
 
-        $validated['team_id'] = auth()->user()->currentTeam()->id;
+        $validated['team_id'] = auth()->user()->currentTeam->id;
         $credential = AzureCredential::create($validated);
 
         // Set as default if it's the first one
-        if (auth()->user()->currentTeam()->azureCredentials()->count() === 1) {
+        if (auth()->user()->currentTeam->azureCredentials()->count() === 1) {
             $credential->update(['is_default' => true]);
         }
 
@@ -111,7 +111,7 @@ class AzureCredentialController extends Controller
         $azureCredential->update($validated);
 
         if ($request->has('is_default') && $request->is_default) {
-            Auth::user()->currentTeam()->azureCredentials()
+            Auth::user()->currentTeam->azureCredentials()
                 ->where('id', '!=', $azureCredential->id)
                 ->update(['is_default' => false]);
         }

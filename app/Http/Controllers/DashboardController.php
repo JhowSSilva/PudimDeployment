@@ -12,7 +12,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $currentTeam = auth()->user()->currentTeam();
+        $currentTeam = auth()->user()->getCurrentTeam();
         
         // Team servers
         $servers = Server::where('team_id', $currentTeam?->id)->latest()->get();

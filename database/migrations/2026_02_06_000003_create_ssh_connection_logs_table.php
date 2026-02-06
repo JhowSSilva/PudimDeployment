@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('ssh_connection_logs', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('server_id')->constrained()->onDelete('cascade');
+            $table->foreignId('key_id')->nullable()->constrained('ssh_keys')->onDelete('set null');
+            $table->string('ip_address', 45)->nullable();
+            $table->timestamp('connected_at')->useCurrent();
+            $table->timestamp('disconnected_at')->nullable();
+            $table->enum('status', ['success', 'failed', 'disconnected'])->default('success');
+            $table->text('error_message')->nullable();
+            
+            $table->index('user_id');
+            $table->index('server_id');
+            $table->index('connected_at');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('ssh_connection_logs');
+    }
+};

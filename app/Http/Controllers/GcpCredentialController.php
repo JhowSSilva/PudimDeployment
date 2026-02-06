@@ -10,7 +10,7 @@ class GcpCredentialController extends Controller
 {
     public function index()
     {
-        $credentials = Auth::user()->currentTeam()->gcpCredentials()->latest()->get();
+        $credentials = Auth::user()->currentTeam->gcpCredentials()->latest()->get();
         
         return view('gcp-credentials.index', compact('credentials'));
     }
@@ -61,12 +61,12 @@ class GcpCredentialController extends Controller
             }
         }
 
-        $validated['team_id'] = auth()->user()->currentTeam()->id;
+        $validated['team_id'] = auth()->user()->currentTeam->id;
         $credential = $validated;
-        $credential['team_id'] = auth()->user()->currentTeam()->id;
+        $credential['team_id'] = auth()->user()->currentTeam->id;
         $credential = GcpCredential::create($validated);
 
-        if (auth()->user()->currentTeam()->gcpCredentials()->count() === 1) {
+        if (auth()->user()->currentTeam->gcpCredentials()->count() === 1) {
             $credential->update(['is_default' => true]);
         }
 
@@ -117,7 +117,7 @@ class GcpCredentialController extends Controller
         $gcpCredential->update($validated);
 
         if ($request->has('is_default') && $request->is_default) {
-            Auth::user()->currentTeam()->gcpCredentials()
+            Auth::user()->currentTeam->gcpCredentials()
                 ->where('id', '!=', $gcpCredential->id)
                 ->update(['is_default' => false]);
         }

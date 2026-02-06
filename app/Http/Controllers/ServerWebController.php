@@ -12,7 +12,7 @@ class ServerWebController extends Controller
 {
     public function index()
     {
-        $currentTeam = auth()->user()->currentTeam();
+        $currentTeam = auth()->user()->getCurrentTeam();
         
         $servers = Server::where('team_id', $currentTeam?->id)
             ->latest()
@@ -49,7 +49,7 @@ class ServerWebController extends Controller
         }
 
         $validated['user_id'] = auth()->id();
-        $validated['team_id'] = auth()->user()->currentTeam()?->id;
+        $validated['team_id'] = auth()->user()->currentTeam?->id;
         $validated['status'] = 'provisioning';
 
         $server = Server::create($validated);

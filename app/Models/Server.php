@@ -65,6 +65,7 @@ class Server extends Model
         'ram_mb',
         'disk_gb',
         'system_info',
+        'default_key_id',
     ];
 
     protected $casts = [
@@ -156,6 +157,11 @@ class Server extends Model
     public function queueWorkers(): HasMany
     {
         return $this->hasMany(QueueWorker::class);
+    }
+
+    public function defaultSSHKey(): BelongsTo
+    {
+        return $this->belongsTo(SSHKey::class, 'default_key_id');
     }
 
     // Helper methods
