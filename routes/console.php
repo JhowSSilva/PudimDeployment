@@ -31,3 +31,25 @@ Schedule::job(new \App\Jobs\RenewSSLCertificatesJob)
     ->daily()
     ->at('02:00')
     ->name('renew-ssl-certificates');
+
+// Backup System Scheduler
+// Check for due backups every minute
+Schedule::command('backups:schedule')
+    ->everyMinute()
+    ->name('schedule-backups')
+    ->withoutOverlapping();
+
+// Cleanup old backups daily at 3 AM (based on retention policies)
+Schedule::command('backups:cleanup')
+    ->daily()
+    ->at('03:00')
+    ->name('cleanup-old-backups')
+    ->onOneServer();
+
+// Cleanup old backup job records weekly on Sunday at 4 AM
+Schedule::command('backups:cleanup-records')
+    ->weekly()
+    ->sundays()
+    ->at('04:00')
+    ->name('cleanup-backup-records')
+    ->onOneServer();

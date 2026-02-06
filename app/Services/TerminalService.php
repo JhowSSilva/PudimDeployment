@@ -5,11 +5,13 @@ namespace App\Services;
 use App\Models\Server;
 use Illuminate\Support\Facades\Log;
 use phpseclib3\Net\SSH2;
+use phpseclib3\Net\SFTP;
 use phpseclib3\Crypt\PublicKeyLoader;
 
 class TerminalService
 {
     private SSH2 $ssh;
+    private ?SFTP $sftp = null;
     private Server $server;
 
     public function __construct(Server $server)
@@ -151,5 +153,47 @@ class TerminalService
             'os' => $this->server->os_type . ' ' . ($this->server->os_version ?? ''),
             'user' => $this->server->ssh_user ?? 'root',
         ];
+    }
+
+    /**
+     * Get SFTP instance for file transfers
+     */
+    public function getSftp(): SFTP
+    {
+        if ($this->sftp && $this->sftp->isConnected()) {
+            return $this->sftp;
+        }
+
+        try {
+            $this->sftp = new SFTP($this->server->ip_address, $this->server->ssh_port ?? 22);
+            $this->sftp->setTimeout(30);
+
+            if ($this->server->auth_type === 'key' || $this->server->ssh_key_private) {
+                $privateKey = $this->server->ssh_key_private ?? $this->server->ssh_key;
+                if (!$privateKey) {
+                    throw new \Exception('SSH key not found');
+                }
+                $key = PublicKeyLoader::load($privateKey);
+                $success = $this->sftp->login($this->server->ssh_user ?? 'root', $key);
+            } else {
+                $success = $this->sftp->login(
+                    $this->server->ssh_user ?? 'root',
+                    $this->server->ssh_password ?? ''
+                );
+            }
+
+            if (!$success) {
+                throw new \Exception('SFTP login failed');
+            }
+
+            return $this->sftp;
+
+        } catch (\Exception $e) {
+            Log::error('SFTP connection error', [
+                'server_id' => $this->server->id,
+                'error' => $e->getMessage()
+            ]);
+            throw $e;
+        }
     }
 }

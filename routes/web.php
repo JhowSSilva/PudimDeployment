@@ -17,6 +17,7 @@ use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\QueueWorkerController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\TerminalController;
+use App\Http\Controllers\FileTransferController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,11 +37,28 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('sites', SiteWebController::class);
     Route::get('servers/{server}/sites/create', [SiteWebController::class, 'createForServer'])->name('servers.sites.create');
     
-    // Terminal routes
+    // Terminal routes (standalone)
+    Route::prefix('terminal')->name('terminal.')->group(function () {
+        Route::get('/', [TerminalController::class, 'index'])->name('index');
+        Route::get('/{server}', [TerminalController::class, 'show'])->name('show');
+        Route::post('/{server}/execute', [TerminalController::class, 'execute'])->name('execute');
+        Route::post('/{server}/stream', [TerminalController::class, 'stream'])->name('stream');
+    });
+    
+    // Terminal routes (legacy - server context)
     Route::prefix('servers/{server}/terminal')->name('servers.terminal.')->group(function () {
         Route::get('/', [TerminalController::class, 'show'])->name('show');
         Route::post('/execute', [TerminalController::class, 'execute'])->name('execute');
+        Route::post('/stream', [TerminalController::class, 'stream'])->name('stream');
         Route::get('/info', [TerminalController::class, 'info'])->name('info');
+    });
+
+    // File Transfer routes (upload/download arquivos via SSH)
+    Route::prefix('servers/{server}/files')->name('files.')->group(function () {
+        Route::post('/upload', [FileTransferController::class, 'upload'])->name('upload');
+        Route::post('/download', [FileTransferController::class, 'download'])->name('download');
+        Route::get('/list', [FileTransferController::class, 'list'])->name('list');
+        Route::delete('/delete', [FileTransferController::class, 'delete'])->name('delete');
     });
     
     Route::resource('cloudflare-accounts', CloudflareAccountController::class);
@@ -167,5 +185,8 @@ Route::middleware(['auth'])->group(function () {
 
 // GitHub Integration Routes
 require __DIR__.'/github.php';
+
+// Backup System Routes
+require __DIR__.'/backups.php';
 
 require __DIR__.'/auth.php';

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TerminalOutput;
 use App\Models\Server;
 use App\Services\TerminalService;
 use Illuminate\Http\Request;
@@ -30,13 +31,23 @@ class TerminalController extends Controller
             $terminal = new TerminalService($server);
             
             if (!$terminal->connect()) {
+                $error = 'Failed to connect to server';
+                broadcast(new TerminalOutput($server->id, $error, 'error'));
+                
                 return response()->json([
                     'success' => false,
-                    'error' => 'Failed to connect to server'
+                    'error' => $error
                 ], 500);
             }
 
+            // Broadcast command echo
+            broadcast(new TerminalOutput($server->id, '$ ' . $request->command, 'command'));
+            
             $output = $terminal->execute($request->command);
+            
+            // Broadcast command output
+            broadcast(new TerminalOutput($server->id, $output, 'output'));
+            
             $terminal->disconnect();
 
             return response()->json([
@@ -50,10 +61,46 @@ class TerminalController extends Controller
                 'error' => $e->getMessage()
             ]);
 
+            broadcast(new TerminalOutput($server->id, 'Error: ' . $e->getMessage(), 'error'));
+
             return response()->json([
                 'success' => false,
                 'error' => $e->getMessage()
             ], 500);
+        }
+    }
+
+    /**
+     * Execute command with real-time streaming (WebSocket)
+     */
+    public function stream(Server $server, Request $request)
+    {
+        $request->validate([
+            'command' => 'required|string|max:5000',
+        ]);
+        
+        try {
+            $terminal = new TerminalService($server);
+            
+            if (!$terminal->connect()) {
+                broadcast(new TerminalOutput($server->id, 'Failed to connect to server', 'error'));
+                return response()->json(['success' => false], 500);
+            }
+
+            // Echo the command
+            broadcast(new TerminalOutput($server->id, '$ ' . $request->command, 'command'));
+            
+            // Execute and stream output
+            $output = $terminal->execute($request->command);
+            broadcast(new TerminalOutput($server->id, $output, 'output'));
+            
+            $terminal->disconnect();
+
+            return response()->json(['success' => true]);
+
+        } catch (\Exception $e) {
+            broadcast(new TerminalOutput($server->id, 'Error: ' . $e->getMessage(), 'error'));
+            return response()->json(['success' => false], 500);
         }
     }
 
