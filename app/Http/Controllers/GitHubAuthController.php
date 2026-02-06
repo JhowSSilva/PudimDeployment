@@ -12,10 +12,24 @@ use Illuminate\Support\Facades\Log;
 class GitHubAuthController extends Controller
 {
     /**
+     * Show GitHub settings page
+     */
+    public function settings()
+    {
+        return view('github.settings');
+    }
+
+    /**
      * Redirect to GitHub OAuth
      */
     public function redirectToGitHub()
     {
+        // Check if OAuth is configured
+        if (!$this->isOAuthConfigured()) {
+            return redirect()->route('dashboard')
+                ->with('error', 'GitHub OAuth is not configured. Please use Personal Access Token instead.');
+        }
+        
         $clientId = config('services.github.client_id');
         $redirectUri = route('github.callback');
         
@@ -29,6 +43,12 @@ class GitHubAuthController extends Controller
      */
     public function handleGitHubCallback(Request $request)
     {
+        // Check if OAuth is configured
+        if (!$this->isOAuthConfigured()) {
+            return redirect()->route('dashboard')
+                ->with('error', 'GitHub OAuth is not configured.');
+        }
+        
         $code = $request->get('code');
         
         if (!$code) {
@@ -157,5 +177,14 @@ class GitHubAuthController extends Controller
             Log::error('Failed to get GitHub user: ' . $e->getMessage());
             return null;
         }
+    }
+
+    /**
+     * Check if OAuth is properly configured
+     */
+    protected function isOAuthConfigured(): bool
+    {
+        return !empty(config('services.github.client_id')) 
+            && !empty(config('services.github.client_secret'));
     }
 }

@@ -4,11 +4,13 @@
 
 Sistema completo de gerenciamento de deploys PHP com integração ao GitHub, similar ao Ploi.io. Permite gerenciar repositórios, workflows, GitHub Pages e webhooks diretamente da interface do Pudim Deployment.
 
+**🎯 Modelo Multi-Tenant:** Cada usuário configura suas próprias credenciais GitHub (Personal Access Token), sem depender de configuração global do administrador.
+
 ## ✨ Funcionalidades
 
-### 1. **Autenticação GitHub**
-- ✅ OAuth App do GitHub para autenticação
-- ✅ Suporte a Personal Access Tokens
+### 1. **Autenticação GitHub (Por Usuário)**
+- ✅ **Personal Access Tokens (Recomendado)** - Cada usuário gera seu próprio token
+- ✅ OAuth App do GitHub (Opcional) - Configuração global pelo admin
 - ✅ Tokens armazenados criptografados no banco de dados
 - ✅ Middleware de validação de token
 
@@ -69,7 +71,31 @@ As migrations criam as seguintes tabelas:
 - `github_pages` - Configuração do GitHub Pages
 - Adiciona campos GitHub na tabela `users`
 
-### 3. Configurar GitHub OAuth App
+### 3. Configuração de Autenticação
+
+#### Opção A: Personal Access Token (Recomendado) 🔑
+
+Cada usuário gera seu próprio token no GitHub:
+
+1. Acesse: https://github.com/settings/tokens
+2. Clique em "Generate new token (classic)"
+3. Selecione os scopes:
+   - `repo` (Full control of repositories)
+   - `workflow` (Update GitHub Action workflows)
+   - `admin:repo_hook` (Full control of repository hooks)
+   - `delete_repo` (Delete repositories - opcional)
+4. Copie o token gerado
+5. Na aplicação, acesse "GitHub Settings" e cole o token
+
+**✅ Vantagens:**
+- Sem configuração do administrador
+- Cada usuário tem controle total
+- Mais simples de implementar
+- Usuários gerenciam suas próprias permissões
+
+#### Opção B: OAuth App (Opcional) 🔐
+
+Apenas configure se quiser oferecer login OAuth (requer configuração do admin):
 
 1. Acesse: https://github.com/settings/developers
 2. Clique em "New OAuth App"
@@ -79,14 +105,21 @@ As migrations criam as seguintes tabelas:
    - **Authorization callback URL:** `https://seu-dominio.com/github/callback`
 4. Copie `Client ID` e `Client Secret`
 
-### 4. Configurar Variáveis de Ambiente
-
-Adicione no seu `.env`:
+Adicione no `.env`:
 
 ```env
 GITHUB_CLIENT_ID=seu_client_id_aqui
 GITHUB_CLIENT_SECRET=seu_client_secret_aqui
 GITHUB_REDIRECT_URI="${APP_URL}/github/callback"
+```
+
+**⚠️ Nota:** Se OAuth não estiver configurado, os usuários só poderão usar Personal Access Tokens (opção A).
+
+### 4. Configurar Webhooks (Opcional)
+
+Para receber eventos do GitHub em tempo real:
+
+```env
 GITHUB_WEBHOOK_SECRET=seu_secret_aleatório_aqui
 ```
 
@@ -173,6 +206,56 @@ GitHubService::verifyWebhookSignature($payload, $signature, $secret);
 
 ### Middleware de Autenticação
 O middleware `EnsureGitHubTokenValid` garante que o usuário tem um token do GitHub válido antes de acessar recursos protegidos.
+
+## 👤 Guia do Usuário Final
+
+### Como Conectar Sua Conta GitHub
+
+Cada usuário pode conectar sua própria conta GitHub de forma independente. Existem duas opções:
+
+#### Método 1: Personal Access Token (Mais Simples) ⭐
+
+1. **No GitHub:**
+   - Acesse https://github.com/settings/tokens
+   - Clique em **"Generate new token (classic)"**
+   - Dê um nome: "Pudim Deployment"
+   - Selecione os scopes necessários:
+     - ✅ `repo` - Controle total de repositórios
+     - ✅ `workflow` - Gerenciar GitHub Actions
+     - ✅ `admin:repo_hook` - Gerenciar webhooks
+   - Clique em **"Generate token"**
+   - **Copie o token** (ele aparece apenas uma vez!)
+
+2. **No Pudim Deployment:**
+   - Acesse **"Settings"** → **"GitHub Integration"**
+   - Cole o token no campo **"Personal Access Token"**
+   - Clique em **"Save Token"**
+   - Pronto! 🎉
+
+#### Método 2: OAuth (Se configurado pelo admin)
+
+1. Na aplicação, clique em **"Connect GitHub"**
+2. Você será redirecionado para GitHub
+3. Autorize a aplicação
+4. Será redirecionado de volta, já conectado!
+
+### Gerenciar Seus Repositórios
+
+Após conectar:
+
+1. **Sincronizar repositórios:**
+   - Vá em "GitHub" → "Repositories"
+   - Clique em "Sync Repositories"
+   - Aguarde a sincronização
+
+2. **Configurar deploys:**
+   - Selecione um repositório
+   - Configure workflows automáticos
+   - Ative GitHub Pages se necessário
+
+3. **Desconectar:**
+   - "Settings" → "GitHub"
+   - Clique em "Disconnect GitHub"
 
 ## 🎨 Templates de Workflow
 

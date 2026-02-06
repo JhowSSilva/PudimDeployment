@@ -41,6 +41,12 @@ return [
         'zone_id' => env('CLOUDFLARE_ZONE_ID'),
     ],
 
+    /*
+     * GitHub Integration
+     * 
+     * OAuth (optional): Configure only if you want to offer OAuth authentication
+     * Otherwise, users will use Personal Access Tokens
+     */
     'github' => [
         'client_id' => env('GITHUB_CLIENT_ID'),
         'client_secret' => env('GITHUB_CLIENT_SECRET'),

@@ -14,6 +14,7 @@ Route::get('/webhook/github/test', [GitHubWebhookController::class, 'test'])->na
 
 // GitHub OAuth Routes
 Route::prefix('github')->name('github.')->group(function () {
+    Route::get('/settings', [GitHubAuthController::class, 'settings'])->name('settings');
     Route::get('/connect', [GitHubAuthController::class, 'redirectToGitHub'])->name('connect');
     Route::get('/callback', [GitHubAuthController::class, 'handleGitHubCallback'])->name('callback');
     Route::post('/disconnect', [GitHubAuthController::class, 'disconnect'])->name('disconnect');

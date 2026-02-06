@@ -14,8 +14,8 @@ class GitHubRepositoryController extends Controller
         $user = Auth::user();
         
         if (!$user->hasGitHubConnected()) {
-            return redirect()->route('github.connect')
-                ->with('info', 'Please connect your GitHub account first');
+            return redirect()->route('github.settings')
+                ->with('info', 'Por favor, conecte sua conta GitHub primeiro');
         }
 
         $repositories = GitHubRepository::where('user_id', $user->id)
