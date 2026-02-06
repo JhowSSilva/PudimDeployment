@@ -1,0 +1,251 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                  🧪 GUIA DE TESTE MANUAL - SERVER MANAGER                      ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+📋 PASSO A PASSO PARA TESTAR MANUALMENTE
+
+═══════════════════════════════════════════════════════════════════════════════
+ETAPA 1: TESTES BÁSICOS (SEM SERVIDOR REAL)
+═══════════════════════════════════════════════════════════════════════════════
+
+Estes comandos funcionam mesmo sem ter servidores cadastrados:
+
+1️⃣  TESTE AI OPTIMIZE:
+    
+    php artisan ai:optimize
+    
+    ✓ O que esperar: Mensagem mostrando que não há servidores ativos
+    ✓ Isso é NORMAL! O comando está funcionando.
+
+2️⃣  TESTE USAGE TRACK:
+    
+    php artisan usage:track
+    
+    ✓ O que esperar: Rastreamento de 0 servidores (se não houver dados)
+
+3️⃣  TESTE SECURITY SCAN:
+    
+    php artisan security:scan
+    
+    ✓ O que esperar: Scan de 0 servidores
+
+4️⃣  TESTE DATABASE BACKUP:
+    
+    php artisan databases:backup
+    
+    ✓ O que esperar: Backup de 0 databases
+
+5️⃣  TESTE INVOICE GENERATION:
+    
+    php artisan invoices:generate
+    
+    ✓ O que esperar: Geração de 0 invoices
+
+═══════════════════════════════════════════════════════════════════════════════
+ETAPA 2: CRIAR DADOS DE TESTE
+═══════════════════════════════════════════════════════════════════════════════
+
+Execute este script PHP para criar dados de teste:
+
+    php -r "
+    require 'vendor/autoload.php';
+    \$app = require 'bootstrap/app.php';
+    \$app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+    
+    DB::beginTransaction();
+    
+    // Criar user
+    \$user = App\Models\User::firstOrCreate(
+        ['email' => 'test@example.com'],
+        ['name' => 'Test User', 'password' => bcrypt('password')]
+    );
+    echo \"User ID: {\$user->id}\n\";
+    
+    // Criar team
+    \$team = App\Models\Team::firstOrCreate(
+        ['name' => 'Test Team'],
+        ['user_id' => \$user->id]
+    );
+    echo \"Team ID: {\$team->id}\n\";
+    
+    // Criar servidor
+    \$server = App\Models\Server::firstOrCreate(
+        ['name' => 'Test Server'],
+        [
+            'team_id' => \$team->id,
+            'ip_address' => '192.168.1.100',
+            'cloud_provider' => 'custom',
+            'region' => 'local',
+            'status' => 'active',
+            'memory' => 2048,
+            'cpus' => 2,
+            'disk_size' => 50,
+            'custom_hourly_rate' => 0.05,
+        ]
+    );
+    echo \"Server ID: {\$server->id}\n\";
+    
+    DB::commit();
+    echo \"\n✅ Dados criados com sucesso!\n\";
+    "
+
+═══════════════════════════════════════════════════════════════════════════════
+ETAPA 3: TESTAR COM SERVIDOR ESPECÍFICO
+═══════════════════════════════════════════════════════════════════════════════
+
+Depois de criar os dados, teste com o ID do servidor (normalmente 1):
+
+1️⃣  AI OPTIMIZE (com servidor específico):
+    
+    php artisan ai:optimize --server_id=1
+    
+    ✓ Deve mostrar análise do servidor
+    ✓ Predições de carga
+    ✓ Recomendações de otimização
+    ✓ Detecção de ameaças
+
+2️⃣  SECURITY SCAN (em servidor específico):
+    
+    php artisan security:scan --server_id=1
+    
+    ✓ Vai tentar conectar via SSH (vai falhar se não tiver SSH configurado)
+    ✓ Isso é ESPERADO para testes locais!
+
+3️⃣  TESTAR BILLING:
+    
+    # Rastrear uso
+    php artisan usage:track
+    
+    # Gerar invoice
+    php artisan invoices:generate --team_id=1
+
+═══════════════════════════════════════════════════════════════════════════════
+ETAPA 4: TESTAR SERVICES DIRETAMENTE
+═══════════════════════════════════════════════════════════════════════════════
+
+Teste os services via Tinker:
+
+    php artisan tinker
+
+Dentro do tinker, execute:
+
+    # Testar AIService
+    $server = App\Models\Server::first();
+    $ai = app(App\Services\AIService::class);
+    $ai->predictServerLoad($server);
+
+    # Testar BillingService
+    $billing = app(App\Services\BillingService::class);
+    $billing->calculateServerCosts($server);
+
+    # Sair do tinker
+    exit
+
+═══════════════════════════════════════════════════════════════════════════════
+ETAPA 5: VERIFICAR LOGS
+═══════════════════════════════════════════════════════════════════════════════
+
+Abra outro terminal e acompanhe os logs em tempo real:
+
+    tail -f storage/logs/laravel.log
+
+Enquanto isso, execute os comandos no primeiro terminal para ver o output.
+
+═══════════════════════════════════════════════════════════════════════════════
+ETAPA 6: TESTAR API (OPCIONAL)
+═══════════════════════════════════════════════════════════════════════════════
+
+Para testar a API REST:
+
+1. Inicie o servidor:
+    
+    php artisan serve
+    
+
+2. Em outro terminal, crie um token (via tinker):
+    
+    php artisan tinker
+    
+    $user = App\Models\User::first();
+    $token = $user->createToken('test')->plainTextToken;
+    echo $token;
+    exit
+
+3. Use o token para testar endpoints:
+    
+    export API_TOKEN="cole-o-token-aqui"
+    
+    # Testar AI
+    curl -X POST http://localhost:8000/api/servers/1/ai/predict-load \
+      -H "Authorization: Bearer $API_TOKEN"
+    
+    # Testar Performance
+    curl -X GET http://localhost:8000/api/sites/1/performance/metrics \
+      -H "Authorization: Bearer $API_TOKEN"
+
+Consulte API_TESTING.md para mais exemplos!
+
+═══════════════════════════════════════════════════════════════════════════════
+VERIFICAÇÃO RÁPIDA
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ Comandos disponíveis?
+    php artisan list | grep -E "(ai:|security:|usage:|invoices:|databases:)"
+
+✅ Tabelas criadas?
+    php artisan migrate:status
+
+✅ Laravel funcionando?
+    php artisan about
+
+✅ Rotas registradas?
+    php artisan route:list --path=api | head -20
+
+═══════════════════════════════════════════════════════════════════════════════
+TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════════
+
+❌ "No servers found"
+   ✅ Normal! Execute a ETAPA 2 para criar dados de teste
+
+❌ "SSH connection failed"
+   ✅ Normal para testes locais! O comando está funcionando
+
+❌ "Class not found"
+   ✅ Execute: composer dump-autoload
+
+❌ "Table not found"
+   ✅ Execute: php artisan migrate
+
+═══════════════════════════════════════════════════════════════════════════════
+COMANDOS PRONTOS PARA COPIAR/COLAR
+═══════════════════════════════════════════════════════════════════════════════
+
+# Teste rápido de todos os comandos
+php artisan ai:optimize
+php artisan security:scan
+php artisan usage:track
+php artisan invoices:generate
+php artisan databases:backup
+
+# Ver lista de comandos
+php artisan list | grep -E "(ai:|security:|usage:|invoices:|databases:)"
+
+# Ver logs
+tail -f storage/logs/laravel.log
+
+# Limpar cache
+php artisan optimize:clear
+
+# Ver rotas API
+php artisan route:list --path=api
+
+═══════════════════════════════════════════════════════════════════════════════
+
+💡 DICA: Use o script interativo para facilitar:
+   
+   ./manual-test.sh
+
+═══════════════════════════════════════════════════════════════════════════════
