@@ -1,179 +1,138 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+<x-layout title="Chaves SSH">
+    <div class="mb-6 flex justify-between items-center">
+        <h2 class="text-2xl font-bold text-white">
             {{ __('Chaves SSH') }}
         </h2>
-    </x-slot>
+        <button @click="showModal = true" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            Nova Chave SSH
+        </button>
+    </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0">
-                    <div>
-                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Minhas Chaves SSH</h2>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Gerencie suas chaves SSH para autenticação em servidores</p>
-                    </div>
-                    <div class="flex space-x-2">
-                        <button id="btn-import-key" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold px-4 py-2 rounded-lg transition duration-200">
-                            Importar Chave
-                        </button>
-                        <button id="btn-generate-key" class="bg-yellow-600 hover:bg-yellow-700 text-black font-semibold px-4 py-2 rounded-lg transition duration-200">
-                            + Gerar Nova Chave
-                        </button>
+    @if(session('success'))
+        <div class="mb-4 p-4 bg-green-900/50 border border-green-500 text-green-200 rounded-lg">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <div class="bg-neutral-800 overflow-hidden shadow-xl sm:rounded-lg">
+        <div class="p-6">
+            @forelse($sshKeys as $key)
+                <div class="mb-4 p-4 bg-neutral-700 rounded-lg border border-neutral-600 hover:border-blue-500 transition-colors">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-white mb-2">{{ $key->name }}</h3>
+                            
+                            <div class="space-y-2 text-sm text-neutral-400">
+                                <div>
+                                    <span>Fingerprint:</span>
+                                    <span class="text-white ml-1 font-mono text-xs">{{ $key->fingerprint }}</span>
+                                </div>
+                                <div>
+                                    <span>Criada:</span>
+                                    <span class="text-white ml-1">{{ $key->created_at->format('d/m/Y H:i') }}</span>
+                                </div>
+                                @if($key->servers_count > 0)
+                                    <div>
+                                        <span>Usada em:</span>
+                                        <span class="text-white ml-1">{{ $key->servers_count }} servidor(es)</span>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="mt-3">
+                                <button @click="showKey{{ $key->id }} = !showKey{{ $key->id }}" class="text-sm text-blue-400 hover:text-blue-300">
+                                    <span x-text="showKey{{ $key->id }} ? 'Ocultar chave' : 'Ver chave pública'"></span>
+                                </button>
+                                <div x-show="showKey{{ $key->id }}" x-cloak class="mt-2 p-3 bg-neutral-900 rounded overflow-x-auto">
+                                    <code class="text-xs text-green-400">{{ $key->public_key }}</code>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="ml-4">
+                            <form action="{{ route('ssh.keys.destroy', $key) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta chave?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700">
+                                    Excluir
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                
-                <!-- Lista de chaves -->
-                <div id="keys-list" class="space-y-4">
-                    <div class="text-center py-12">
-                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
-                        </svg>
-                        <p class="mt-2 text-gray-500 dark:text-gray-400">Carregando chaves SSH...</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Link para terminal -->
-            <div class="mt-6">
-                <a href="{{ route('ssh.terminal') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white hover:bg-gray-700 transition duration-200">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            @empty
+                <div class="text-center py-8 text-neutral-500">
+                    <svg class="mx-auto h-12 w-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
                     </svg>
-                    Abrir Terminal SSH
-                </a>
-            </div>
+                    <p>Nenhuma chave SSH configurada.</p>
+                </div>
+            @endforelse
+
+            @if($sshKeys->hasPages())
+                <div class="mt-4">
+                    {{ $sshKeys->links() }}
+                </div>
+            @endif
         </div>
     </div>
 
-    <!-- Modal: Gerar Nova Chave -->
-    <div id="modal-generate" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white dark:bg-gray-900 rounded-lg shadow-2xl p-6 w-full max-w-md m-4">
-            <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white">Gerar Nova Chave SSH</h3>
-            
-            <form id="form-generate-key" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Nome da Chave *
-                    </label>
-                    <input type="text" name="name" required class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 focus:border-yellow-600 focus:ring focus:ring-yellow-600 focus:ring-opacity-50 text-gray-900 dark:text-white" placeholder="ex: producao_server">
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Tipo de Chave *
-                    </label>
-                    <div class="space-y-2">
-                        <label class="flex items-center p-3 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
-                            <input type="radio" name="type" value="rsa" checked class="mr-3 text-yellow-600 focus:ring-yellow-600">
-                            <div>
-                                <span class="font-medium text-gray-700 dark:text-gray-300">RSA 4096 bits</span>
-                                <p class="text-xs text-gray-500">Compatível e seguro (recomendado)</p>
-                            </div>
-                        </label>
-                        <label class="flex items-center p-3 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
-                            <input type="radio" name="type" value="ed25519" class="mr-3 text-yellow-600 focus:ring-yellow-600">
-                            <div>
-                                <span class="font-medium text-gray-700 dark:text-gray-300">ED25519</span>
-                                <p class="text-xs text-gray-500">Moderno e mais rápido</p>
-                            </div>
-                        </label>
+    <!-- Modal -->
+    <div x-data="{ showModal: false, @foreach($sshKeys as $key) showKey{{ $key->id }}: false, @endforeach }"
+         x-show="showModal"
+         x-cloak
+         class="fixed inset-0 z-50 overflow-y-auto"
+         aria-labelledby="modal-title"
+         role="dialog"
+         aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen px-4">
+            <div x-show="showModal"
+                 x-transition:enter="ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="fixed inset-0 bg-neutral-900 bg-opacity-75 transition-opacity"
+                 @click="showModal = false"></div>
+
+            <div x-show="showModal"
+                 x-transition:enter="ease-out duration-300"
+                 x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave="ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                 class="relative bg-neutral-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+                <form action="{{ route('ssh.keys.store') }}" method="POST" class="p-6">
+                    @csrf
+                    <h3 class="text-lg font-semibold text-white mb-4">Nova Chave SSH</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-neutral-300 mb-2">Nome</label>
+                            <input type="text" name="name" id="name" required
+                                   class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500">
+                        </div>
+
+                        <div>
+                            <label for="public_key" class="block text-sm font-medium text-neutral-300 mb-2">Chave Pública</label>
+                            <textarea name="public_key" id="public_key" rows="5" required placeholder="ssh-rsa AAAAB3..."
+                                      class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-white font-mono text-xs focus:ring-2 focus:ring-blue-500"></textarea>
+                            <p class="mt-1 text-xs text-neutral-500">Cole o conteúdo da sua chave pública SSH (normalmente ~/.ssh/id_rsa.pub)</p>
+                        </div>
                     </div>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Passphrase (Opcional, recomendado)
-                    </label>
-                    <input type="password" name="passphrase" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 focus:border-yellow-600 focus:ring focus:ring-yellow-600 focus:ring-opacity-50 text-gray-900 dark:text-white" placeholder="Deixe em branco para não usar">
-                    <p class="text-xs text-gray-500 mt-1">Adiciona uma camada extra de segurança</p>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Comentário/Email
-                    </label>
-                    <input type="text" name="comment" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 focus:border-yellow-600 focus:ring focus:ring-yellow-600 focus:ring-opacity-50 text-gray-900 dark:text-white" placeholder="admin@pudimdeployment.com">
-                </div>
-                
-                <div class="flex space-x-3 pt-4">
-                    <button type="submit" class="flex-1 bg-yellow-600 hover:bg-yellow-700 text-black font-semibold px-4 py-2 rounded-lg transition duration-200">
-                        Gerar Chave
-                    </button>
-                    <button type="button" id="btn-cancel-generate" class="flex-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white px-4 py-2 rounded-lg transition duration-200">
-                        Cancelar
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
 
-    <!-- Modal: Importar Chave -->
-    <div id="modal-import" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white dark:bg-gray-900 rounded-lg shadow-2xl p-6 w-full max-w-md m-4">
-            <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white">Importar Chave SSH</h3>
-            
-            <form id="form-import-key" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Nome da Chave *
-                    </label>
-                    <input type="text" name="name" required class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 focus:border-yellow-600 focus:ring focus:ring-yellow-600 focus:ring-opacity-50 text-gray-900 dark:text-white" placeholder="ex: minha_chave">
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Chave Privada *
-                    </label>
-                    <textarea name="private_key" required rows="8" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 focus:border-yellow-600 focus:ring focus:ring-yellow-600 focus:ring-opacity-50 font-mono text-xs text-gray-900 dark:text-white" placeholder="-----BEGIN RSA PRIVATE KEY-----&#10;...&#10;-----END RSA PRIVATE KEY-----"></textarea>
-                    <p class="text-xs text-gray-500 mt-1">Cole o conteúdo completo da chave privada</p>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Passphrase (se houver)
-                    </label>
-                    <input type="password" name="passphrase" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 focus:border-yellow-600 focus:ring focus:ring-yellow-600 focus:ring-opacity-50 text-gray-900 dark:text-white">
-                </div>
-                
-                <div class="flex space-x-3 pt-4">
-                    <button type="submit" class="flex-1 bg-yellow-600 hover:bg-yellow-700 text-black font-semibold px-4 py-2 rounded-lg transition duration-200">
-                        Importar
-                    </button>
-                    <button type="button" id="btn-cancel-import" class="flex-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white px-4 py-2 rounded-lg transition duration-200">
-                        Cancelar
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal: Ver Chave Pública -->
-    <div id="modal-view-public" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white dark:bg-gray-900 rounded-lg shadow-2xl p-6 w-full max-w-2xl m-4">
-            <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white">Chave Pública SSH</h3>
-            
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Chave Pública
-                    </label>
-                    <textarea id="public-key-content" readonly rows="6" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 font-mono text-xs text-gray-900 dark:text-white"></textarea>
-                </div>
-                
-                <div class="flex space-x-3">
-                    <button id="btn-copy-public" class="flex-1 bg-yellow-600 hover:bg-yellow-700 text-black font-semibold px-4 py-2 rounded-lg transition duration-200">
-                        Copiar
-                    </button>
-                    <button id="btn-close-public" class="flex-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white px-4 py-2 rounded-lg transition duration-200">
-                        Fechar
-                    </button>
-                </div>
+                    <div class="mt-6 flex gap-3">
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            Adicionar Chave
+                        </button>
+                        <button type="button" @click="showModal = false" class="px-6 py-2 bg-neutral-600 text-white rounded-lg hover:bg-neutral-500">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
-    @push('scripts')
-    <script src="{{ asset('js/ssh-keys.js') }}"></script>
-    @endpush
-</x-app-layout>
+</x-layout>

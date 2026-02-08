@@ -209,6 +209,70 @@
 
             <div class="border-t border-neutral-800"></div>
 
+            <!-- MONITORAMENTO -->
+            <div>
+                <div class="px-3 mb-2">
+                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">Monitoramento</span>
+                </div>
+                <div class="space-y-1">
+                    <a href="{{ route('monitoring.index') }}" 
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('monitoring.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        <span class="font-medium">Monitoring</span>
+                    </a>
+                    <a href="{{ route('alerts.index') }}" 
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('alerts.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                        <span class="font-medium">Alerts</span>
+                    </a>
+                    <a href="{{ route('activity.index') }}" 
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('activity.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="font-medium">Activity</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t border-neutral-800"></div>
+
+            <!-- AUTO-SCALING -->
+            <div>
+                <div class="px-3 mb-2">
+                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">Auto-scaling</span>
+                </div>
+                <div class="space-y-1">
+                    <a href="{{ route('scaling.pools.index') }}" 
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('scaling.pools.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
+                        </svg>
+                        <span class="font-medium">Server Pools</span>
+                    </a>
+                    <a href="{{ route('scaling.load-balancers.index') }}" 
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('scaling.load-balancers.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+                        </svg>
+                        <span class="font-medium">Load Balancers</span>
+                    </a>
+                    <a href="{{ route('scaling.policies.index') }}" 
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('scaling.policies.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                        <span class="font-medium">Scaling Policies</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t border-neutral-800"></div>
+
             <!-- CI/CD -->
             <div>
                 <div class="px-3 mb-2">
@@ -236,12 +300,30 @@
                         </svg>
                         <span class="font-medium">Integrações</span>
                     </a>
-                    <a href="{{ route('cicd.approvals.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cicd.approvals.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                    <a href="{{ route('cicd.deployment-approvals.index') }}" 
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cicd.deployment-approvals.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         <span class="font-medium">Aprovações</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t border-neutral-800"></div>
+
+            <!-- PLANOS -->
+            <div>
+                <div class="px-3 mb-2">
+                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">Planos</span>
+                </div>
+                <div class="space-y-1">
+                    <a href="{{ route('billing.plans') }}" 
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('billing.plans*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        <span class="font-medium">Planos</span>
                     </a>
                 </div>
             </div>
@@ -308,5 +390,30 @@
                 </div>
             </div>
         </div>
+
+        <!-- Auto-scroll to active item -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const sidebar = document.querySelector('aside nav');
+                const activeItem = sidebar?.querySelector('a.bg-amber-600');
+                
+                if (activeItem && sidebar) {
+                    // Aguarda um frame para garantir que o DOM está renderizado
+                    requestAnimationFrame(() => {
+                        const sidebarRect = sidebar.getBoundingClientRect();
+                        const activeRect = activeItem.getBoundingClientRect();
+                        
+                        // Calcula a posição ideal (centraliza o item ativo)
+                        const scrollPosition = activeRect.top - sidebarRect.top - (sidebarRect.height / 2) + (activeRect.height / 2);
+                        
+                        // Faz scroll suave até o item ativo
+                        sidebar.scrollTo({
+                            top: sidebar.scrollTop + scrollPosition,
+                            behavior: 'smooth'
+                        });
+                    });
+                }
+            });
+        </script>
     </aside>
 </div>

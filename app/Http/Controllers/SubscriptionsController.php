@@ -13,7 +13,6 @@ class SubscriptionsController extends Controller
 
     public function __construct(BillingService $billingService)
     {
-        $this->middleware('auth');
         $this->billingService = $billingService;
     }
 

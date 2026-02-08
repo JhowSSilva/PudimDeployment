@@ -8,11 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display the activity feed.
      */
@@ -63,7 +58,7 @@ class ActivityController extends Controller
             ->sort();
 
         // Get team members for filter
-        $users = $team->allUsers()->sortBy('name');
+        $users = $team->users()->orderBy('name')->get();
 
         return view('activity.index', compact('activities', 'actions', 'subjectTypes', 'users'));
     }

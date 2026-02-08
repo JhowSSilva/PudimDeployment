@@ -17,7 +17,7 @@ class PipelineRunController extends Controller
             ->with('triggeredBy')
             ->paginate(20);
 
-        return view('pipeline-runs.index', compact('pipeline', 'runs'));
+        return view('cicd.pipeline-runs.index', compact('pipeline', 'runs'));
     }
 
     public function show(PipelineRun $pipelineRun)
@@ -26,7 +26,7 @@ class PipelineRunController extends Controller
 
         $pipelineRun->load(['pipeline.stages', 'triggeredBy', 'deployment']);
 
-        return view('pipeline-runs.show', compact('pipelineRun'));
+        return view('cicd.pipeline-runs.show', compact('pipelineRun'));
     }
 
     public function cancel(PipelineRun $pipelineRun)

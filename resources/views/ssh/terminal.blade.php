@@ -1,87 +1,175 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+<x-layout title="Terminal SSH">
+    <div class="mb-6">
+        <h2 class="text-2xl font-bold text-white">
             {{ __('Terminal SSH') }}
         </h2>
-    </x-slot>
+        <p class="text-sm text-neutral-400 mt-1">Acesso remoto aos seus servidores via SSH</p>
+    </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-gray-900 rounded-lg shadow-2xl overflow-hidden">
-                <!-- Header com controles -->
-                <div class="bg-gray-800 border-b border-gray-700 p-4">
-                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
-                            <!-- Dropdown de servidores -->
-                            <div class="w-full sm:w-auto">
-                                <label class="block text-xs text-gray-400 mb-1">Servidor:</label>
-                                <select id="server-select" class="bg-gray-700 text-white rounded-lg px-4 py-2 border border-gray-600 focus:border-yellow-600 focus:ring focus:ring-yellow-600 focus:ring-opacity-50 w-full sm:w-64">
-                                    <option value="">Selecione um servidor...</option>
-                                </select>
-                            </div>
-                            
-                            <!-- Dropdown de chaves SSH -->
-                            <div class="w-full sm:w-auto">
-                                <label class="block text-xs text-gray-400 mb-1">Chave SSH:</label>
-                                <select id="key-select" class="bg-gray-700 text-white rounded-lg px-4 py-2 border border-gray-600 focus:border-yellow-600 focus:ring focus:ring-yellow-600 focus:ring-opacity-50 w-full sm:w-64">
-                                    <option value="">Selecione uma chave...</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="flex flex-wrap items-center gap-2">
-                            <!-- Status de conexão -->
-                            <span id="connection-status" class="flex items-center space-x-2 px-3 py-2 bg-gray-700 rounded-lg">
-                                <span id="status-indicator" class="h-3 w-3 rounded-full bg-red-500"></span>
-                                <span id="status-text" class="text-red-400 text-sm font-medium">Desconectado</span>
-                            </span>
-                            
-                            <!-- Botões de ação -->
-                            <button id="btn-connect" class="bg-yellow-600 hover:bg-yellow-700 text-black font-semibold px-4 py-2 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
-                                Conectar
-                            </button>
-                            <button id="btn-disconnect" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                                Desconectar
-                            </button>
-                            <button id="btn-clear" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition duration-200">
-                                Limpar
-                            </button>
-                        </div>
-                    </div>
+    <div class="mb-4 bg-neutral-800 p-4 rounded-lg">
+        <form id="connectionForm" class="flex gap-4 items-end">
+            <div class="flex-1">
+                <label for="server_id" class="block text-sm font-medium text-neutral-300 mb-2">Servidor</label>
+                <select name="server_id" id="server_id" required
+                        class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500">
+                    <option value="">Selecione um servidor</option>
+                    @foreach($servers as $server)
+                        <option value="{{ $server->id }}" data-ip="{{ $server->ip_address }}">
+                            {{ $server->name }} ({{ $server->ip_address }})
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="w-48">
+                <label for="ssh_key_id" class="block text-sm font-medium text-neutral-300 mb-2">Chave SSH</label>
+                <select name="ssh_key_id" id="ssh_key_id"
+                        class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500">
+                    <option value="">Padrão</option>
+                    @foreach($sshKeys as $key)
+                        <option value="{{ $key->id }}">{{ $key->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <button type="submit" id="connectBtn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                Conectar
+            </button>
+        </form>
+    </div>
+
+    <div class="bg-neutral-900 rounded-lg overflow-hidden shadow-xl" id="terminalContainer" style="display: none;">
+        <div class="bg-neutral-800 px-4 py-2 flex justify-between items-center border-b border-neutral-700">
+            <div class="flex items-center gap-2">
+                <div class="flex gap-1.5">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
                 </div>
-                
-                <!-- Área do terminal -->
-                <div id="terminal" class="bg-black p-4 h-[600px] lg:h-[700px]"></div>
+                <span class="text-neutral-400 text-sm ml-4" id="connectionStatus">Desconectado</span>
             </div>
+            <button id="disconnectBtn" class="text-sm text-red-400 hover:text-red-300">
+                Desconectar
+            </button>
+        </div>
+        <div id="terminal" class="p-4" style="height: 600px; background: #1a1a1a;"></div>
+    </div>
 
-            <!-- Links rápidos -->
-            <div class="mt-6 flex flex-wrap gap-4">
-                <a href="{{ route('ssh.keys') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white hover:bg-gray-700 transition duration-200">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
-                    </svg>
-                    Gerenciar Chaves SSH
-                </a>
-                <a href="{{ route('servers.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white hover:bg-gray-700 transition duration-200">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
-                    </svg>
-                    Gerenciar Servidores
-                </a>
-            </div>
+    <div class="mt-6 bg-neutral-800 p-6 rounded-lg">
+        <h3 class="text-lg font-semibold text-white mb-4">Comandos Rápidos</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <button class="quick-cmd px-3 py-2 bg-neutral-700 text-white text-sm rounded hover:bg-neutral-600 transition-colors" data-cmd="ls -la">
+                ls -la
+            </button>
+            <button class="quick-cmd px-3 py-2 bg-neutral-700 text-white text-sm rounded hover:bg-neutral-600 transition-colors" data-cmd="df -h">
+                df -h
+            </button>
+            <button class="quick-cmd px-3 py-2 bg-neutral-700 text-white text-sm rounded hover:bg-neutral-600 transition-colors" data-cmd="free -m">
+                free -m
+            </button>
+            <button class="quick-cmd px-3 py-2 bg-neutral-700 text-white text-sm rounded hover:bg-neutral-600 transition-colors" data-cmd="top">
+                top
+            </button>
+            <button class="quick-cmd px-3 py-2 bg-neutral-700 text-white text-sm rounded hover:bg-neutral-600 transition-colors" data-cmd="ps aux">
+                ps aux
+            </button>
+            <button class="quick-cmd px-3 py-2 bg-neutral-700 text-white text-sm rounded hover:bg-neutral-600 transition-colors" data-cmd="systemctl status">
+                systemctl status
+            </button>
+            <button class="quick-cmd px-3 py-2 bg-neutral-700 text-white text-sm rounded hover:bg-neutral-600 transition-colors" data-cmd="docker ps">
+                docker ps
+            </button>
+            <button class="quick-cmd px-3 py-2 bg-neutral-700 text-white text-sm rounded hover:bg-neutral-600 transition-colors" data-cmd="tail -f /var/log/syslog">
+                tail logs
+            </button>
         </div>
     </div>
 
-    @push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    @endpush
-
     @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
-    <script src="{{ asset('js/ssh-terminal.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css">
+    <script>
+        let term;
+        let socket;
+
+        document.getElementById('connectionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const serverId = document.getElementById('server_id').value;
+            const keyId = document.getElementById('ssh_key_id').value;
+            
+            if (!serverId) {
+                alert('Por favor, selecione um servidor');
+                return;
+            }
+
+            connectTerminal(serverId, keyId);
+        });
+
+        document.getElementById('disconnectBtn').addEventListener('click', function() {
+            disconnectTerminal();
+        });
+
+        document.querySelectorAll('.quick-cmd').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const cmd = this.dataset.cmd;
+                if (term && socket && socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify({ type: 'command', data: cmd + '\n' }));
+                } else {
+                    alert('Por favor, conecte-se a um servidor primeiro');
+                }
+            });
+        });
+
+        function connectTerminal(serverId, keyId) {
+            document.getElementById('terminalContainer').style.display = 'block';
+            document.getElementById('connectionStatus').textContent = 'Conectando...';
+
+            if (!term) {
+                term = new Terminal({
+                    cursorBlink: true,
+                    theme: {
+                        background: '#1a1a1a',
+                        foreground: '#10b981',
+                    }
+                });
+                term.open(document.getElementById('terminal'));
+            }
+
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            socket = new WebSocket(`${protocol}//${window.location.host}/ssh/connect?server_id=${serverId}&key_id=${keyId || ''}`);
+
+            socket.onopen = function() {
+                document.getElementById('connectionStatus').textContent = 'Conectado';
+                term.write('✓ Conectado ao servidor\r\n');
+            };
+
+            socket.onmessage = function(event) {
+                term.write(event.data);
+            };
+
+            socket.onerror = function(error) {
+                document.getElementById('connectionStatus').textContent = 'Erro na conexão';
+                term.write('\r\n✗ Erro na conexão SSH\r\n');
+            };
+
+            socket.onclose = function() {
+                document.getElementById('connectionStatus').textContent = 'Desconectado';
+                term.write('\r\n✗ Conexão encerrada\r\n');
+            };
+
+            term.onData(data => {
+                if (socket && socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify({ type: 'input', data: data }));
+                }
+            });
+        }
+
+        function disconnectTerminal() {
+            if (socket) {
+                socket.close();
+            }
+            document.getElementById('terminalContainer').style.display = 'none';
+        }
+    </script>
     @endpush
-</x-app-layout>
+</x-layout>

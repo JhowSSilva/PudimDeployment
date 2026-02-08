@@ -14,7 +14,6 @@ class AlertController extends Controller
 
     public function __construct(AlertManagerService $alertManager)
     {
-        $this->middleware('auth');
         $this->alertManager = $alertManager;
     }
 

@@ -14,7 +14,6 @@ class MonitoringController extends Controller
 
     public function __construct(MetricsCollectorService $metricsCollector)
     {
-        $this->middleware('auth');
         $this->metricsCollector = $metricsCollector;
     }
 

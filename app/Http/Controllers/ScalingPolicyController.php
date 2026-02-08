@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ScalingPolicyController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of scaling policies.
      */
@@ -32,8 +27,8 @@ class ScalingPolicyController extends Controller
      */
     public function create()
     {
-        $serverPools = Auth::user()->currentTeam->serverPools;
-        return view('scaling.policies.create', compact('serverPools'));
+        $pools = Auth::user()->currentTeam->serverPools;
+        return view('scaling.policies.create', compact('pools'));
     }
 
     /**
@@ -85,9 +80,9 @@ class ScalingPolicyController extends Controller
     {
         $this->authorize('update', $policy);
 
-        $serverPools = Auth::user()->currentTeam->serverPools;
+        $pools = Auth::user()->currentTeam->serverPools;
 
-        return view('scaling.policies.edit', compact('policy', 'serverPools'));
+        return view('scaling.policies.edit', compact('policy', 'pools'));
     }
 
     /**

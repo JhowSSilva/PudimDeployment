@@ -17,14 +17,14 @@ class PipelineController extends Controller
             ->latest()
             ->paginate(12);
 
-        return view('pipelines.index', compact('pipelines'));
+        return view('cicd.pipelines.index', compact('pipelines'));
     }
 
     public function create()
     {
         $sites = Site::where('team_id', auth()->user()->current_team_id)->get();
         
-        return view('pipelines.create', compact('sites'));
+        return view('cicd.pipelines.create', compact('sites'));
     }
 
     public function store(Request $request)
@@ -65,7 +65,7 @@ class PipelineController extends Controller
             'last_success' => $pipeline->getLastSuccessfulRun(),
         ];
 
-        return view('pipelines.show', compact('pipeline', 'stats'));
+        return view('cicd.pipelines.show', compact('pipeline', 'stats'));
     }
 
     public function edit(Pipeline $pipeline)
@@ -74,7 +74,7 @@ class PipelineController extends Controller
 
         $sites = Site::where('team_id', $pipeline->team_id)->get();
 
-        return view('pipelines.edit', compact('pipeline', 'sites'));
+        return view('cicd.pipelines.edit', compact('pipeline', 'sites'));
     }
 
     public function update(Request $request, Pipeline $pipeline)

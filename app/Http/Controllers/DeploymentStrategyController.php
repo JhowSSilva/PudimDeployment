@@ -16,14 +16,14 @@ class DeploymentStrategyController extends Controller
             ->latest()
             ->paginate(12);
 
-        return view('deployment-strategies.index', compact('strategies'));
+        return view('cicd.deployment-strategies.index', compact('strategies'));
     }
 
     public function create()
     {
         $sites = Site::where('team_id', auth()->user()->current_team_id)->get();
         
-        return view('deployment-strategies.create', compact('sites'));
+        return view('cicd.deployment-strategies.create', compact('sites'));
     }
 
     public function store(Request $request)
@@ -53,7 +53,7 @@ class DeploymentStrategyController extends Controller
 
         $deploymentStrategy->load('site');
 
-        return view('deployment-strategies.show', compact('deploymentStrategy'));
+        return view('cicd.deployment-strategies.show', compact('deploymentStrategy'));
     }
 
     public function edit(DeploymentStrategy $deploymentStrategy)
@@ -62,7 +62,7 @@ class DeploymentStrategyController extends Controller
 
         $sites = Site::where('team_id', $deploymentStrategy->team_id)->get();
 
-        return view('deployment-strategies.edit', compact('deploymentStrategy', 'sites'));
+        return view('cicd.deployment-strategies.edit', compact('deploymentStrategy', 'sites'));
     }
 
     public function update(Request $request, DeploymentStrategy $deploymentStrategy)

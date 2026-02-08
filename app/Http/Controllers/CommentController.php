@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Store a new comment.
      */

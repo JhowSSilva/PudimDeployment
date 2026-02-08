@@ -14,12 +14,12 @@ class IntegrationController extends Controller
             ->latest()
             ->paginate(12);
 
-        return view('integrations.index', compact('integrations'));
+        return view('cicd.integrations.index', compact('integrations'));
     }
 
     public function create()
     {
-        return view('integrations.create');
+        return view('cicd.integrations.create');
     }
 
     public function store(Request $request)
@@ -46,14 +46,14 @@ class IntegrationController extends Controller
     {
         Gate::authorize('view', $integration);
 
-        return view('integrations.show', compact('integration'));
+        return view('cicd.integrations.show', compact('integration'));
     }
 
     public function edit(Integration $integration)
     {
         Gate::authorize('update', $integration);
 
-        return view('integrations.edit', compact('integration'));
+        return view('cicd.integrations.edit', compact('integration'));
     }
 
     public function update(Request $request, Integration $integration)

@@ -8,28 +8,31 @@ use Illuminate\Support\Facades\Gate;
 
 class DeploymentApprovalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
         
-        // Get pending approvals that the user can review
-        $pendingApprovals = DeploymentApproval::pending()
+        // Get pending count for badge
+        $pendingCount = DeploymentApproval::pending()
             ->whereHas('pipelineRun.pipeline', function($q) use ($user) {
                 $q->where('team_id', $user->current_team_id);
             })
-            ->with(['pipelineRun.pipeline', 'requestedBy', 'deploymentStrategy'])
-            ->latest()
-            ->get();
+            ->count();
 
-        // Get all team approvals for history
-        $allApprovals = DeploymentApproval::whereHas('pipelineRun.pipeline', function($q) use ($user) {
+        // Build query based on status filter
+        $query = DeploymentApproval::whereHas('pipelineRun.pipeline', function($q) use ($user) {
                 $q->where('team_id', $user->current_team_id);
             })
-            ->with(['pipelineRun.pipeline', 'requestedBy', 'reviewedBy'])
-            ->latest()
-            ->paginate(20);
+            ->with(['pipelineRun.pipeline', 'requestedBy', 'deploymentStrategy', 'reviewedBy']);
 
-        return view('deployment-approvals.index', compact('pendingApprovals', 'allApprovals'));
+        // Filter by status if provided
+        if ($status = $request->get('status')) {
+            $query->where('status', $status);
+        }
+
+        $approvals = $query->latest()->paginate(20);
+
+        return view('cicd.deployment-approvals.index', compact('approvals', 'pendingCount'));
     }
 
     public function show(DeploymentApproval $deploymentApproval)
@@ -43,7 +46,7 @@ class DeploymentApprovalController extends Controller
             'reviewedBy'
         ]);
 
-        return view('deployment-approvals.show', compact('deploymentApproval'));
+        return view('cicd.deployment-approvals.show', compact('deploymentApproval'));
     }
 
     public function approve(Request $request, DeploymentApproval $deploymentApproval)

@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class UsageController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display the team's usage metrics dashboard.
      */
