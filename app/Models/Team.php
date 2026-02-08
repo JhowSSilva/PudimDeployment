@@ -18,10 +18,13 @@ class Team extends Model
         'description',
         'slug',
         'personal_team',
+        'plan_id',
+        'plan_limits',
     ];
 
     protected $casts = [
         'personal_team' => 'boolean',
+        'plan_limits' => 'array',
     ];
 
     protected static function boot()
@@ -119,6 +122,39 @@ class Team extends Model
     public function servers(): HasMany
     {
         return $this->hasMany(Server::class);
+    }
+
+    public function plan(): BelongsTo
+    {
+        return $this->belongsTo(Plan::class);
+    }
+
+    public function subscriptions(): HasMany
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    public function activeSubscription(): ?Subscription
+    {
+        return $this->subscriptions()
+            ->where('status', 'active')
+            ->where(function ($q) {
+                $q->whereNull('ends_at')
+                  ->orWhere('ends_at', '>', now());
+            })
+            ->first();
+    }
+
+    public function onTrial(): bool
+    {
+        $subscription = $this->activeSubscription();
+        return $subscription && $subscription->isTrialing();
+    }
+
+    public function subscribed(): bool
+    {
+        $subscription = $this->activeSubscription();
+        return $subscription && $subscription->isActive();
     }
 
     public function getRoleBadgeAttribute(): string

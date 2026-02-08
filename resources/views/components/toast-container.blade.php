@@ -41,8 +41,8 @@
                 
                 <!-- Content -->
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm font-semibold text-neutral-900" x-text="toast.title"></p>
-                    <p x-show="toast.message" class="text-sm text-neutral-600 mt-1" x-text="toast.message"></p>
+                    <p class="text-sm font-semibold text-white" x-text="toast.title"></p>
+                    <p x-show="toast.message" class="text-sm text-neutral-300 mt-1" x-text="toast.message"></p>
                 </div>
                 
                 <!-- Close Button -->

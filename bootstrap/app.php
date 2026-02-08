@@ -4,6 +4,9 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,6 +22,15 @@ return Application::configure(basePath: dirname(__DIR__))
             // SSH Routes
             Route::middleware('web')
                 ->group(base_path('routes/ssh.php'));
+            
+            // Configure Rate Limiters
+            RateLimiter::for('api', function (Request $request) {
+                return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+            });
+            
+            RateLimiter::for('webhooks', function (Request $request) {
+                return Limit::perMinute(30)->by($request->ip());
+            });
         }
     )
     ->withProviders([

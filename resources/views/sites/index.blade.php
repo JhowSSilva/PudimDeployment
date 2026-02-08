@@ -14,8 +14,8 @@
             <div class="mb-8">
                 <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-3xl font-bold text-neutral-900">Sites & Aplicações</h1>
-                    <p class="mt-1 text-sm text-neutral-600">Gerencie deployments, domínios e configurações</p>
+                    <h1 class="text-3xl font-bold text-white">Sites & Aplicações</h1>
+                    <p class="mt-1 text-sm text-neutral-300">Gerencie deployments, domínios e configurações</p>
                 </div>
                 <div class="flex items-center space-x-3">
                     <!-- View Mode Toggle -->
@@ -46,7 +46,7 @@
         <x-card class="mb-6">
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div>
-                    <label for="search-sites" class="block text-sm font-medium text-neutral-700 mb-2">Buscar</label>
+                    <label for="search-sites" class="block text-sm font-medium text-neutral-200 mb-2">Buscar</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <svg class="h-5 w-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -58,17 +58,17 @@
                             type="text" 
                             id="search-sites" 
                             placeholder="Nome ou domínio..." 
-                            class="block w-full pl-10 pr-3 py-2.5 border border-neutral-300 rounded-lg text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                            class="block w-full pl-10 pr-3 py-2.5 border border-neutral-600 bg-neutral-900 rounded-lg text-white placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
                         >
                     </div>
                 </div>
                 
                 <div>
-                    <label for="status-filter" class="block text-sm font-medium text-neutral-700 mb-2">Status</label>
+                    <label for="status-filter" class="block text-sm font-medium text-neutral-200 mb-2">Status</label>
                     <select 
                         x-model="statusFilter" 
                         id="status-filter" 
-                        class="block w-full px-3 py-2.5 border border-neutral-300 rounded-lg text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                        class="block w-full px-3 py-2.5 border border-neutral-600 bg-neutral-900 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
                     >
                         <option value="all">Todos</option>
                         <option value="active">Ativos</option>
@@ -91,19 +91,19 @@
             <!-- Grid View -->
             <div x-show="viewMode === 'grid'" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             @forelse($sites as $site)
-                    <x-card padding="false" class="group hover:ring-2 hover:ring-primary-500 hover:ring-offset-2 transition-all duration-200">
+                    <x-card padding="false" class="group hover:ring-2 hover:ring-primary-500 transition-all duration-200">
                         <!-- Card Header -->
-                        <div class="p-6 border-b border-neutral-200">
+                        <div class="p-6 border-b border-neutral-700">
                             <div class="flex items-start justify-between mb-4">
                                 <div class="flex items-center space-x-3 flex-1 min-w-0">
-                                    <div class="flex-shrink-0 w-12 h-12 bg-neutral-100 group-hover:bg-primary-50 rounded-xl flex items-center justify-center transition-colors duration-200">
-                                        <svg class="w-6 h-6 text-neutral-600 group-hover:text-primary-600 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-neutral-700 group-hover:bg-primary-900/40 rounded-xl flex items-center justify-center transition-colors duration-200">
+                                        <svg class="w-6 h-6 text-neutral-300 group-hover:text-primary-400 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
                                         </svg>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <h3 class="text-base font-semibold text-neutral-900 truncate">{{ $site->name }}</h3>
-                                        <a href="http://{{ $site->domain }}" target="_blank" class="text-sm text-primary-600 hover:text-primary-700 truncate block">
+                                        <h3 class="text-base font-semibold text-white truncate">{{ $site->name }}</h3>
+                                        <a href="http://{{ $site->domain }}" target="_blank" class="text-sm text-primary-400 hover:text-primary-300 truncate block">
                                             {{ $site->domain }}
                                         </a>
                                     </div>
@@ -119,7 +119,7 @@
                             
                             <!-- Site Info -->
                             <div class="space-y-2">
-                                <div class="flex items-center text-sm text-neutral-600">
+                                <div class="flex items-center text-sm text-neutral-300">
                                     <svg class="w-4 h-4 mr-2 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
                                     </svg>
@@ -127,7 +127,7 @@
                                 </div>
                                 
                                 @if($site->git_repository)
-                                    <div class="flex items-center text-sm text-neutral-600">
+                                    <div class="flex items-center text-sm text-neutral-300">
                                         <svg class="w-4 h-4 mr-2 text-neutral-400" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                         </svg>
@@ -146,7 +146,7 @@
                                     </div>
                                 @endif
                                 
-                                <div class="flex items-center text-sm text-neutral-600">
+                                <div class="flex items-center text-sm text-neutral-300">
                                     <svg class="w-4 h-4 mr-2 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
                                     </svg>
@@ -156,7 +156,7 @@
                         </div>
                         
                         <!-- SSL & Deployment Status -->
-                        <div class="p-6 bg-neutral-50">
+                        <div class="p-6 bg-neutral-900/50">
                             <div class="flex items-center justify-between mb-3">
                                 <span class="text-xs font-medium text-neutral-600">SSL Certificate</span>
                                 @if($site->ssl_enabled ?? false)

@@ -1,19 +1,152 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Api\ServerController;
 use App\Http\Controllers\Api\SiteController;
 use App\Http\Controllers\Api\DeploymentController;
 use App\Http\Controllers\SiteManagementController;
 use App\Http\Controllers\DockerController;
 use App\Http\Controllers\LaravelToolsController;
+use App\Http\Controllers\GitHubRepositoryController;
 
-Route::middleware(['auth:api'])->group(function () {
+// Health check endpoint (public, no auth required)
+Route::get('/health', function () {
+    $checks = [];
+    $healthy = true;
+
+    // Database check
+    try {
+        DB::connection()->getPdo();
+        $checks['database'] = [
+            'status' => 'healthy',
+            'message' => 'Database connection successful',
+        ];
+    } catch (\Exception $e) {
+        $healthy = false;
+        $checks['database'] = [
+            'status' => 'unhealthy',
+            'message' => 'Database connection failed: ' . $e->getMessage(),
+        ];
+    }
+
+    // Redis check
+    try {
+        Redis::connection()->ping();
+        $checks['redis'] = [
+            'status' => 'healthy',
+            'message' => 'Redis connection successful',
+        ];
+    } catch (\Exception $e) {
+        $healthy = false;
+        $checks['redis'] = [
+            'status' => 'unhealthy',
+            'message' => 'Redis connection failed: ' . $e->getMessage(),
+        ];
+    }
+
+    // Storage check
+    try {
+        $testFile = 'health-check-' . time() . '.txt';
+        Storage::disk('local')->put($testFile, 'test');
+        Storage::disk('local')->delete($testFile);
+        $checks['storage'] = [
+            'status' => 'healthy',
+            'message' => 'Storage read/write successful',
+        ];
+    } catch (\Exception $e) {
+        $healthy = false;
+        $checks['storage'] = [
+            'status' => 'unhealthy',
+            'message' => 'Storage failed: ' . $e->getMessage(),
+        ];
+    }
+
+    // Queue check
+    try {
+        $queueSize = Queue::size();
+        $checks['queue'] = [
+            'status' => 'healthy',
+            'message' => 'Queue connection successful',
+            'size' => $queueSize,
+        ];
+    } catch (\Exception $e) {
+        $healthy = false;
+        $checks['queue'] = [
+            'status' => 'unhealthy',
+            'message' => 'Queue connection failed: ' . $e->getMessage(),
+        ];
+    }
+
+    // Disk space check
+    $diskFree = disk_free_space('/');
+    $diskTotal = disk_total_space('/');
+    $diskUsedPercent = (($diskTotal - $diskFree) / $diskTotal) * 100;
+    
+    if ($diskUsedPercent > 90) {
+        $healthy = false;
+        $checks['disk'] = [
+            'status' => 'unhealthy',
+            'message' => 'Disk space critical',
+            'used_percent' => round($diskUsedPercent, 2),
+        ];
+    } else {
+        $checks['disk'] = [
+            'status' => 'healthy',
+            'message' => 'Disk space sufficient',
+            'used_percent' => round($diskUsedPercent, 2),
+        ];
+    }
+
+    return response()->json([
+        'status' => $healthy ? 'healthy' : 'unhealthy',
+        'timestamp' => now()->toIso8601String(),
+        'checks' => $checks,
+        'version' => config('app.version', '1.0.0'),
+    ], $healthy ? 200 : 503);
+});
+
+Route::middleware(['auth:api', 'throttle:api'])->group(function () {
     
     // User info
     Route::get('/user', function (Request $request) {
         return $request->user();
+    });
+
+    // GitHub Repositories
+    Route::get('/github/repositories', function (Request $request) {
+        $user = $request->user();
+        
+        if (!$user->hasGitHubConnected()) {
+            return response()->json(['error' => 'GitHub não conectado'], 403);
+        }
+
+        try {
+            $service = new \App\Services\RepositoryService($user);
+            $repositories = $service->syncRepositories();
+            
+            return response()->json([
+                'repositories' => $repositories->map(function ($repo) {
+                    return [
+                        'id' => $repo->id,
+                        'name' => $repo->name,
+                        'full_name' => $repo->full_name,
+                        'clone_url' => $repo->clone_url,
+                        'ssh_url' => $repo->ssh_url,
+                        'default_branch' => $repo->default_branch,
+                        'description' => $repo->description,
+                        'is_private' => $repo->is_private,
+                        'language' => $repo->language,
+                    ];
+                })
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     });
 
     // Servers

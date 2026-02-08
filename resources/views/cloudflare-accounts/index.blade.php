@@ -3,8 +3,8 @@
         <!-- Header -->
         <div class="md:flex md:items-center md:justify-between mb-8">
             <div class="flex-1 min-w-0">
-                <h1 class="text-3xl font-bold text-gray-900">Contas Cloudflare</h1>
-                <p class="mt-2 text-sm text-gray-700">Gerencie múltiplas contas Cloudflare para DNS e SSL</p>
+                <h1 class="text-3xl font-bold text-neutral-100">Contas Cloudflare</h1>
+                <p class="mt-2 text-sm text-neutral-400">Gerencie múltiplas contas Cloudflare para DNS e SSL</p>
             </div>
             <div class="mt-4 flex md:mt-0 md:ml-4">
                 <a href="{{ route('cloudflare-accounts.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
@@ -47,11 +47,11 @@
         @endif
 
         <!-- Accounts List -->
-        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="bg-neutral-800 border border-neutral-700/50 shadow-lg overflow-hidden sm:rounded-lg">
             @if($accounts->count() > 0)
-                <ul role="list" class="divide-y divide-gray-200">
+                <ul role="list" class="divide-y divide-neutral-700">
                     @foreach($accounts as $account)
-                        <li class="px-6 py-4 hover:bg-gray-50 transition-colors">
+                        <li class="px-6 py-4 hover:bg-neutral-700/50 transition-colors">
                             <div class="flex items-center justify-between">
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center space-x-3">
@@ -64,7 +64,7 @@
                                         </div>
                                         <div class="flex-1 min-w-0">
                                             <div class="flex items-center space-x-2">
-                                                <h3 class="text-lg font-medium text-gray-900 truncate">{{ $account->name }}</h3>
+                                                <h3 class="text-lg font-medium text-white truncate">{{ $account->name }}</h3>
                                                 @if($account->is_active)
                                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                                         Ativa
@@ -76,9 +76,9 @@
                                                 @endif
                                             </div>
                                             @if($account->description)
-                                                <p class="mt-1 text-sm text-gray-500">{{ $account->description }}</p>
+                                                <p class="mt-1 text-sm text-neutral-300">{{ $account->description }}</p>
                                             @endif
-                                            <div class="mt-2 flex items-center space-x-4 text-sm text-gray-500">
+                                            <div class="mt-2 flex items-center space-x-4 text-sm text-neutral-300">
                                                 @if($account->zone_id)
                                                     <span class="flex items-center">
                                                         <svg class="mr-1.5 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -93,7 +93,7 @@
                                                     </svg>
                                                     {{ $account->sites_count }} {{ Str::plural('site', $account->sites_count) }}
                                                 </span>
-                                                <span class="text-xs text-gray-400">
+                                                <span class="text-xs text-neutral-400">
                                                     Criada em {{ $account->created_at->format('d/m/Y') }}
                                                 </span>
                                             </div>

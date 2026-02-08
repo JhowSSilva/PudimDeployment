@@ -3,10 +3,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="mb-8">
-                <h1 class="text-3xl font-bold text-neutral-900">
+                <h1 class="text-3xl font-bold text-white">
                     Configurações
                 </h1>
-                <p class="text-neutral-600 mt-2">Gerencie seu perfil, senha e times</p>
+                <p class="text-neutral-300 mt-2">Gerencie seu perfil, senha e times</p>
             </div>
 
             @if(session('success'))
@@ -34,19 +34,19 @@
             <!-- Tabs Navigation -->
             <div class="mb-6" x-data="{ activeTab: 'profile' }">
                 <div class="flex space-x-2 border-b border-neutral-200">
-                    <button @click="activeTab = 'profile'" :class="activeTab === 'profile' ? 'border-primary-500 text-primary-600' : 'border-transparent text-neutral-500 hover:text-neutral-700 hover:border-neutral-300'" class="px-6 py-3 font-medium border-b-2 transition-all">
+                    <button @click="activeTab = 'profile'" :class="activeTab === 'profile' ? 'border-primary-500 text-primary-400' : 'border-transparent text-neutral-400 hover:text-neutral-200 hover:border-neutral-600'" class="px-6 py-3 font-medium border-b-2 transition-all">
                         <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                         </svg>
                         Perfil
                     </button>
-                    <button @click="activeTab = 'password'" :class="activeTab === 'password' ? 'border-primary-500 text-primary-600' : 'border-transparent text-neutral-500 hover:text-neutral-700 hover:border-neutral-300'" class="px-6 py-3 font-medium border-b-2 transition-all">
+                    <button @click="activeTab = 'password'" :class="activeTab === 'password' ? 'border-primary-500 text-primary-400' : 'border-transparent text-neutral-400 hover:text-neutral-200 hover:border-neutral-600'" class="px-6 py-3 font-medium border-b-2 transition-all">
                         <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                         </svg>
                         Senha
                     </button>
-                    <button @click="activeTab = 'teams'" :class="activeTab === 'teams' ? 'border-primary-500 text-primary-600' : 'border-transparent text-neutral-500 hover:text-neutral-700 hover:border-neutral-300'" class="px-6 py-3 font-medium border-b-2 transition-all">
+                    <button @click="activeTab = 'teams'" :class="activeTab === 'teams' ? 'border-primary-500 text-primary-400' : 'border-transparent text-neutral-400 hover:text-neutral-200 hover:border-neutral-600'" class="px-6 py-3 font-medium border-b-2 transition-all">
                         <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
@@ -57,7 +57,7 @@
                 <!-- Profile Tab -->
                 <div x-show="activeTab === 'profile'" x-cloak class="mt-6">
                     <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8">
-                        <h2 class="text-2xl font-bold text-neutral-900 mb-6">Informações do Perfil</h2>
+                        <h2 class="text-2xl font-bold text-white mb-6">Informações do Perfil</h2>
                         
                         <form action="{{ route('profile.update') }}" method="POST">
                             @csrf
@@ -65,7 +65,7 @@
 
                             <div class="space-y-6">
                                 <div>
-                                    <label class="block text-sm font-medium text-neutral-700 mb-2">Nome</label>
+                                    <label class="block text-sm font-medium text-neutral-200 mb-2">Nome</label>
                                     <input type="text" name="name" value="{{ old('name', $user->name) }}" required class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent">
                                     @error('name')
                                         <p class="text-error-500 text-sm mt-1">{{ $message }}</p>
@@ -73,7 +73,7 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-neutral-700 mb-2">Email</label>
+                                    <label class="block text-sm font-medium text-neutral-200 mb-2">Email</label>
                                     <input type="email" name="email" value="{{ old('email', $user->email) }}" required class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent">
                                     @error('email')
                                         <p class="text-error-500 text-sm mt-1">{{ $message }}</p>
@@ -93,7 +93,7 @@
                 <!-- Password Tab -->
                 <div x-show="activeTab === 'password'" x-cloak class="mt-6">
                     <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8">
-                        <h2 class="text-2xl font-bold text-neutral-900 mb-6">Atualizar Senha</h2>
+                        <h2 class="text-2xl font-bold text-white mb-6">Atualizar Senha</h2>
                     
                     <form action="{{ route('profile.password') }}" method="POST">
                         @csrf
@@ -101,7 +101,7 @@
 
                         <div class="space-y-6">
                                 <div>
-                                    <label class="block text-sm font-medium text-neutral-700 mb-2">Senha Atual</label>
+                                    <label class="block text-sm font-medium text-neutral-200 mb-2">Senha Atual</label>
                                     <input type="password" name="current_password" required class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent">
                                     @error('current_password')
                                         <p class="text-error-500 text-sm mt-1">{{ $message }}</p>
@@ -109,7 +109,7 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-neutral-700 mb-2">Nova Senha</label>
+                                    <label class="block text-sm font-medium text-neutral-200 mb-2">Nova Senha</label>
                                     <input type="password" name="password" required class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent">
                                     @error('password')
                                         <p class="text-error-500 text-sm mt-1">{{ $message }}</p>
@@ -117,7 +117,7 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-neutral-700 mb-2">Confirmar Nova Senha</label>
+                                    <label class="block text-sm font-medium text-neutral-200 mb-2">Confirmar Nova Senha</label>
                                     <input type="password" name="password_confirmation" required class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent">
                                 </div>
 
@@ -136,19 +136,19 @@
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <!-- Create Team Card -->
                         <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8">
-                            <h2 class="text-2xl font-bold text-neutral-900 mb-6">Criar Novo Time</h2>
+                            <h2 class="text-2xl font-bold text-white mb-6">Criar Novo Time</h2>
                         
                         <form action="{{ route('profile.teams.create') }}" method="POST">
                             @csrf
 
                             <div class="space-y-4">
                                     <div>
-                                        <label class="block text-sm font-medium text-neutral-700 mb-2">Nome do Time</label>
+                                        <label class="block text-sm font-medium text-neutral-200 mb-2">Nome do Time</label>
                                         <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent">
                                     </div>
 
                                     <div>
-                                        <label class="block text-sm font-medium text-neutral-700 mb-2">Descrição (opcional)</label>
+                                        <label class="block text-sm font-medium text-neutral-200 mb-2">Descrição (opcional)</label>
                                         <textarea name="description" rows="3" class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent"></textarea>
                                     </div>
 
@@ -161,14 +161,14 @@
 
                         <!-- Teams List -->
                         <div class="space-y-4">
-                            <h2 class="text-2xl font-bold text-neutral-900">Meus Times</h2>
+                            <h2 class="text-2xl font-bold text-white">Meus Times</h2>
                         
                             @forelse($ownedTeams as $team)
                                 <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6 hover:shadow-2xl hover:scale-[1.02] transition-all">
                                     <div class="flex items-start justify-between mb-4">
                                         <div>
-                                            <h3 class="text-xl font-bold text-neutral-900">{{ $team->name }}</h3>
-                                            <p class="text-neutral-600 text-sm mt-1">{{ $team->description }}</p>
+                                            <h3 class="text-xl font-bold text-white">{{ $team->name }}</h3>
+                                            <p class="text-neutral-300 text-sm mt-1">{{ $team->description }}</p>
                                     </div>
                                     {!! $team->role_badge !!}
                                 </div>
@@ -200,24 +200,24 @@
                                     <svg class="w-16 h-16 mx-auto text-neutral-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                     </svg>
-                                    <p class="text-neutral-600 font-medium">Você ainda não criou nenhum time</p>
+                                    <p class="text-neutral-300 font-medium">Você ainda não criou nenhum time</p>
                                     <p class="text-neutral-500 text-sm mt-2">Crie um time para colaborar com outros usuários</p>
                                 </div>
                             @endforelse
 
                             @if($teams->count() > 0)
-                                <h3 class="text-xl font-bold text-neutral-900 mt-8">Times que Participo</h3>
+                                <h3 class="text-xl font-bold text-white mt-8">Times que Participo</h3>
                                 @foreach($teams as $team)
                                     <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6 hover:shadow-2xl hover:scale-[1.02] transition-all">
                                         <div class="flex items-start justify-between mb-4">
                                             <div>
-                                                <h3 class="text-xl font-bold text-neutral-900">{{ $team->name }}</h3>
-                                                <p class="text-neutral-600 text-sm mt-1">{{ $team->description }}</p>
+                                                <h3 class="text-xl font-bold text-white">{{ $team->name }}</h3>
+                                                <p class="text-neutral-300 text-sm mt-1">{{ $team->description }}</p>
                                         </div>
                                         {!! $team->role_badge !!}
                                     </div>
 
-                                        <div class="flex items-center text-sm text-neutral-600 mb-4">
+                                        <div class="flex items-center text-sm text-neutral-400 mb-4">
                                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                                             </svg>

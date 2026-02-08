@@ -2,22 +2,22 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-6">
-                <h1 class="text-3xl font-bold text-neutral-900 dark:text-white">Gerenciamento de Bancos de Dados</h1>
-                <p class="mt-2 text-neutral-600 dark:text-neutral-400">Gerencie todos os bancos de dados dos seus servidores</p>
+                <h1 class="text-3xl font-bold text-neutral-100">Gerenciamento de Bancos de Dados</h1>
+                <p class="mt-2 text-neutral-400">Gerencie todos os bancos de dados dos seus servidores</p>
             </div>
             @if($servers->isEmpty())
-                <div class="bg-white/80 dark:bg-neutral-800 backdrop-blur-sm overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-neutral-800 backdrop-blur-sm overflow-hidden shadow-lg sm:rounded-lg border border-neutral-700/50">
                     <div class="p-6 text-center">
-                        <div class="text-neutral-500 dark:text-neutral-400 mb-4">
+                        <div class="text-neutral-400 mb-4">
                             <svg class="mx-auto h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                       d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                             </svg>
                         </div>
-                        <h3 class="text-lg font-medium text-neutral-900 dark:text-white mb-2">
+                        <h3 class="text-lg font-medium text-neutral-100 mb-2">
                             Nenhum servidor encontrado
                         </h3>
-                        <p class="text-neutral-500 dark:text-neutral-400 mb-4">
+                        <p class="text-neutral-400 mb-4">
                             Você precisa adicionar servidores antes de gerenciar bancos de dados.
                         </p>
                         <a href="{{ route('servers.create') }}" 
@@ -29,11 +29,11 @@
             @else
                 <div class="space-y-6">
                     @foreach($servers as $server)
-                        <div class="bg-white/80 dark:bg-neutral-800 backdrop-blur-sm overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="bg-neutral-800 backdrop-blur-sm overflow-hidden shadow-lg sm:rounded-lg border border-neutral-700/50">
                             <div class="p-6">
                                 <div class="flex items-center justify-between mb-4">
                                     <div class="flex items-center">
-                                        <div class="bg-primary-100 dark:bg-primary-900 p-2 rounded-lg mr-4">
+                                        <div class="bg-primary-900/40 p-2 rounded-lg mr-4">
                                             <svg class="h-6 w-6 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
                                             </svg>

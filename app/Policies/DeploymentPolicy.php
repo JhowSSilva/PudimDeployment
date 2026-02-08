@@ -21,7 +21,13 @@ class DeploymentPolicy
      */
     public function view(User $user, Deployment $deployment): bool
     {
-        return $user->id === $deployment->site->server->user_id;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $deployment->site->server->team_id === $currentTeam->id;
     }
 
     /**
@@ -29,7 +35,13 @@ class DeploymentPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $currentTeam->userCan($user, 'create-resources');
     }
 
     /**
@@ -45,7 +57,14 @@ class DeploymentPolicy
      */
     public function delete(User $user, Deployment $deployment): bool
     {
-        return false;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $deployment->site->server->team_id === $currentTeam->id 
+            && $currentTeam->userCan($user, 'delete-resources');
     }
 
     /**

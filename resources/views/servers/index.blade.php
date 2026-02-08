@@ -14,8 +14,8 @@
             <div class="mb-8">
                 <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-3xl font-bold text-neutral-900">Servidores</h1>
-                    <p class="mt-1 text-sm text-neutral-600">Gerencie e monitore todos os seus servidores</p>
+                    <h1 class="text-3xl font-bold text-white">Servidores</h1>
+                    <p class="mt-1 text-sm text-neutral-300">Gerencie e monitore todos os seus servidores</p>
                 </div>
                 <div class="flex items-center space-x-3">
                     <!-- View Mode Toggle -->
@@ -46,7 +46,7 @@
         <x-card class="mb-6">
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div>
-                    <label for="search" class="block text-sm font-medium text-neutral-700 mb-2">Buscar</label>
+                    <label for="search" class="block text-sm font-medium text-neutral-200 mb-2">Buscar</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <svg class="h-5 w-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -58,17 +58,17 @@
                             type="text" 
                             id="search" 
                             placeholder="Nome ou IP..." 
-                            class="block w-full pl-10 pr-3 py-2.5 border border-neutral-300 rounded-lg text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                            class="block w-full pl-10 pr-3 py-2.5 border border-neutral-600 bg-neutral-900 rounded-lg text-white placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
                         >
                     </div>
                 </div>
                 
                 <div>
-                    <label for="status" class="block text-sm font-medium text-neutral-700 mb-2">Status</label>
+                    <label for="status" class="block text-sm font-medium text-neutral-200 mb-2">Status</label>
                     <select 
                         x-model="statusFilter" 
                         id="status" 
-                        class="block w-full px-3 py-2.5 border border-neutral-300 rounded-lg text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                        class="block w-full px-3 py-2.5 border border-neutral-600 bg-neutral-900 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
                     >
                         <option value="all">Todos</option>
                         <option value="online">Online</option>
@@ -95,19 +95,19 @@
                     @php
                         $metric = $server->latestMetric();
                     @endphp
-                    <x-card padding="false" class="group hover:ring-2 hover:ring-primary-500 hover:ring-offset-2 transition-all duration-200">
+                    <x-card padding="false" class="group hover:ring-2 hover:ring-primary-500 transition-all duration-200">
                         <!-- Card Header -->
-                        <div class="p-6 border-b border-neutral-200">
+                        <div class="p-6 border-b border-neutral-700">
                             <div class="flex items-start justify-between mb-4">
                                 <div class="flex items-center space-x-3 flex-1 min-w-0">
-                                    <div class="flex-shrink-0 w-12 h-12 bg-neutral-100 group-hover:bg-primary-50 rounded-xl flex items-center justify-center transition-colors duration-200">
-                                        <svg class="w-6 h-6 text-neutral-600 group-hover:text-primary-600 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-neutral-700 group-hover:bg-primary-900/40 rounded-xl flex items-center justify-center transition-colors duration-200">
+                                        <svg class="w-6 h-6 text-neutral-300 group-hover:text-primary-400 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
                                         </svg>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <h3 class="text-base font-semibold text-neutral-900 truncate">{{ $server->name }}</h3>
-                                        <p class="text-sm text-neutral-500 truncate">{{ $server->ip_address }}</p>
+                                        <h3 class="text-base font-semibold text-white truncate">{{ $server->name }}</h3>
+                                        <p class="text-sm text-neutral-400 truncate">{{ $server->ip_address }}</p>
                                     </div>
                                 </div>
                                 @if($server->status === 'online')
@@ -123,13 +123,13 @@
                             
                             <!-- Server Info -->
                             <div class="space-y-2">
-                                <div class="flex items-center text-sm text-neutral-600">
+                                <div class="flex items-center text-sm text-neutral-300">
                                     <svg class="w-4 h-4 mr-2 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
                                     </svg>
                                     {{ $server->os_type ?? 'N/A' }} {{ $server->os_version }}
                                 </div>
-                                <div class="flex items-center text-sm text-neutral-600">
+                                <div class="flex items-center text-sm text-neutral-300">
                                     <svg class="w-4 h-4 mr-2 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                     </svg>
@@ -140,11 +140,11 @@
                         
                         <!-- Metrics -->
                         @if($metric)
-                            <div class="p-6 bg-neutral-50 space-y-4">
+                            <div class="p-6 bg-neutral-900/50 space-y-4">
                                 <!-- CPU -->
                                 <div>
                                     <div class="flex items-center justify-between mb-2">
-                                        <span class="text-xs font-medium text-neutral-600">CPU</span>
+                                        <span class="text-xs font-medium text-neutral-300">CPU</span>
                                         <span class="text-xs font-semibold {{ $metric->cpu_usage > 80 ? 'text-error-600' : ($metric->cpu_usage > 60 ? 'text-warning-600' : 'text-success-600') }}">
                                             {{ number_format($metric->cpu_usage, 1) }}%
                                         </span>

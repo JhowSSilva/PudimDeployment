@@ -3,8 +3,8 @@
     <div class="mb-8">
         <div class="flex items-center justify-between">
             <div>
-                <h1 class="text-3xl font-bold text-neutral-900">Dashboard</h1>
-                <p class="mt-1 text-sm text-neutral-600">Visão geral do seu ambiente de deployment</p>
+                <h1 class="text-3xl font-bold text-neutral-100">Dashboard</h1>
+                <p class="mt-1 text-sm text-neutral-400">Visão geral do seu ambiente de deployment</p>
             </div>
             <div class="flex items-center space-x-3">
                 <x-button variant="ghost" size="sm">
@@ -25,22 +25,22 @@
     <!-- Stats Grid -->
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
         <!-- Total Servers -->
-        <x-card padding="false" class="group">
+        <x-card padding="false" class="group hover:scale-[1.02] transition-transform">
             <div class="p-6">
                 <div class="flex items-center justify-between">
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-neutral-600 mb-1">Total de Servidores</p>
-                        <p class="text-3xl font-bold text-neutral-900">{{ $totalServers }}</p>
+                        <p class="text-sm font-medium text-neutral-400 mb-1">Total de Servidores</p>
+                        <p class="text-3xl font-bold text-neutral-100">{{ $totalServers }}</p>
                         <p class="text-sm text-neutral-500 mt-2 flex items-center">
-                            <svg class="w-4 h-4 text-success-600 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="w-4 h-4 text-success-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"></path>
                             </svg>
-                            <span class="text-success-600 font-medium">8.2%</span>
+                            <span class="text-success-500 font-medium">8.2%</span>
                             <span class="ml-1">vs último mês</span>
                         </p>
                     </div>
-                    <div class="w-14 h-14 bg-primary-50 group-hover:bg-primary-100 rounded-xl flex items-center justify-center transition-colors duration-200">
-                        <svg class="w-7 h-7 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-14 h-14 bg-primary-900/30 group-hover:bg-primary-800/40 rounded-xl flex items-center justify-center transition-colors duration-200 ring-1 ring-primary-500/20">
+                        <svg class="w-7 h-7 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
                         </svg>
                     </div>
@@ -49,18 +49,18 @@
         </x-card>
 
         <!-- Online Servers -->
-        <x-card padding="false" class="group">
+        <x-card padding="false" class="group hover:scale-[1.02] transition-transform">
             <div class="p-6">
                 <div class="flex items-center justify-between">
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-neutral-600 mb-1">Servidores Online</p>
-                        <p class="text-3xl font-bold text-success-600">{{ $serversOnline }}</p>
+                        <p class="text-sm font-medium text-neutral-400 mb-1">Servidores Online</p>
+                        <p class="text-3xl font-bold text-success-400">{{ $serversOnline }}</p>
                         <p class="text-sm text-neutral-500 mt-2">
                             {{ $totalServers > 0 ? round(($serversOnline / $totalServers) * 100, 1) : 0 }}% uptime
                         </p>
                     </div>
-                    <div class="w-14 h-14 bg-success-50 group-hover:bg-success-100 rounded-xl flex items-center justify-center transition-colors duration-200">
-                        <svg class="w-7 h-7 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-14 h-14 bg-success-900/30 group-hover:bg-success-800/40 rounded-xl flex items-center justify-center transition-colors duration-200 ring-1 ring-success-500/20">
+                        <svg class="w-7 h-7 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
@@ -69,18 +69,18 @@
         </x-card>
 
         <!-- Offline Servers -->
-        <x-card padding="false" class="group">
+        <x-card padding="false" class="group hover:scale-[1.02] transition-transform">
             <div class="p-6">
                 <div class="flex items-center justify-between">
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-neutral-600 mb-1">Servidores Offline</p>
-                        <p class="text-3xl font-bold text-error-600">{{ $serversOffline }}</p>
+                        <p class="text-sm font-medium text-neutral-400 mb-1">Servidores Offline</p>
+                        <p class="text-3xl font-bold text-error-400">{{ $serversOffline }}</p>
                         <p class="text-sm text-neutral-500 mt-2">
                             {{ $serversOffline > 0 ? 'Requer atenção' : 'Tudo OK' }}
                         </p>
                     </div>
-                    <div class="w-14 h-14 bg-error-50 group-hover:bg-error-100 rounded-xl flex items-center justify-center transition-colors duration-200">
-                        <svg class="w-7 h-7 text-error-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-14 h-14 bg-error-900/30 group-hover:bg-error-800/40 rounded-xl flex items-center justify-center transition-colors duration-200 ring-1 ring-error-500/20">
+                        <svg class="w-7 h-7 text-error-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
@@ -89,12 +89,12 @@
         </x-card>
 
         <!-- Total Sites -->
-        <x-card padding="false" class="group">
+        <x-card padding="false" class="group hover:scale-[1.02] transition-transform">
             <div class="p-6">
                 <div class="flex items-center justify-between">
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-neutral-600 mb-1">Sites Ativos</p>
-                        <p class="text-3xl font-bold text-neutral-900">{{ $totalSites }}</p>
+                        <p class="text-sm font-medium text-neutral-400 mb-1">Sites Ativos</p>
+                        <p class="text-3xl font-bold text-neutral-100">{{ $totalSites }}</p>
                         <p class="text-sm text-neutral-500 mt-2">
                             Distribuídos em {{ $totalServers }} {{ Str::plural('servidor', $totalServers) }}
                         </p>

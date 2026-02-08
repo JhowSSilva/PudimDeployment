@@ -13,8 +13,12 @@ class WebhookService
     /**
      * Validate GitHub webhook signature
      */
-    public function validateGitHubSignature(string $payload, string $signature, string $secret): bool
+    public function validateGitHubSignature(?string $payload, ?string $signature, ?string $secret): bool
     {
+        if (empty($payload) || empty($signature) || empty($secret)) {
+            return false;
+        }
+        
         $expectedSignature = 'sha256=' . hash_hmac('sha256', $payload, $secret);
         return hash_equals($expectedSignature, $signature);
     }
@@ -22,16 +26,24 @@ class WebhookService
     /**
      * Validate GitLab webhook token
      */
-    public function validateGitLabToken(string $token, string $secret): bool
+    public function validateGitLabToken(?string $token, ?string $secret): bool
     {
+        if (empty($token) || empty($secret)) {
+            return false;
+        }
+        
         return hash_equals($secret, $token);
     }
 
     /**
      * Validate Bitbucket webhook signature
      */
-    public function validateBitbucketSignature(string $payload, string $signature, string $secret): bool
+    public function validateBitbucketSignature(?string $payload, ?string $signature, ?string $secret): bool
     {
+        if (empty($payload) || empty($signature) || empty($secret)) {
+            return false;
+        }
+        
         $expectedSignature = 'sha256=' . hash_hmac('sha256', $payload, $secret);
         return hash_equals($expectedSignature, $signature);
     }

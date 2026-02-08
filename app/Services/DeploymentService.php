@@ -5,10 +5,13 @@ namespace App\Services;
 use App\Models\Site;
 use App\Models\Deployment;
 use App\Models\User;
+use App\Traits\StructuredLogging;
 use Illuminate\Support\Facades\Log;
 
 class DeploymentService
 {
+    use StructuredLogging;
+    
     private Site $site;
     private SSHConnectionService $ssh;
     private Deployment $deployment;
@@ -72,7 +75,13 @@ class DeploymentService
             
             $this->site->update(['status' => 'error']);
 
-            Log::error("Deployment failed for site {$this->site->domain}: " . $e->getMessage());
+            $this->logError("Deployment failed", [
+                'deployment_id' => $this->deployment->id,
+                'site_id' => $this->site->id,
+                'site_domain' => $this->site->domain,
+                'server_id' => $this->site->server_id,
+                'trigger' => $trigger,
+            ], $e);
         } finally {
             $this->ssh->disconnect();
         }

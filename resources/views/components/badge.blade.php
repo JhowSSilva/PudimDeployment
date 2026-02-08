@@ -16,12 +16,12 @@ $sizeClasses = [
 
 // Color variants
 $variantClasses = [
-    'neutral' => 'bg-neutral-50 text-neutral-700 ring-neutral-600/20',
-    'success' => 'bg-success-50 text-success-700 ring-success-600/20',
-    'error' => 'bg-error-50 text-error-700 ring-error-600/20',
-    'warning' => 'bg-warning-50 text-warning-700 ring-warning-600/20',
-    'info' => 'bg-info-50 text-info-700 ring-info-600/20',
-    'primary' => 'bg-primary-50 text-primary-700 ring-primary-600/20',
+    'neutral' => 'bg-neutral-700/50 text-neutral-300 ring-neutral-600/30',
+    'success' => 'bg-success-900/40 text-success-300 ring-success-500/30',
+    'error' => 'bg-error-900/40 text-error-300 ring-error-500/30',
+    'warning' => 'bg-warning-900/40 text-warning-300 ring-warning-500/30',
+    'info' => 'bg-info-900/40 text-info-300 ring-info-500/30',
+    'primary' => 'bg-primary-900/40 text-primary-300 ring-primary-500/30',
 ];
 
 // Dot colors

@@ -4,7 +4,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <h1 class="text-3xl font-bold">Meus Repositórios GitHub</h1>
-                    <p class="text-gray-600 mt-1">Gerencie e configure deploys para seus repositórios</p>
+                    <p class="text-neutral-300 mt-1">Gerencie e configure deploys para seus repositórios</p>
                 </div>
                 <form action="{{ route('github.repositories.sync') }}" method="POST">
                     @csrf

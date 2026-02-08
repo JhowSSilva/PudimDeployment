@@ -13,7 +13,7 @@ class SitePolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +21,13 @@ class SitePolicy
      */
     public function view(User $user, Site $site): bool
     {
-        return $user->id === $site->server->user_id;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $site->server->team_id === $currentTeam->id;
     }
 
     /**
@@ -29,7 +35,13 @@ class SitePolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $currentTeam->userCan($user, 'create-resources');
     }
 
     /**
@@ -37,7 +49,14 @@ class SitePolicy
      */
     public function update(User $user, Site $site): bool
     {
-        return $user->id === $site->server->user_id;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $site->server->team_id === $currentTeam->id 
+            && $currentTeam->userCan($user, 'create-resources');
     }
 
     /**
@@ -45,7 +64,14 @@ class SitePolicy
      */
     public function delete(User $user, Site $site): bool
     {
-        return $user->id === $site->server->user_id;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $site->server->team_id === $currentTeam->id 
+            && $currentTeam->userCan($user, 'delete-resources');
     }
 
     /**
@@ -53,7 +79,14 @@ class SitePolicy
      */
     public function deploy(User $user, Site $site): bool
     {
-        return $user->id === $site->server->user_id;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $site->server->team_id === $currentTeam->id 
+            && $currentTeam->userCan($user, 'create-resources');
     }
 
     /**
@@ -61,7 +94,7 @@ class SitePolicy
      */
     public function restore(User $user, Site $site): bool
     {
-        return false;
+        return $this->delete($user, $site);
     }
 
     /**
@@ -69,6 +102,13 @@ class SitePolicy
      */
     public function forceDelete(User $user, Site $site): bool
     {
-        return false;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $site->server->team_id === $currentTeam->id 
+            && $currentTeam->isOwner($user);
     }
 }

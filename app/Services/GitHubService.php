@@ -74,9 +74,15 @@ class GitHubService
      */
     public function getRateLimit(): array
     {
+        if (!$this->client) {
+            return [];
+        }
+
         try {
-            return $this->client->rateLimit()->getRateLimits();
-        } catch (RuntimeException $e) {
+            $rateLimitApi = $this->client->api('rate_limit');
+            $limits = $rateLimitApi->getResources();
+            return $limits;
+        } catch (RuntimeException|\Exception $e) {
             Log::error('Failed to get rate limit: ' . $e->getMessage());
             return [];
         }
@@ -89,12 +95,12 @@ class GitHubService
     {
         $rateLimit = $this->getRateLimit();
         
-        if (empty($rateLimit['rate'])) {
+        if (empty($rateLimit['core'])) {
             return false;
         }
 
-        $remaining = $rateLimit['rate']['remaining'] ?? 0;
-        $limit = $rateLimit['rate']['limit'] ?? 5000;
+        $remaining = $rateLimit['core']['remaining'] ?? 0;
+        $limit = $rateLimit['core']['limit'] ?? 5000;
         
         return $remaining < ($limit * 0.1); // Less than 10% remaining
     }

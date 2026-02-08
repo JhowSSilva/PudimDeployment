@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Site;
 use App\Services\WebhookService;
+use App\Traits\StructuredLogging;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class WebhookController extends Controller
 {
+    use StructuredLogging;
+    
     public function __construct(
         private WebhookService $webhookService
     ) {}
@@ -22,10 +25,12 @@ class WebhookController extends Controller
 
         // Verify token
         if (!hash_equals($site->webhook_secret ?? '', $token)) {
-            Log::warning('Webhook: Invalid token', [
+            $this->logSecurity('Webhook: Invalid token', [
                 'site_id' => $siteId,
-                'ip' => $request->ip()
-            ]);
+                'site_domain' => $site->domain,
+                'ip' => $request->ip(),
+            ], 'warning');
+            
             return response()->json(['error' => 'Invalid token'], 403);
         }
 
@@ -46,7 +51,12 @@ class WebhookController extends Controller
             $rawPayload = $request->getContent();
 
             if (!$this->webhookService->validateGitHubSignature($rawPayload, $signature, $site->webhook_secret)) {
-                Log::warning('Webhook: Invalid GitHub signature', ['site_id' => $siteId]);
+                $this->logSecurity('Webhook: Invalid GitHub signature', [
+                    'site_id' => $siteId,
+                    'site_domain' => $site->domain,
+                    'ip' => $request->ip(),
+                ], 'warning');
+                
                 return response()->json(['error' => 'Invalid signature'], 403);
             }
 
@@ -57,7 +67,12 @@ class WebhookController extends Controller
             $gitlabToken = $request->header('X-Gitlab-Token');
 
             if (!$this->webhookService->validateGitLabToken($gitlabToken, $site->webhook_secret)) {
-                Log::warning('Webhook: Invalid GitLab token', ['site_id' => $siteId]);
+                $this->logSecurity('Webhook: Invalid GitLab token', [
+                    'site_id' => $siteId,
+                    'site_domain' => $site->domain,
+                    'ip' => $request->ip(),
+                ], 'warning');
+                
                 return response()->json(['error' => 'Invalid token'], 403);
             }
 
@@ -69,14 +84,24 @@ class WebhookController extends Controller
             $rawPayload = $request->getContent();
 
             if ($signature && !$this->webhookService->validateBitbucketSignature($rawPayload, $signature, $site->webhook_secret)) {
-                Log::warning('Webhook: Invalid Bitbucket signature', ['site_id' => $siteId]);
+                $this->logSecurity('Webhook: Invalid Bitbucket signature', [
+                    'site_id' => $siteId,
+                    'site_domain' => $site->domain,
+                    'ip' => $request->ip(),
+                ], 'warning');
+                
                 return response()->json(['error' => 'Invalid signature'], 403);
             }
 
             $deployment = $this->webhookService->processBitbucketWebhook($site, $payload);
 
         } else {
-            Log::warning('Webhook: Unknown provider', ['site_id' => $siteId]);
+            $this->logWarning('Webhook: Unknown provider', [
+                'site_id' => $siteId,
+                'site_domain' => $site->domain,
+                'headers' => $request->headers->all(),
+            ]);
+            
             return response()->json(['error' => 'Unknown webhook provider'], 400);
         }
 

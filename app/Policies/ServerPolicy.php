@@ -13,7 +13,7 @@ class ServerPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +21,13 @@ class ServerPolicy
      */
     public function view(User $user, Server $server): bool
     {
-        return $user->id === $server->user_id;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $server->team_id === $currentTeam->id;
     }
 
     /**
@@ -29,7 +35,13 @@ class ServerPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $currentTeam->userCan($user, 'create-resources');
     }
 
     /**
@@ -37,7 +49,14 @@ class ServerPolicy
      */
     public function update(User $user, Server $server): bool
     {
-        return $user->id === $server->user_id;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $server->team_id === $currentTeam->id 
+            && $currentTeam->userCan($user, 'create-resources');
     }
 
     /**
@@ -45,7 +64,14 @@ class ServerPolicy
      */
     public function delete(User $user, Server $server): bool
     {
-        return $user->id === $server->user_id;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $server->team_id === $currentTeam->id 
+            && $currentTeam->userCan($user, 'delete-resources');
     }
 
     /**
@@ -53,7 +79,7 @@ class ServerPolicy
      */
     public function restore(User $user, Server $server): bool
     {
-        return false;
+        return $this->delete($user, $server);
     }
 
     /**
@@ -61,6 +87,13 @@ class ServerPolicy
      */
     public function forceDelete(User $user, Server $server): bool
     {
-        return false;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $server->team_id === $currentTeam->id 
+            && $currentTeam->isOwner($user);
     }
 }

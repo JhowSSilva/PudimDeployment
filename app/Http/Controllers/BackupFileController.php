@@ -43,7 +43,7 @@ class BackupFileController extends Controller
 
             $stream = $disk->readStream($file->storage_path);
 
-            return response()->stream function() use ($stream) {
+            return response()->stream(function() use ($stream) {
                 fpassthru($stream);
                 fclose($stream);
             }, 200, [

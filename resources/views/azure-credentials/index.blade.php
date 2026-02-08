@@ -3,8 +3,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center mb-8">
                 <div>
-                    <h1 class="text-3xl font-bold text-neutral-900">Credenciais Azure</h1>
-                    <p class="text-neutral-600 mt-1">Gerencie suas credenciais Microsoft Azure</p>
+                    <h1 class="text-3xl font-bold text-neutral-100">Credenciais Azure</h1>
+                    <p class="text-neutral-400 mt-1">Gerencie suas credenciais Microsoft Azure</p>
                 </div>
                 <a href="{{ route('azure-credentials.create') }}" class="inline-flex items-center bg-primary-500 hover:bg-primary-600 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg transition-all">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,7 +33,7 @@
                             <path d="M13.05 11.561l-6.89 1.377 8.977 1.273 1.32-8.641zM10.154 3.896L0 6.27l8.26 11.604 2.92-13.978zm11.47 10.857l-6.939-1.255-1.244 8.143h8.183z"/>
                         </svg>
                     </x-slot:icon>
-                    <p class="text-neutral-600 mb-6">Adicione suas credenciais Azure para provisionar Virtual Machines</p>
+                    <p class="text-neutral-400 mb-6">Adicione suas credenciais Azure para provisionar Virtual Machines</p>
                     <x-button href="{{ route('azure-credentials.create') }}" variant="primary">
                         Adicionar Credencial
                     </x-button>

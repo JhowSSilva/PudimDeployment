@@ -20,7 +20,13 @@ class BackupConfigurationPolicy
      */
     public function view(User $user, BackupConfiguration $backup): bool
     {
-        return $user->currentTeam->id === $backup->team_id;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $currentTeam->id === $backup->team_id;
     }
 
     /**
@@ -28,7 +34,13 @@ class BackupConfigurationPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $currentTeam->userCan($user, 'create-resources');
     }
 
     /**
@@ -36,7 +48,14 @@ class BackupConfigurationPolicy
      */
     public function update(User $user, BackupConfiguration $backup): bool
     {
-        return $user->currentTeam->id === $backup->team_id;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $currentTeam->id === $backup->team_id 
+            && $currentTeam->userCan($user, 'create-resources');
     }
 
     /**
@@ -44,6 +63,13 @@ class BackupConfigurationPolicy
      */
     public function delete(User $user, BackupConfiguration $backup): bool
     {
-        return $user->currentTeam->id === $backup->team_id;
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $currentTeam->id === $backup->team_id 
+            && $currentTeam->userCan($user, 'delete-resources');
     }
 }

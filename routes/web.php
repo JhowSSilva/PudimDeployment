@@ -19,14 +19,22 @@ use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\TerminalController;
 use App\Http\Controllers\FileTransferController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\HealthCheckController;
+use App\Http\Controllers\PlansController;
+use App\Http\Controllers\SubscriptionsController;
+use App\Http\Controllers\UsageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
+// Health check endpoints (no auth)
+Route::get('/health', [HealthCheckController::class, 'check'])->name('health.check');
+Route::get('/ping', [HealthCheckController::class, 'ping'])->name('health.ping');
+
 // Webhook routes (no auth middleware - called by external services)
-Route::prefix('webhooks')->name('webhooks.')->group(function () {
+Route::prefix('webhooks')->name('webhooks.')->middleware('throttle:webhooks')->group(function () {
     Route::post('/receive/{siteId}/{token}', [WebhookController::class, 'receive'])->name('receive');
 });
 
@@ -152,6 +160,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/enable', [WebhookController::class, 'enable'])->name('enable');
         Route::post('/disable', [WebhookController::class, 'disable'])->name('disable');
         Route::post('/regenerate-secret', [WebhookController::class, 'regenerateSecret'])->name('regenerate-secret');
+    });
+    
+    // Billing & Subscription routes
+    Route::prefix('billing')->name('billing.')->group(function () {
+        // Plans routes (public within auth)
+        Route::get('/plans', [PlansController::class, 'index'])->name('plans');
+        Route::get('/plans/{plan}', [PlansController::class, 'show'])->name('plans.show');
+        
+        // Subscription management
+        Route::get('/subscription', [SubscriptionsController::class, 'show'])->name('subscription');
+        Route::post('/subscribe/{plan}', [SubscriptionsController::class, 'subscribe'])->name('subscribe');
+        Route::post('/subscription/cancel', [SubscriptionsController::class, 'cancel'])->name('subscription.cancel');
+        Route::post('/subscription/resume', [SubscriptionsController::class, 'resume'])->name('subscription.resume');
+        Route::post('/subscription/swap/{plan}', [SubscriptionsController::class, 'swap'])->name('subscription.swap');
+        
+        // Usage metrics
+        Route::get('/usage', [UsageController::class, 'index'])->name('usage');
     });
     
     // Profile routes

@@ -3,8 +3,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center mb-8">
                 <div>
-                    <h1 class="text-3xl font-bold text-neutral-900">Credenciais DigitalOcean</h1>
-                    <p class="text-neutral-600 mt-1">Gerencie suas credenciais DigitalOcean</p>
+                    <h1 class="text-3xl font-bold text-neutral-100">Credenciais DigitalOcean</h1>
+                    <p class="text-neutral-400 mt-1">Gerencie suas credenciais DigitalOcean</p>
                 </div>
                 <a href="{{ route('digitalocean-credentials.create') }}" class="inline-flex items-center bg-primary-500 hover:bg-primary-600 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg transition-all">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,7 +33,7 @@
                             <path d="M12 24v-5.294h5.294C17.294 23.988 12 24 12 24zm0-5.294H6.706v-5.294H12v5.294zM6.706 13.412H1.412v-5.294h5.294v5.294zm5.294-5.294H6.706V2.824h5.294v5.294z"/>
                         </svg>
                     </x-slot:icon>
-                    <p class="text-neutral-600 mb-6">Adicione suas credenciais DigitalOcean para provisionar Droplets</p>
+                    <p class="text-neutral-400 mb-6">Adicione suas credenciais DigitalOcean para provisionar Droplets</p>
                     <x-button href="{{ route('digitalocean-credentials.create') }}" variant="primary">
                         Adicionar Credencial
                     </x-button>
