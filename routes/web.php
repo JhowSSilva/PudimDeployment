@@ -23,6 +23,19 @@ use App\Http\Controllers\HealthCheckController;
 use App\Http\Controllers\PlansController;
 use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\UsageController;
+use App\Http\Controllers\MonitoringController;
+use App\Http\Controllers\AlertController;
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\TeamRoleController;
+use App\Http\Controllers\ServerPoolController;
+use App\Http\Controllers\LoadBalancerController;
+use App\Http\Controllers\ScalingPolicyController;
+use App\Http\Controllers\PipelineController;
+use App\Http\Controllers\PipelineRunController;
+use App\Http\Controllers\DeploymentStrategyController;
+use App\Http\Controllers\IntegrationController;
+use App\Http\Controllers\DeploymentApprovalController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -160,6 +173,103 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/enable', [WebhookController::class, 'enable'])->name('enable');
         Route::post('/disable', [WebhookController::class, 'disable'])->name('disable');
         Route::post('/regenerate-secret', [WebhookController::class, 'regenerateSecret'])->name('regenerate-secret');
+    });
+    
+    // Monitoring & Metrics routes
+    Route::prefix('monitoring')->name('monitoring.')->group(function () {
+        Route::get('/', [MonitoringController::class, 'index'])->name('index');
+        Route::get('/servers/{server}', [MonitoringController::class, 'show'])->name('show');
+        Route::post('/servers/{server}/collect', [MonitoringController::class, 'collect'])->name('collect');
+        Route::get('/servers/{server}/metrics', [MonitoringController::class, 'metrics'])->name('metrics');
+    });
+    
+    // Alerts routes
+    Route::prefix('alerts')->name('alerts.')->group(function () {
+        Route::get('/', [AlertController::class, 'index'])->name('index');
+        Route::get('/{alert}', [AlertController::class, 'show'])->name('show');
+        Route::post('/{alert}/acknowledge', [AlertController::class, 'acknowledge'])->name('acknowledge');
+        Route::post('/{alert}/resolve', [AlertController::class, 'resolve'])->name('resolve');
+        
+        // Alert rules
+        Route::get('/rules/index', [AlertController::class, 'rules'])->name('rules');
+        Route::get('/rules/create', [AlertController::class, 'createRule'])->name('rules.create');
+        Route::post('/rules', [AlertController::class, 'storeRule'])->name('rules.store');
+        Route::post('/rules/{rule}/toggle', [AlertController::class, 'toggleRule'])->name('rules.toggle');
+        Route::delete('/rules/{rule}', [AlertController::class, 'destroyRule'])->name('rules.destroy');
+    });
+    
+    // Activity Feed routes
+    Route::prefix('activity')->name('activity.')->group(function () {
+        Route::get('/', [ActivityController::class, 'index'])->name('index');
+        Route::get('/resource/{type}/{id}', [ActivityController::class, 'resource'])->name('resource');
+    });
+    
+    // Comments routes
+    Route::prefix('comments')->name('comments.')->group(function () {
+        Route::post('/', [CommentController::class, 'store'])->name('store');
+        Route::put('/{comment}', [CommentController::class, 'update'])->name('update');
+        Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('destroy');
+        Route::get('/get', [CommentController::class, 'getComments'])->name('get');
+    });
+    
+    // Team Roles routes
+    Route::prefix('team/roles')->name('team.roles.')->group(function () {
+        Route::get('/', [TeamRoleController::class, 'index'])->name('index');
+        Route::get('/create', [TeamRoleController::class, 'create'])->name('create');
+        Route::post('/', [TeamRoleController::class, 'store'])->name('store');
+        Route::get('/{role}/edit', [TeamRoleController::class, 'edit'])->name('edit');
+        Route::put('/{role}', [TeamRoleController::class, 'update'])->name('update');
+        Route::delete('/{role}', [TeamRoleController::class, 'destroy'])->name('destroy');
+        Route::post('/{role}/assign', [TeamRoleController::class, 'assign'])->name('assign');
+        Route::post('/{role}/remove', [TeamRoleController::class, 'remove'])->name('remove');
+    });
+    
+    // Auto-scaling & Load Balancing routes
+    Route::prefix('scaling')->name('scaling.')->group(function () {
+        // Server Pools
+        Route::resource('pools', ServerPoolController::class);
+        Route::post('/pools/{pool}/servers/add', [ServerPoolController::class, 'addServer'])->name('pools.servers.add');
+        Route::post('/pools/{pool}/servers/remove', [ServerPoolController::class, 'removeServer'])->name('pools.servers.remove');
+        
+        // Load Balancers
+        Route::resource('load-balancers', LoadBalancerController::class);
+        Route::get('/load-balancers/{loadBalancer}/stats', [LoadBalancerController::class, 'stats'])->name('load-balancers.stats');
+        
+        // Scaling Policies
+        Route::resource('policies', ScalingPolicyController::class);
+        Route::post('/policies/{policy}/toggle', [ScalingPolicyController::class, 'toggle'])->name('policies.toggle');
+    });
+    
+    // CI/CD & Deployment Pipelines routes
+    Route::prefix('cicd')->name('cicd.')->group(function () {
+        // Pipelines
+        Route::resource('pipelines', PipelineController::class);
+        Route::post('/pipelines/{pipeline}/pause', [PipelineController::class, 'pause'])->name('pipelines.pause');
+        Route::post('/pipelines/{pipeline}/activate', [PipelineController::class, 'activate'])->name('pipelines.activate');
+        Route::post('/pipelines/{pipeline}/run', [PipelineController::class, 'run'])->name('pipelines.run');
+        
+        // Pipeline Runs
+        Route::get('/pipelines/{pipeline}/runs', [PipelineRunController::class, 'index'])->name('pipeline-runs.index');
+        Route::get('/runs/{pipelineRun}', [PipelineRunController::class, 'show'])->name('pipeline-runs.show');
+        Route::post('/runs/{pipelineRun}/cancel', [PipelineRunController::class, 'cancel'])->name('pipeline-runs.cancel');
+        Route::post('/runs/{pipelineRun}/retry', [PipelineRunController::class, 'retry'])->name('pipeline-runs.retry');
+        Route::get('/runs/{pipelineRun}/logs', [PipelineRunController::class, 'logs'])->name('pipeline-runs.logs');
+        Route::delete('/runs/{pipelineRun}', [PipelineRunController::class, 'destroy'])->name('pipeline-runs.destroy');
+        
+        // Deployment Strategies
+        Route::resource('deployment-strategies', DeploymentStrategyController::class);
+        Route::post('/deployment-strategies/{deploymentStrategy}/make-default', [DeploymentStrategyController::class, 'makeDefault'])->name('deployment-strategies.make-default');
+        
+        // Integrations
+        Route::resource('integrations', IntegrationController::class);
+        Route::post('/integrations/{integration}/toggle', [IntegrationController::class, 'toggle'])->name('integrations.toggle');
+        Route::post('/integrations/{integration}/test', [IntegrationController::class, 'test'])->name('integrations.test');
+        
+        // Deployment Approvals
+        Route::get('/approvals', [DeploymentApprovalController::class, 'index'])->name('deployment-approvals.index');
+        Route::get('/approvals/{deploymentApproval}', [DeploymentApprovalController::class, 'show'])->name('deployment-approvals.show');
+        Route::post('/approvals/{deploymentApproval}/approve', [DeploymentApprovalController::class, 'approve'])->name('deployment-approvals.approve');
+        Route::post('/approvals/{deploymentApproval}/reject', [DeploymentApprovalController::class, 'reject'])->name('deployment-approvals.reject');
     });
     
     // Billing & Subscription routes

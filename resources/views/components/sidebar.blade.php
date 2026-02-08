@@ -206,6 +206,45 @@
                     </a>
                 </div>
             </div>
+
+            <div class="border-t border-neutral-800"></div>
+
+            <!-- CI/CD -->
+            <div>
+                <div class="px-3 mb-2">
+                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">CI/CD</span>
+                </div>
+                <div class="space-y-1">
+                    <a href="{{ route('cicd.pipelines.index') }}" 
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cicd.pipelines.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                        </svg>
+                        <span class="font-medium">Pipelines</span>
+                    </a>
+                    <a href="{{ route('cicd.deployment-strategies.index') }}" 
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cicd.deployment-strategies.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <span class="font-medium">Estratégias</span>
+                    </a>
+                    <a href="{{ route('cicd.integrations.index') }}" 
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cicd.integrations.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        <span class="font-medium">Integrações</span>
+                    </a>
+                    <a href="{{ route('cicd.approvals.index') }}" 
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cicd.approvals.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="font-medium">Aprovações</span>
+                    </a>
+                </div>
+            </div>
         </nav>
 
         <!-- User Card (Footer) -->

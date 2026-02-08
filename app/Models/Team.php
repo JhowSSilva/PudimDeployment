@@ -157,6 +157,26 @@ class Team extends Model
         return $subscription && $subscription->isActive();
     }
 
+    public function serverPools(): HasMany
+    {
+        return $this->hasMany(ServerPool::class);
+    }
+
+    public function loadBalancers(): HasMany
+    {
+        return $this->hasMany(LoadBalancer::class);
+    }
+
+    public function scalingPolicies(): HasMany
+    {
+        return $this->hasMany(ScalingPolicy::class);
+    }
+
+    public function healthChecks(): HasMany
+    {
+        return $this->hasMany(HealthCheck::class);
+    }
+
     public function getRoleBadgeAttribute(): string
     {
         return match(auth()->user()?->teams()->where('teams.id', $this->id)->first()?->pivot?->role) {

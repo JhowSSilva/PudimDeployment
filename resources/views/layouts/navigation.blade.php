@@ -19,6 +19,11 @@
                     <a href="{{ route('ssl-certificates.index') }}" style="color: #b45309; text-decoration: none; padding: 0.5rem 0.25rem; border-bottom: 2px solid transparent; font-size: 0.875rem; font-weight: 500; transition: all 0.15s ease-in-out; font-weight: bold;" onmouseover="this.style.color='#92400e'" onmouseout="this.style.color='#b45309'">🔒 SSL</a>
                     <a href="{{ route('aws-credentials.index') }}" style="color: #6b7280; text-decoration: none; padding: 0.5rem 0.25rem; border-bottom: 2px solid transparent; font-size: 0.875rem; font-weight: 500; transition: all 0.15s ease-in-out;" onmouseover="this.style.color='#1f2937'" onmouseout="this.style.color='#6b7280'">AWS</a>
                     <a href="{{ route('cloudflare-accounts.index') }}" style="color: #6b7280; text-decoration: none; padding: 0.5rem 0.25rem; border-bottom: 2px solid transparent; font-size: 0.875rem; font-weight: 500; transition: all 0.15s ease-in-out;" onmouseover="this.style.color='#1f2937'" onmouseout="this.style.color='#6b7280'">Cloudflare</a>
+                    <a href="{{ route('monitoring.index') }}" style="color: #059669; text-decoration: none; padding: 0.5rem 0.25rem; border-bottom: 2px solid transparent; font-size: 0.875rem; font-weight: 500; transition: all 0.15s ease-in-out; font-weight: bold;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'">📊 Monitoring</a>
+                    <a href="{{ route('alerts.index') }}" style="color: #dc2626; text-decoration: none; padding: 0.5rem 0.25rem; border-bottom: 2px solid transparent; font-size: 0.875rem; font-weight: 500; transition: all 0.15s ease-in-out; font-weight: bold;" onmouseover="this.style.color='#b91c1c'" onmouseout="this.style.color='#dc2626'">🚨 Alerts</a>
+                    <a href="{{ route('activity.index') }}" style="color: #8b5cf6; text-decoration: none; padding: 0.5rem 0.25rem; border-bottom: 2px solid transparent; font-size: 0.875rem; font-weight: 500; transition: all 0.15s ease-in-out; font-weight: bold;" onmouseover="this.style.color='#7c3aed'" onmouseout="this.style.color='#8b5cf6'">📝 Activity</a>
+                    <a href="{{ route('scaling.pools.index') }}" style="color: #ea580c; text-decoration: none; padding: 0.5rem 0.25rem; border-bottom: 2px solid transparent; font-size: 0.875rem; font-weight: 500; transition: all 0.15s ease-in-out; font-weight: bold;" onmouseover="this.style.color='#c2410c'" onmouseout="this.style.color='#ea580c'">⚡ Auto-scaling</a>
+                    <a href="{{ route('cicd.pipelines.index') }}" style="color: #7c3aed; text-decoration: none; padding: 0.5rem 0.25rem; border-bottom: 2px solid transparent; font-size: 0.875rem; font-weight: 500; transition: all 0.15s ease-in-out; font-weight: bold;" onmouseover="this.style.color='#6d28d9'" onmouseout="this.style.color='#7c3aed'">⚙️ CI/CD</a>
                     <a href="{{ route('billing.plans') }}" style="color: #0891b2; text-decoration: none; padding: 0.5rem 0.25rem; border-bottom: 2px solid transparent; font-size: 0.875rem; font-weight: 500; transition: all 0.15s ease-in-out; font-weight: bold;" onmouseover="this.style.color='#0e7490'" onmouseout="this.style.color='#0891b2'">💳 Planos</a>
                 </div>
             </div>
@@ -40,6 +45,9 @@
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('team.roles.index')">
+                            Team Roles & Permissions
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('billing.subscription')">
                             Minha Assinatura

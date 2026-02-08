@@ -45,13 +45,21 @@ class CollectServerMetrics implements ShouldQueue
         Log::info("Collecting metrics for server: {$this->server->name}");
 
         try {
-            $collector = new MetricsCollectorService($this->server);
-            $metrics = $collector->collect();
+            $collector = app(MetricsCollectorService::class);
+            $metrics = $collector->collectServerMetrics($this->server);
 
-            if ($metrics) {
-                Log::info("Metrics collected successfully for server: {$this->server->name}");
+            if (!empty($metrics)) {
+                Log::info("Metrics collected successfully for server: {$this->server->name}", [
+                    'metrics_count' => count($metrics)
+                ]);
+                
+                // Update server last_checked_at
+                $this->server->update(['last_checked_at' => now()]);
+                
+                // Evaluate alert rules for collected metrics
+                dispatch(new EvaluateAlertRules($this->server));
             } else {
-                Log::warning("Failed to collect metrics for server: {$this->server->name}");
+                Log::warning("No metrics collected for server: {$this->server->name}");
             }
 
         } catch (\Exception $e) {

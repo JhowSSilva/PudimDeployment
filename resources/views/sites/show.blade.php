@@ -186,5 +186,92 @@
                 </div>
             </div>
         </div>
+
+        <!-- Comments Section -->
+        <div class="mt-8">
+            <div class="bg-white shadow sm:rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900 mb-6">Comentários</h3>
+                    
+                    <!-- Comment Form -->
+                    <div class="mb-6">
+                        <x-comment-form 
+                            commentable-type="App\Models\Site" 
+                            :commentable-id="$site->id" 
+                        />
+                    </div>
+
+                    <!-- Comments List -->
+                    <div id="comments-container" class="space-y-4">
+                        <div class="text-center py-8 text-gray-500">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                            <p class="mt-2">Carregando comentários...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        function loadComments(commentableType, commentableId) {
+            fetch(`/comments/get?commentable_type=${commentableType}&commentable_id=${commentableId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('comments-container');
+                    
+                    if (data.comments && data.comments.length > 0) {
+                        container.innerHTML = '';
+                        data.comments.forEach(comment => {
+                            container.innerHTML += renderComment(comment);
+                        });
+                    } else {
+                        container.innerHTML = `
+                            <div class="text-center py-8 text-gray-500">
+                                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                </svg>
+                                <p class="mt-2">Nenhum comentário ainda. Seja o primeiro!</p>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading comments:', error);
+                });
+        }
+
+        function renderComment(comment, depth = 0) {
+            const marginLeft = depth > 0 ? 'ml-12' : '';
+            const replies = comment.replies ? comment.replies.map(reply => renderComment(reply, depth + 1)).join('') : '';
+            
+            return `
+                <div class="comment-item ${marginLeft}" data-comment-id="${comment.id}">
+                    <div class="flex gap-3 p-4 bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition">
+                        <div class="flex-shrink-0">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold">
+                                ${comment.user.name.charAt(0).toUpperCase()}
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="font-medium text-gray-900">${comment.user.name}</span>
+                                <span class="text-xs text-gray-500">${comment.time_since}</span>
+                                ${comment.is_edited ? '<span class="text-xs text-gray-400 italic">(editado)</span>' : ''}
+                            </div>
+                            <div class="comment-body text-sm text-gray-700 whitespace-pre-wrap">${comment.body}</div>
+                        </div>
+                    </div>
+                    ${replies}
+                </div>
+            `;
+        }
+
+        // Load comments on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadComments('App\\\\Models\\\\Site', {{ $site->id }});
+        });
+    </script>
 </x-layout>
