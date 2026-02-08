@@ -4,7 +4,7 @@ use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
 use App\Models\Server;
-use App\Jobs\CollectServerMetrics;
+use App\Jobs\CollectServerMetricsJob;
 use App\Jobs\RunUptimeChecks;
 use App\Jobs\EvaluateAlertRules;
 use App\Services\AlertManagerService;
@@ -13,15 +13,15 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-// Schedule metrics collection for all servers every minute
+// Schedule metrics collection for all servers every 5 minutes
 Schedule::call(function () {
     Server::where('status', '!=', 'offline')
         ->chunk(10, function ($servers) {
             foreach ($servers as $server) {
-                CollectServerMetrics::dispatch($server);
+                CollectServerMetricsJob::dispatch($server);
             }
         });
-})->everyMinute()->name('collect-server-metrics');
+})->everyFiveMinutes()->name('collect-server-metrics');
 
 // Schedule SSL certificate expiration check daily at 2 AM
 Schedule::command('ssl:check-expiring --days=30')

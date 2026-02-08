@@ -27,6 +27,9 @@ class DashboardController extends Controller
             ->limit(10)
             ->get();
         
+        // Generate language statistics
+        $languageStats = $this->generateLanguageStats($servers);
+        
         $data = [
             'currentTeam' => $currentTeam,
             'totalServers' => $servers->count(),
@@ -37,6 +40,7 @@ class DashboardController extends Controller
             'servers' => $servers->take(5),
             'sites' => $sites->take(5),
             'recentActivities' => $recentActivities,
+            'languageStats' => $languageStats,
             'recentDeployments' => Deployment::whereIn('site_id', $sites->pluck('id'))
                 ->with(['site', 'user'])
                 ->latest()
@@ -45,5 +49,54 @@ class DashboardController extends Controller
         ];
         
         return view('dashboard', $data);
+    }
+
+    protected function generateLanguageStats($servers)
+    {
+        $stats = [];
+        $totalServers = $servers->count();
+        
+        if ($totalServers === 0) {
+            return $stats;
+        }
+        
+        // Group servers by programming language
+        $languageGroups = $servers->groupBy('programming_language');
+        
+        foreach ($languageGroups as $language => $serversInLanguage) {
+            // Default to 'php' if no language specified (backward compatibility)
+            $language = $language ?: 'php';
+            
+            $count = $serversInLanguage->count();
+            $percentage = ($count / $totalServers) * 100;
+            
+            // Count by status
+            $online = $serversInLanguage->where('status', 'online')->count();
+            $provisioning = $serversInLanguage->where('status', 'provisioning')->count();
+            
+            // Group by language version
+            $versions = $serversInLanguage->groupBy('language_version')
+                ->map(function ($versionGroup) {
+                    return $versionGroup->count();
+                })
+                ->filter(function ($count, $version) {
+                    return !empty($version); // Only include versions that are set
+                });
+            
+            $stats[$language] = [
+                'count' => $count,
+                'percentage' => $percentage,
+                'online' => $online,
+                'provisioning' => $provisioning,
+                'versions' => $versions->toArray()
+            ];
+        }
+        
+        // Sort by count descending
+        uasort($stats, function ($a, $b) {
+            return $b['count'] <=> $a['count'];
+        });
+        
+        return $stats;
     }
 }

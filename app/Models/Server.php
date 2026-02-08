@@ -69,6 +69,15 @@ class Server extends Model
         'disk_gb',
         'system_info',
         'default_key_id',
+        // Multi-language support fields
+        'programming_language',
+        'language_version',
+        'webserver_version',
+        'database_version_new',
+        'installed_tools',
+        'process_manager',
+        'size_slug',
+        'ipv6_address',
     ];
 
     protected $casts = [
@@ -86,6 +95,8 @@ class Server extends Model
         'system_info' => 'array',
         'provision_started_at' => 'datetime',
         'provision_completed_at' => 'datetime',
+        // Multi-language support casts
+        'installed_tools' => 'array',
     ];
 
     protected $hidden = [
@@ -167,6 +178,22 @@ class Server extends Model
         return $this->belongsTo(SSHKey::class, 'default_key_id');
     }
 
+    // New relationships for multi-language support
+    public function sshCommands(): HasMany
+    {
+        return $this->hasMany(ServerSSHCommand::class);
+    }
+
+    public function firewallRules(): HasMany
+    {
+        return $this->hasMany(ServerFirewallRule::class);
+    }
+
+    public function provisionLogs(): HasMany
+    {
+        return $this->hasMany(ServerProvisionLog::class);
+    }
+
     // Helper methods
     public function isOnline(): bool
     {
@@ -201,5 +228,58 @@ class Server extends Model
     public function getFormattedMonthlyCostAttribute(): string
     {
         return $this->monthly_cost ? '$' . number_format($this->monthly_cost, 2) . '/mês' : 'N/A';
+    }
+
+    // Multi-language helper methods
+    public function isPHP(): bool
+    {
+        return $this->programming_language === 'php';
+    }
+
+    public function isNodeJS(): bool
+    {
+        return $this->programming_language === 'nodejs';
+    }
+
+    public function isPython(): bool
+    {
+        return $this->programming_language === 'python';
+    }
+
+    public function getLanguageDisplayName(): string
+    {
+        return match ($this->programming_language) {
+            'php' => 'PHP',
+            'nodejs' => 'Node.js',
+            'python' => 'Python',
+            'ruby' => 'Ruby',
+            'go' => 'Go',
+            'java' => 'Java',
+            'dotnet' => '.NET',
+            'rust' => 'Rust',
+            'elixir' => 'Elixir',
+            'static' => 'Static Files',
+            default => ucfirst($this->programming_language ?? 'Unknown'),
+        };
+    }
+
+    public function hasProcessManager(): bool
+    {
+        return !empty($this->process_manager);
+    }
+
+    public function getActiveFirewallRules()
+    {
+        return $this->firewallRules()->where('is_active', true)->get();
+    }
+
+    public function getInstalledToolsList(): array
+    {
+        return $this->installed_tools ?? [];
+    }
+
+    public function hasToolInstalled(string $tool): bool
+    {
+        return in_array($tool, $this->getInstalledToolsList());
     }
 }

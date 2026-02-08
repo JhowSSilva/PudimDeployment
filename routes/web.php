@@ -55,6 +55,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
     Route::resource('servers', ServerWebController::class);
+    
+    // Multi-language server routes (AJAX)
+    Route::prefix('servers')->name('servers.')->group(function () {
+        Route::get('/languages/versions', [ServerController::class, 'getVersions'])->name('languages.versions');
+        Route::get('{server}/installation-progress', [ServerController::class, 'getInstallationProgress'])->name('installation.progress');
+        Route::post('{server}/validate-installation', [ServerController::class, 'validateInstallation'])->name('installation.validate');
+    });
+    
     Route::resource('sites', SiteWebController::class);
     Route::get('servers/{server}/sites/create', [SiteWebController::class, 'createForServer'])->name('servers.sites.create');
     

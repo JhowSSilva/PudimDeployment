@@ -109,6 +109,112 @@
         </x-card>
     </div>
 
+    <!-- Multi-Language Stack Overview -->
+    @if($languageStats && count($languageStats) > 0)
+        <div class="mb-8">
+            <div class="mb-4">
+                <h2 class="text-xl font-semibold text-neutral-100 mb-2">Stack de Linguagens</h2>
+                <p class="text-sm text-neutral-400">Distribuição dos servidores por linguagem de programação</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-{{ min(count($languageStats), 4) }} gap-6">
+                @foreach($languageStats as $lang => $stats)
+                    @php
+                        $languageConfig = [
+                            'php' => [
+                                'name' => 'PHP',
+                                'color' => 'indigo',
+                                'icon' => '<path d="M7.01 10.207h3.647c.453 0 .857-.053 1.058-.156a1.192 1.192 0 00.502-.518c.107-.289.107-.682 0-.971a1.186 1.186 0 00-.502-.517c-.201-.103-.605-.157-1.058-.157H7.01v2.319zm-.457-3.5v-1.667c0-.435.275-.792.65-.792h5.021c.38 0 .968.075 1.472.328.51.254.918.64 1.147 1.111.23.47.23 1.027 0 1.498-.115.235-.278.453-.481.635.114.089.22.194.313.315.18.23.31.484.387.756.077.273.096.554.057.831-.04.277-.133.548-.276.794-.292.502-.71.871-1.202 1.062-.492.192-1.07.233-1.672.233H6.553a.665.665 0 01-.65-.792V6.707z"/>',
+                                'bg' => 'indigo-900/30',
+                                'ring' => 'indigo-500/20',
+                                'iconColor' => 'indigo-400'
+                            ],
+                            'nodejs' => [
+                                'name' => 'Node.js',
+                                'color' => 'green',
+                                'icon' => '<path d="M12 2L2 7v10l10 5 10-5V7l-10-5zM6.5 9.75L10 7.5l3.5 2.25v4.5L10 16.5l-3.5-2.25v-4.5z"/>',
+                                'bg' => 'green-900/30',
+                                'ring' => 'green-500/20',
+                                'iconColor' => 'green-400'
+                            ],
+                            'python' => [
+                                'name' => 'Python',
+                                'color' => 'yellow',
+                                'icon' => '<path d="M12.1 2a9.8 9.8 0 00-2.1.25A9.15 9.15 0 003.9 8l-.75 1.5A9.15 9.15 0 009.9 22a9.8 9.8 0 002.1-.25A9.15 9.15 0 0018.1 16l.75-1.5A9.15 9.15 0 0012.1 2z"/>',
+                                'bg' => 'yellow-900/30',
+                                'ring' => 'yellow-500/20',
+                                'iconColor' => 'yellow-400'
+                            ],
+                            'default' => [
+                                'name' => ucfirst($lang),
+                                'color' => 'neutral',
+                                'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>',
+                                'bg' => 'neutral-800/30',
+                                'ring' => 'neutral-500/20',  
+                                'iconColor' => 'neutral-400'
+                            ]
+                        ];
+                        $config = $languageConfig[$lang] ?? $languageConfig['default'];
+                    @endphp
+                    
+                    <x-card padding="false" class="group hover:scale-[1.02] transition-all duration-300">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 bg-{{ $config['bg'] }} group-hover:bg-{{ $config['color'] }}-800/40 rounded-xl flex items-center justify-center transition-colors duration-200 ring-1 ring-{{ $config['ring'] }}">
+                                    <svg class="w-6 h-6 text-{{ $config['iconColor'] }}" fill="currentColor" viewBox="0 0 24 24">
+                                        {!! $config['icon'] !!}
+                                    </svg>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold text-neutral-100">{{ $stats['count'] }}</p>
+                                    <p class="text-xs text-neutral-400">{{ Str::plural('servidor', $stats['count']) }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <div>
+                                    <div class="flex items-center justify-between text-sm mb-1">
+                                        <span class="font-medium text-neutral-200">{{ $config['name'] }}</span>
+                                        <span class="text-neutral-400">{{ round($stats['percentage'], 1) }}%</span>
+                                    </div>
+                                    <div class="w-full bg-neutral-700 rounded-full h-2">
+                                        <div class="bg-{{ $config['color'] }}-500 h-2 rounded-full transition-all duration-1000 ease-out" 
+                                             style="width: {{ $stats['percentage'] }}%"></div>
+                                    </div>
+                                </div>
+                                
+                                @if(isset($stats['versions']) && count($stats['versions']) > 0)
+                                    <div class="space-y-1">
+                                        <p class="text-xs font-medium text-neutral-300 mb-2">Versões em uso:</p>
+                                        @foreach($stats['versions'] as $version => $count)
+                                            <div class="flex items-center justify-between text-xs">
+                                                <span class="text-neutral-400">v{{ $version }}</span>
+                                                <span class="text-{{ $config['color'] }}-400 font-medium">{{ $count }}</span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                                
+                                <div class="pt-2 border-t border-neutral-700">
+                                    <div class="flex items-center justify-between text-xs">
+                                        <span class="text-neutral-400">Online</span>
+                                        <span class="text-success-400 font-medium">{{ $stats['online'] ?? 0 }}</span>
+                                    </div>
+                                    @if(($stats['provisioning'] ?? 0) > 0)
+                                        <div class="flex items-center justify-between text-xs mt-1">
+                                            <span class="text-neutral-400">Provisionando</span>
+                                            <span class="text-warning-400 font-medium">{{ $stats['provisioning'] }}</span>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </x-card>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Main Content - 2/3 width -->
         <div class="lg:col-span-2 space-y-8">

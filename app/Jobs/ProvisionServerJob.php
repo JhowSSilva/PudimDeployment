@@ -19,20 +19,24 @@ class ProvisionServerJob implements ShouldQueue
     public $timeout = 2400; // 40 minutes
     public $tries = 1;
 
-    public function __construct(public Server $server) {}
+    public function __construct(public Server $server, public array $config = []) {}
 
-    public function handle(
-        SSHService $ssh,
-        ProvisionService $provision
-    ): void {
+    public function handle(): void
+    {
         try {
-            Log::info("Starting provisioning job for server: {$this->server->name} (ID: {$this->server->id})");
+            Log::info("Starting modern provisioning job for server: {$this->server->name} (ID: {$this->server->id})");
             
-            $provision->provision($this->server);
+            // Use new stack installation job for modern multi-language support
+            if ($this->server->programming_language && $this->server->programming_language !== 'php') {
+                // Use new multi-language system
+                InstallServerStackJob::dispatch($this->server, $this->config);
+                return;
+            }
+            
+            // Fallback to legacy system for PHP or undefined language
+            $this->runLegacyProvisioning();
             
             Log::info("Provisioning completed successfully for server: {$this->server->name}");
-            
-            // TODO: Send notification to user via email/notification
             
         } catch (\Exception $e) {
             Log::error("Provisioning job failed for server {$this->server->name}: {$e->getMessage()}", [
@@ -50,9 +54,15 @@ class ProvisionServerJob implements ShouldQueue
                 ],
             ]);
             
-            // TODO: Send error notification to user
-            
             throw $e;
         }
+    }
+    
+    protected function runLegacyProvisioning(): void
+    {
+        $ssh = app(SSHService::class);
+        $provision = app(\App\Services\ProvisionService::class);
+        
+        $provision->provision($this->server);
     }
 }
