@@ -52,7 +52,7 @@
 
                                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                         @foreach($server->sites as $site)
-                                            <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                                            <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4">
                                                 <div class="flex items-center justify-between mb-3">
                                                     <div class="flex items-center">
                                                         <svg class="h-5 w-5 text-primary-600 dark:text-primary-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,7 +67,7 @@
                                                             SSL Ativo
                                                         </span>
                                                     @else
-                                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
+                                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-neutral-100 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200">
                                                             Sem SSL
                                                         </span>
                                                     @endif
@@ -75,7 +75,7 @@
 
                                                 @if($site->sslCertificates->isNotEmpty())
                                                     @foreach($site->sslCertificates->take(2) as $cert)
-                                                        <div class="mb-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-sm">
+                                                        <div class="mb-2 p-2 bg-neutral-50 dark:bg-neutral-900 rounded text-sm">
                                                             <div class="flex items-center justify-between">
                                                                 <div class="flex items-center">
                                                                     <svg class="h-4 w-4 text-green-600 dark:text-green-400 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,7 +98,7 @@
                                                                             <span class="text-primary-600 dark:text-primary-400">{{ $daysUntilExpiry }} dias</span>
                                                                         @endif
                                                                     @else
-                                                                        <span class="text-gray-500">-</span>
+                                                                        <span class="text-neutral-500">-</span>
                                                                     @endif
                                                                 </span>
                                                             </div>

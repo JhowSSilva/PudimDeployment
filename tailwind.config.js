@@ -18,19 +18,19 @@ export default {
                 mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
             },
             colors: {
-                // Primary Brand Colors (Turquoise/Cyan)
+                // Primary Brand Colors (Caramelo/Marrom)
                 primary: {
-                    50: '#ecfeff',
-                    100: '#cffafe',
-                    200: '#a5f3fc',
-                    300: '#67e8f9',
-                    400: '#22d3ee',
-                    500: '#14b8a6',
-                    600: '#0d9488',
-                    700: '#0f766e',
-                    800: '#115e59',
-                    900: '#134e4a',
-                    950: '#042f2e',
+                    50: '#fdf8f3',
+                    100: '#f8ede3',
+                    200: '#f1d4b3',
+                    300: '#e9b880',
+                    400: '#d89b4d',
+                    500: '#c17d2e',
+                    600: '#a66423',
+                    700: '#8b4d1f',
+                    800: '#6f3d1d',
+                    900: '#5a321a',
+                    950: '#3d1f0d',
                 },
                 // Neutral colors (refined grays)
                 neutral: {

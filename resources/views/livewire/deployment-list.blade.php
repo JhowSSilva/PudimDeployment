@@ -1,5 +1,5 @@
 <div class="bg-white shadow rounded-lg">
-    <ul role="list" class="divide-y divide-gray-200">
+    <ul role="list" class="divide-y divide-neutral-200">
         @forelse($deployments as $deployment)
             <li class="px-6 py-4">
                 <div class="flex items-center justify-between">
@@ -34,10 +34,10 @@
                             @endif
                             
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-medium text-gray-900 truncate">
+                                <p class="text-sm font-medium text-neutral-900 truncate">
                                     {{ $deployment->site->domain ?? 'Site desconhecido' }}
                                 </p>
-                                <p class="text-sm text-gray-500 truncate">
+                                <p class="text-sm text-neutral-500 truncate">
                                     @if($deployment->commit_message)
                                         {{ Str::limit($deployment->commit_message, 50) }}
                                     @else
@@ -46,8 +46,8 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="mt-2 flex items-center text-xs text-gray-500">
-                            <svg class="mr-1.5 h-4 w-4 flex-shrink-0 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <div class="mt-2 flex items-center text-xs text-neutral-500">
+                            <svg class="mr-1.5 h-4 w-4 flex-shrink-0 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                             </svg>
                             {{ $deployment->user->name ?? 'Sistema' }}
@@ -65,7 +65,7 @@
                             @elseif($deployment->status === 'failed') bg-red-100 text-red-800
                             @elseif($deployment->status === 'running') bg-blue-100 text-blue-800
                             @elseif($deployment->status === 'pending') bg-yellow-100 text-yellow-800
-                            @else bg-gray-100 text-gray-800
+                            @else bg-neutral-100 text-neutral-800
                             @endif">
                             {{ ucfirst($deployment->status) }}
                         </span>
@@ -74,18 +74,18 @@
             </li>
         @empty
             <li class="px-6 py-12 text-center">
-                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg class="mx-auto h-12 w-12 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                <h3 class="mt-2 text-sm font-semibold text-gray-900">Nenhum deployment</h3>
-                <p class="mt-1 text-sm text-gray-500">Comece fazendo deploy de um site.</p>
+                <h3 class="mt-2 text-sm font-semibold text-neutral-900">Nenhum deployment</h3>
+                <p class="mt-1 text-sm text-neutral-500">Comece fazendo deploy de um site.</p>
             </li>
         @endforelse
     </ul>
 
     @if($deployments->count() > 0)
-        <div class="bg-gray-50 px-6 py-3">
-            <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+        <div class="bg-neutral-50 px-6 py-3">
+            <a href="#" class="text-sm font-medium text-primary-600 hover:text-primary-500">
                 Ver todos os deployments
                 <span aria-hidden="true"> &rarr;</span>
             </a>

@@ -14,8 +14,8 @@
             <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mb-4"></div>
             
             <!-- Loading text -->
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Validando Credenciais</h3>
-            <p class="text-gray-600 text-sm">Aguarde enquanto verificamos suas credenciais...</p>
+            <h3 class="text-lg font-semibold text-neutral-900 mb-2">Validando Credenciais</h3>
+            <p class="text-neutral-600 text-sm">Aguarde enquanto verificamos suas credenciais...</p>
         </div>
     </div>
 

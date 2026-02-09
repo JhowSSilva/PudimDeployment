@@ -17,14 +17,14 @@ $latestMetric = $server->latestMetric();
                 @endif
             </div>
             <div>
-                <h3 class="text-lg font-semibold text-gray-900">{{ $server->name }}</h3>
-                <p class="text-sm text-gray-500">{{ $server->ip_address }}{{ $server->os_type ? ' • ' . $server->os_type . ' ' . $server->os_version : '' }}</p>
+                <h3 class="text-lg font-semibold text-neutral-900">{{ $server->name }}</h3>
+                <p class="text-sm text-neutral-500">{{ $server->ip_address }}{{ $server->os_type ? ' • ' . $server->os_type . ' ' . $server->os_version : '' }}</p>
             </div>
         </div>
         <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium 
             @if($server->status === 'online') bg-green-100 text-green-800
             @elseif($server->status === 'offline') bg-red-100 text-red-800
-            @else bg-gray-100 text-gray-800
+            @else bg-neutral-100 text-neutral-800
             @endif">
             {{ ucfirst($server->status) }}
         </span>
@@ -35,7 +35,7 @@ $latestMetric = $server->latestMetric();
             <!-- CPU -->
             <div>
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-medium text-gray-500">CPU</span>
+                    <span class="text-xs font-medium text-neutral-500">CPU</span>
                     <span class="text-xs font-semibold 
                         @if($latestMetric->cpu_usage > 80) text-red-600
                         @elseif($latestMetric->cpu_usage > 60) text-yellow-600
@@ -44,7 +44,7 @@ $latestMetric = $server->latestMetric();
                         {{ number_format($latestMetric->cpu_usage, 1) }}%
                     </span>
                 </div>
-                <div class="mt-2 w-full bg-gray-200 rounded-full h-2">
+                <div class="mt-2 w-full bg-neutral-200 rounded-full h-2">
                     <div class="h-2 rounded-full 
                         @if($latestMetric->cpu_usage > 80) bg-red-600
                         @elseif($latestMetric->cpu_usage > 60) bg-yellow-600
@@ -57,7 +57,7 @@ $latestMetric = $server->latestMetric();
             <!-- RAM -->
             <div>
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-medium text-gray-500">RAM</span>
+                    <span class="text-xs font-medium text-neutral-500">RAM</span>
                     <span class="text-xs font-semibold 
                         @if($latestMetric->memory_usage_percentage > 80) text-red-600
                         @elseif($latestMetric->memory_usage_percentage > 60) text-yellow-600
@@ -66,7 +66,7 @@ $latestMetric = $server->latestMetric();
                         {{ number_format($latestMetric->memory_usage_percentage, 1) }}%
                     </span>
                 </div>
-                <div class="mt-2 w-full bg-gray-200 rounded-full h-2">
+                <div class="mt-2 w-full bg-neutral-200 rounded-full h-2">
                     <div class="h-2 rounded-full 
                         @if($latestMetric->memory_usage_percentage > 80) bg-red-600
                         @elseif($latestMetric->memory_usage_percentage > 60) bg-yellow-600
@@ -79,7 +79,7 @@ $latestMetric = $server->latestMetric();
             <!-- Disk -->
             <div>
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-medium text-gray-500">Disco</span>
+                    <span class="text-xs font-medium text-neutral-500">Disco</span>
                     <span class="text-xs font-semibold 
                         @if($latestMetric->disk_usage_percentage > 80) text-red-600
                         @elseif($latestMetric->disk_usage_percentage > 60) text-yellow-600
@@ -88,7 +88,7 @@ $latestMetric = $server->latestMetric();
                         {{ number_format($latestMetric->disk_usage_percentage, 1) }}%
                     </span>
                 </div>
-                <div class="mt-2 w-full bg-gray-200 rounded-full h-2">
+                <div class="mt-2 w-full bg-neutral-200 rounded-full h-2">
                     <div class="h-2 rounded-full 
                         @if($latestMetric->disk_usage_percentage > 80) bg-red-600
                         @elseif($latestMetric->disk_usage_percentage > 60) bg-yellow-600
@@ -99,13 +99,13 @@ $latestMetric = $server->latestMetric();
             </div>
         </div>
 
-        <div class="mt-4 flex items-center justify-between text-xs text-gray-500">
+        <div class="mt-4 flex items-center justify-between text-xs text-neutral-500">
             <span>Uptime: {{ $latestMetric->uptime_human }}</span>
             <span>Última atualização: {{ $latestMetric->created_at->diffForHumans() }}</span>
         </div>
     @else
         <div class="text-center py-4">
-            <p class="text-sm text-gray-500">Nenhuma métrica disponível</p>
+            <p class="text-sm text-neutral-500">Nenhuma métrica disponível</p>
         </div>
     @endif
 </div>

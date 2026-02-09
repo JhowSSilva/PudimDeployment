@@ -1,10 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
-  <!-- Main paw -->
-  <ellipse cx="24" cy="32" rx="10" ry="12" fill="#FF6B6B" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="pawGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c17d2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b4d1f;stop-opacity:1" />
+    </linearGradient>
+  </defs>
   
-  <!-- Toes -->
-  <ellipse cx="14" cy="18" rx="5" ry="7" fill="#FF6B6B" />
-  <ellipse cx="24" cy="15" rx="5" ry="7" fill="#FF6B6B" />
-  <ellipse cx="34" cy="18" rx="5" ry="7" fill="#FF6B6B" />
-  <ellipse cx="18" cy="25" rx="4.5" ry="6" fill="#FF6B6B" />
+  <!-- Almofada superior esquerda -->
+  <ellipse cx="20" cy="18" rx="7" ry="9" fill="url(#pawGradient)"/>
+  
+  <!-- Almofada superior central -->
+  <ellipse cx="32" cy="14" rx="7" ry="9" fill="url(#pawGradient)"/>
+  
+  <!-- Almofada superior direita -->
+  <ellipse cx="44" cy="18" rx="7" ry="9" fill="url(#pawGradient)"/>
+  
+  <!-- Almofada principal (maior) -->
+  <ellipse cx="32" cy="38" rx="16" ry="20" fill="url(#pawGradient)"/>
+  
+  <!-- Detalhes de sombra -->
+  <ellipse cx="20" cy="19" rx="4" ry="5" fill="#6f3d1d" opacity="0.3"/>
+  <ellipse cx="32" cy="15" rx="4" ry="5" fill="#6f3d1d" opacity="0.3"/>
+  <ellipse cx="44" cy="19" rx="4" ry="5" fill="#6f3d1d" opacity="0.3"/>
+  <ellipse cx="32" cy="40" rx="11" ry="14" fill="#6f3d1d" opacity="0.2"/>
 </svg>

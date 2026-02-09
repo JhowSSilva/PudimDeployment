@@ -21,7 +21,7 @@
          x-transition:leave="ease-in duration-200"
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
-         class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+         class="fixed inset-0 bg-neutral-500 bg-opacity-75 transition-opacity"></div>
 
     <div x-show="show" class="fixed inset-0 z-10 overflow-y-auto">
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -42,9 +42,9 @@
                         </svg>
                     </div>
                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                        <h3 class="text-base font-semibold leading-6 text-gray-900">{{ $title }}</h3>
+                        <h3 class="text-base font-semibold leading-6 text-neutral-900">{{ $title }}</h3>
                         <div class="mt-2">
-                            <p class="text-sm text-gray-500">{{ $message }}</p>
+                            <p class="text-sm text-neutral-500">{{ $message }}</p>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                     <button type="submit" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">
                         {{ $confirmText }}
                     </button>
-                    <button type="button" @click="show = false" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">
+                    <button type="button" @click="show = false" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-neutral-900 shadow-sm ring-1 ring-inset ring-neutral-300 hover:bg-neutral-50 sm:mt-0 sm:w-auto">
                         {{ $cancelText }}
                     </button>
                 </form>

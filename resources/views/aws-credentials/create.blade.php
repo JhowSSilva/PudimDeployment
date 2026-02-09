@@ -24,7 +24,7 @@
 
                 <div class="space-y-4">
                     <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
+                        <label for="name" class="block text-sm font-medium text-neutral-700 mb-1">
                             Nome da Credencial *
                         </label>
                         <input 
@@ -32,7 +32,7 @@
                             name="name" 
                             id="name"
                             value="{{ old('name') }}"
-                            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('name') border-red-500 @enderror"
+                            class="w-full border border-neutral-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('name') border-red-500 @enderror"
                             placeholder="Produção AWS"
                             required
                         >
@@ -42,7 +42,7 @@
                     </div>
 
                     <div>
-                        <label for="access_key_id" class="block text-sm font-medium text-gray-700 mb-1">
+                        <label for="access_key_id" class="block text-sm font-medium text-neutral-700 mb-1">
                             AWS Access Key ID *
                         </label>
                         <input 
@@ -50,7 +50,7 @@
                             name="access_key_id" 
                             id="access_key_id"
                             value="{{ old('access_key_id') }}"
-                            class="w-full border border-gray-300 rounded px-3 py-2 font-mono text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('access_key_id') border-red-500 @enderror"
+                            class="w-full border border-neutral-300 rounded px-3 py-2 font-mono text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('access_key_id') border-red-500 @enderror"
                             placeholder="AKIAIOSFODNN7EXAMPLE"
                             required
                         >
@@ -60,7 +60,7 @@
                     </div>
 
                     <div>
-                        <label for="secret_access_key" class="block text-sm font-medium text-gray-700 mb-1">
+                        <label for="secret_access_key" class="block text-sm font-medium text-neutral-700 mb-1">
                             AWS Secret Access Key *
                         </label>
                         <input 
@@ -68,7 +68,7 @@
                             name="secret_access_key" 
                             id="secret_access_key"
                             value="{{ old('secret_access_key') }}"
-                            class="w-full border border-gray-300 rounded px-3 py-2 font-mono text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('secret_access_key') border-red-500 @enderror"
+                            class="w-full border border-neutral-300 rounded px-3 py-2 font-mono text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('secret_access_key') border-red-500 @enderror"
                             placeholder="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
                             required
                         >
@@ -78,13 +78,13 @@
                     </div>
 
                     <div>
-                        <label for="default_region" class="block text-sm font-medium text-gray-700 mb-1">
+                        <label for="default_region" class="block text-sm font-medium text-neutral-700 mb-1">
                             Região Padrão *
                         </label>
                         <select 
                             name="default_region" 
                             id="default_region"
-                            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('default_region') border-red-500 @enderror"
+                            class="w-full border border-neutral-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('default_region') border-red-500 @enderror"
                             required
                         >
                             <option value="">Selecione uma região</option>
@@ -100,14 +100,14 @@
                     </div>
 
                     <div>
-                        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">
+                        <label for="description" class="block text-sm font-medium text-neutral-700 mb-1">
                             Descrição (opcional)
                         </label>
                         <textarea 
                             name="description" 
                             id="description"
                             rows="3"
-                            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('description') border-red-500 @enderror"
+                            class="w-full border border-neutral-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('description') border-red-500 @enderror"
                             placeholder="Conta AWS para ambiente de produção"
                         >{{ old('description') }}</textarea>
                         @error('description')
@@ -125,7 +125,7 @@
                     </button>
                     <a 
                         href="{{ route('aws-credentials.index') }}" 
-                        class="flex-1 text-center bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded font-medium"
+                        class="flex-1 text-center bg-neutral-100 hover:bg-neutral-200 text-neutral-700 px-4 py-2 rounded font-medium"
                     >
                         Cancelar
                     </a>

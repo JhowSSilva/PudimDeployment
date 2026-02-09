@@ -1,6 +1,6 @@
 <div class="bg-white rounded-lg shadow p-6">
     <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold text-gray-900">Security Alerts</h3>
+        <h3 class="text-lg font-semibold text-neutral-900">Security Alerts</h3>
         <button wire:click="refresh" class="text-blue-600 hover:text-blue-800">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
@@ -10,7 +10,7 @@
 
     <!-- Security Threats -->
     <div class="mb-6">
-        <h4 class="text-sm font-semibold text-gray-700 mb-3">Recent Threats (Last 24h)</h4>
+        <h4 class="text-sm font-semibold text-neutral-700 mb-3">Recent Threats (Last 24h)</h4>
         @if(count($threats) > 0)
             <div class="space-y-2">
                 @foreach($threats as $threat)
@@ -38,7 +38,7 @@
                 @endforeach
             </div>
         @else
-            <p class="text-sm text-gray-500 bg-gray-50 rounded-lg p-4 text-center">
+            <p class="text-sm text-neutral-500 bg-neutral-50 rounded-lg p-4 text-center">
                 ✓ No threats detected in the last 24 hours
             </p>
         @endif
@@ -46,18 +46,18 @@
 
     <!-- Blocked IPs -->
     <div>
-        <h4 class="text-sm font-semibold text-gray-700 mb-3">Blocked IPs</h4>
+        <h4 class="text-sm font-semibold text-neutral-700 mb-3">Blocked IPs</h4>
         @if(count($blockedIps) > 0)
             <div class="space-y-2">
                 @foreach($blockedIps as $ip)
-                    <div class="flex items-center justify-between p-3 bg-gray-50 border border-gray-200 rounded-lg">
+                    <div class="flex items-center justify-between p-3 bg-neutral-50 border border-neutral-200 rounded-lg">
                         <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>
                             </svg>
                             <div>
-                                <div class="text-sm font-medium text-gray-900">{{ $ip->ip_address }}</div>
-                                <div class="text-xs text-gray-500">
+                                <div class="text-sm font-medium text-neutral-900">{{ $ip->ip_address }}</div>
+                                <div class="text-xs text-neutral-500">
                                     Blocked {{ \Carbon\Carbon::parse($ip->blocked_at)->diffForHumans() }}
                                     @if($ip->reason)
                                         · {{ $ip->reason }}
@@ -74,7 +74,7 @@
                 @endforeach
             </div>
         @else
-            <p class="text-sm text-gray-500 bg-gray-50 rounded-lg p-4 text-center">
+            <p class="text-sm text-neutral-500 bg-neutral-50 rounded-lg p-4 text-center">
                 No IPs are currently blocked
             </p>
         @endif

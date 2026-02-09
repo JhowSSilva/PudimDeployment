@@ -12,14 +12,14 @@
                 placeholder="Escreva um comentário... (use @ para mencionar alguém)"
                 required
                 maxlength="5000"
-                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+                class="w-full rounded-md border-neutral-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
                 oninput="updateCharCount(this)"
             ></textarea>
             <div class="flex items-center justify-between mt-1">
-                <span class="text-xs text-gray-500">
+                <span class="text-xs text-neutral-500">
                     Use @nome para mencionar membros da equipe
                 </span>
-                <span class="char-count text-xs text-gray-500">0 / 5000</span>
+                <span class="char-count text-xs text-neutral-500">0 / 5000</span>
             </div>
         </div>
 
@@ -34,7 +34,7 @@
                 <button 
                     type="button"
                     onclick="toggleReplyForm({{ $parentId }})"
-                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded transition"
+                    class="px-4 py-2 text-sm font-medium text-neutral-700 bg-neutral-100 hover:bg-neutral-200 rounded transition"
                 >
                     Cancelar
                 </button>

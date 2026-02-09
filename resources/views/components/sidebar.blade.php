@@ -26,15 +26,19 @@
            class="fixed top-0 left-0 z-50 w-72 h-screen bg-neutral-900 border-r border-neutral-800 transition-transform duration-300 ease-in-out lg:translate-x-0 flex flex-col overflow-hidden">
         
         <!-- Logo & Branding -->
-        <div class="flex items-center gap-3 px-6 py-5 border-b border-neutral-800">
-            <div class="w-10 h-10 bg-gradient-to-br from-amber-600 to-amber-700 rounded-lg flex items-center justify-center shadow-lg">
-                <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8.75 2c-.69 0-1.25.56-1.25 1.25v2.5c0 .69.56 1.25 1.25 1.25s1.25-.56 1.25-1.25v-2.5C10 2.56 9.44 2 8.75 2zM15.25 2c-.69 0-1.25.56-1.25 1.25v2.5c0 .69.56 1.25 1.25 1.25S16.5 6.44 16.5 5.75v-2.5C16.5 2.56 15.94 2 15.25 2zM5 5.75c-.69 0-1.25.56-1.25 1.25V9.5c0 .69.56 1.25 1.25 1.25S6.25 10.19 6.25 9.5V7c0-.69-.56-1.25-1.25-1.25zm14 0c-.69 0-1.25.56-1.25 1.25V9.5c0 .69.56 1.25 1.25 1.25S20.25 10.19 20.25 9.5V7c0-.69-.56-1.25-1.25-1.25zM12 8c-2.76 0-5 2.24-5 5v4c0 1.66 1.34 3 3 3h4c1.66 0 3-1.34 3-3v-4c0-2.76-2.24-5-5-5z"/>
+        <div class="flex items-center gap-3 px-6 py-5 border-b border-neutral-700 dark:border-neutral-800">
+            <div class="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl flex items-center justify-center shadow-lg shadow-primary-600/20">
+                <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C10.9 2 10 2.9 10 4C10 4.3 10.1 4.6 10.2 4.9C8.9 5.5 8 6.7 8 8.1C8 9 8.4 9.8 9 10.3C8.4 10.8 8 11.5 8 12.4C8 13.1 8.3 13.7 8.7 14.2C7.7 14.9 7 16 7 17.3C7 19.3 8.7 21 10.7 21C11.1 21 11.5 20.9 11.9 20.8C12.2 20.9 12.6 21 13 21C15.2 21 17 19.2 17 17C17 15.9 16.5 14.9 15.7 14.2C16.1 13.7 16.4 13.1 16.4 12.4C16.4 11.5 16 10.8 15.4 10.3C16 9.8 16.4 9 16.4 8.1C16.4 6.7 15.5 5.5 14.2 4.9C14.3 4.6 14.4 4.3 14.4 4C14.4 2.9 13.5 2 12.4 2H12Z"/>
+                    <ellipse cx="10" cy="8" rx="1.2" ry="1.5" fill="white" opacity="0.3"/>
+                    <ellipse cx="14" cy="8" rx="1.2" ry="1.5" fill="white" opacity="0.3"/>
+                    <ellipse cx="9" cy="13" rx="1.2" ry="1.5" fill="white" opacity="0.3"/>
+                    <ellipse cx="15" cy="13" rx="1.2" ry="1.5" fill="white" opacity="0.3"/>
                 </svg>
             </div>
             <div>
-                <h1 class="text-base font-bold text-white">Pudim Deployment</h1>
-                <p class="text-xs text-amber-600">Cloud Management</p>
+                <h1 class="text-lg font-bold text-primary-600 dark:text-primary-400">Pudim Deployment</h1>
+                <p class="text-xs text-primary-700 dark:text-primary-500 font-medium">Cloud Management Platform</p>
             </div>
         </div>
 

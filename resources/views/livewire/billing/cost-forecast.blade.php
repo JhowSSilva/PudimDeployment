@@ -1,6 +1,6 @@
 <div class="bg-white rounded-lg shadow p-6">
     <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold text-gray-900">Cost Forecast</h3>
+        <h3 class="text-lg font-semibold text-neutral-900">Cost Forecast</h3>
         <button wire:click="refresh" class="text-blue-600 hover:text-blue-800">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
@@ -58,11 +58,11 @@
 
         <!-- Server Breakdown -->
         @if(isset($forecast['breakdown']) && count($forecast['breakdown']) > 0)
-            <div class="border-t border-gray-200 pt-4">
-                <h4 class="text-sm font-semibold text-gray-700 mb-3">Cost Breakdown by Server</h4>
+            <div class="border-t border-neutral-200 pt-4">
+                <h4 class="text-sm font-semibold text-neutral-700 mb-3">Cost Breakdown by Server</h4>
                 <div class="space-y-2">
                     @foreach($forecast['breakdown'] as $serverCost)
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div class="flex items-center justify-between p-3 bg-neutral-50 rounded-lg">
                             <div class="flex items-center space-x-3">
                                 <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,15 +70,15 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <div class="text-sm font-medium text-gray-900">{{ $serverCost['server_name'] }}</div>
-                                    <div class="text-xs text-gray-500">{{ $serverCost['provider'] ?? 'Custom' }}</div>
+                                    <div class="text-sm font-medium text-neutral-900">{{ $serverCost['server_name'] }}</div>
+                                    <div class="text-xs text-neutral-500">{{ $serverCost['provider'] ?? 'Custom' }}</div>
                                 </div>
                             </div>
                             <div class="text-right">
-                                <div class="text-sm font-semibold text-gray-900">
+                                <div class="text-sm font-semibold text-neutral-900">
                                     ${{ number_format($serverCost['cost'], 2) }}
                                 </div>
-                                <div class="text-xs text-gray-500">
+                                <div class="text-xs text-neutral-500">
                                     per month
                                 </div>
                             </div>

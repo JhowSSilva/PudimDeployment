@@ -4,12 +4,12 @@
         <div class="mb-8">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-3xl font-bold bg-gradient-to-r from-turquoise-600 to-turquoise-500 bg-clip-text text-transparent">
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent">
                         {{ $team->name }}
                     </h1>
-                    <p class="text-gray-600 mt-2">{{ $team->description }}</p>
+                    <p class="text-neutral-600 mt-2">{{ $team->description }}</p>
                 </div>
-                <a href="{{ route('profile.edit') }}" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-all">
+                <a href="{{ route('profile.edit') }}" class="px-4 py-2 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-lg transition-all">
                     ← Voltar
                 </a>
             </div>
@@ -29,22 +29,22 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Invite Member Card -->
             @can('update', $team)
-                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-6">
-                    <h2 class="text-xl font-bold text-gray-900 mb-4">Convidar Membro</h2>
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-neutral-200 p-6">
+                    <h2 class="text-xl font-bold text-neutral-900 mb-4">Convidar Membro</h2>
                     
                     <form action="{{ route('teams.invite', $team) }}" method="POST">
                         @csrf
 
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                                <input type="email" name="email" required placeholder="usuario@exemplo.com" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-turquoise-500">
-                                <p class="text-xs text-gray-500 mt-1">Enviaremos um convite por e-mail</p>
+                                <label class="block text-sm font-medium text-neutral-700 mb-2">Email</label>
+                                <input type="email" name="email" required placeholder="usuario@exemplo.com" class="w-full px-4 py-2 rounded-lg border border-neutral-300 focus:ring-2 focus:ring-primary-500">
+                                <p class="text-xs text-neutral-500 mt-1">Enviaremos um convite por e-mail</p>
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Função</label>
-                                <select name="role" required class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-turquoise-500">
+                                <label class="block text-sm font-medium text-neutral-700 mb-2">Função</label>
+                                <select name="role" required class="w-full px-4 py-2 rounded-lg border border-neutral-300 focus:ring-2 focus:ring-primary-500">
                                     <option value="viewer">Visualizador - Apenas visualizar</option>
                                     <option value="member" selected>Membro - Criar e editar recursos</option>
                                     <option value="manager">Gerente - Gerenciar recursos e membros</option>
@@ -52,7 +52,7 @@
                                 </select>
                             </div>
 
-                            <button type="submit" class="w-full px-4 py-2 bg-gradient-to-r from-turquoise-500 to-turquoise-600 hover:from-turquoise-600 hover:to-turquoise-700 text-white font-semibold rounded-lg shadow-lg transition-all">
+                            <button type="submit" class="w-full px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-semibold rounded-lg shadow-lg transition-all">
                                 Enviar Convite
                             </button>
                         </div>
@@ -62,9 +62,9 @@
 
             <!-- Team Members List -->
             <div class="lg:col-span-2">
-                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-6">
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-neutral-200 p-6">
                     <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-xl font-bold text-gray-900">Membros ({{ $team->users->count() + 1 }})</h2>
+                        <h2 class="text-xl font-bold text-neutral-900">Membros ({{ $team->users->count() + 1 }})</h2>
                         @can('update', $team)
                             @php
                                 $pendingInvites = \App\Models\TeamInvitation::where('team_id', $team->id)
@@ -72,7 +72,7 @@
                                     ->count();
                             @endphp
                             @if($pendingInvites > 0)
-                                <span class="text-sm text-gray-600">{{ $pendingInvites }} convite(s) pendente(s)</span>
+                                <span class="text-sm text-neutral-600">{{ $pendingInvites }} convite(s) pendente(s)</span>
                             @endif
                         @endcan
                     </div>
@@ -85,8 +85,8 @@
                                     {{ strtoupper(substr($team->owner->name, 0, 1)) }}
                                 </div>
                                 <div>
-                                    <div class="font-semibold text-gray-900">{{ $team->owner->name }}</div>
-                                    <div class="text-sm text-gray-600">{{ $team->owner->email }}</div>
+                                    <div class="font-semibold text-neutral-900">{{ $team->owner->name }}</div>
+                                    <div class="text-sm text-neutral-600">{{ $team->owner->email }}</div>
                                 </div>
                             </div>
                             <span class="px-3 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">
@@ -96,14 +96,14 @@
 
                         <!-- Members -->
                         @foreach($team->users as $member)
-                            <div class="flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg hover:shadow-md transition-all">
+                            <div class="flex items-center justify-between p-4 bg-neutral-50 border border-neutral-200 rounded-lg hover:shadow-md transition-all">
                                 <div class="flex items-center">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-turquoise-500 to-turquoise-600 text-white font-bold mr-3">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-primary-500 to-primary-600 text-white font-bold mr-3">
                                         {{ strtoupper(substr($member->name, 0, 1)) }}
                                     </div>
                                     <div>
-                                        <div class="font-semibold text-gray-900">{{ $member->name }}</div>
-                                        <div class="text-sm text-gray-600">{{ $member->email }}</div>
+                                        <div class="font-semibold text-neutral-900">{{ $member->name }}</div>
+                                        <div class="text-sm text-neutral-600">{{ $member->email }}</div>
                                     </div>
                                 </div>
 
@@ -112,7 +112,7 @@
                                         <form action="{{ route('teams.members.update', [$team, $member]) }}" method="POST" class="inline">
                                             @csrf
                                             @method('PUT')
-                                            <select name="role" onchange="this.form.submit()" class="px-3 py-1 text-sm rounded-lg border border-gray-300 focus:ring-2 focus:ring-turquoise-500">
+                                            <select name="role" onchange="this.form.submit()" class="px-3 py-1 text-sm rounded-lg border border-neutral-300 focus:ring-2 focus:ring-primary-500">
                                                 <option value="viewer" {{ $member->pivot->role === 'viewer' ? 'selected' : '' }}>Visualizador</option>
                                                 <option value="member" {{ $member->pivot->role === 'member' ? 'selected' : '' }}>Membro</option>
                                                 <option value="manager" {{ $member->pivot->role === 'manager' ? 'selected' : '' }}>Gerente</option>
@@ -132,7 +132,7 @@
                                             @if($member->pivot->role === 'admin') bg-red-100 text-red-800
                                             @elseif($member->pivot->role === 'manager') bg-blue-100 text-blue-800
                                             @elseif($member->pivot->role === 'member') bg-green-100 text-green-800
-                                            @else bg-gray-100 text-gray-800
+                                            @else bg-neutral-100 text-neutral-800
                                             @endif">
                                             {{ ucfirst($member->pivot->role) }}
                                         </span>
@@ -142,12 +142,12 @@
                         @endforeach
 
                         @if($team->users->count() === 0)
-                            <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-8 text-center">
-                                <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="bg-neutral-50 border-2 border-dashed border-neutral-300 rounded-xl p-8 text-center">
+                                <svg class="w-16 h-16 mx-auto text-neutral-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                                 </svg>
-                                <p class="text-gray-600 font-medium">Nenhum membro ainda</p>
-                                <p class="text-gray-500 text-sm mt-2">Convide pessoas para colaborar com você</p>
+                                <p class="text-neutral-600 font-medium">Nenhum membro ainda</p>
+                                <p class="text-neutral-500 text-sm mt-2">Convide pessoas para colaborar com você</p>
                             </div>
                         @endif
                     </div>

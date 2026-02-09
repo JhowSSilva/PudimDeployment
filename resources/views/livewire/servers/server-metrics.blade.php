@@ -1,6 +1,6 @@
 <div class="bg-white rounded-lg shadow p-6">
     <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold text-gray-900">Server Metrics</h3>
+        <h3 class="text-lg font-semibold text-neutral-900">Server Metrics</h3>
         <button wire:click="refresh" class="text-blue-600 hover:text-blue-800">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
@@ -72,22 +72,22 @@
         </div>
 
         @if(isset($metrics['active_connections']))
-        <div class="mt-4 pt-4 border-t border-gray-200">
+        <div class="mt-4 pt-4 border-t border-neutral-200">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
-                    <span class="text-gray-600">Active Connections:</span>
+                    <span class="text-neutral-600">Active Connections:</span>
                     <span class="font-semibold ml-2">{{ $metrics['active_connections'] }}</span>
                 </div>
                 <div>
-                    <span class="text-gray-600">Uptime:</span>
+                    <span class="text-neutral-600">Uptime:</span>
                     <span class="font-semibold ml-2">{{ $metrics['uptime'] ?? 'N/A' }}</span>
                 </div>
                 <div>
-                    <span class="text-gray-600">Network In:</span>
+                    <span class="text-neutral-600">Network In:</span>
                     <span class="font-semibold ml-2">{{ $metrics['network_in'] ?? 'N/A' }}</span>
                 </div>
                 <div>
-                    <span class="text-gray-600">Network Out:</span>
+                    <span class="text-neutral-600">Network Out:</span>
                     <span class="font-semibold ml-2">{{ $metrics['network_out'] ?? 'N/A' }}</span>
                 </div>
             </div>

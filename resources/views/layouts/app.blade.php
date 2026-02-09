@@ -22,12 +22,12 @@
         @stack('styles')
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div class="min-h-screen bg-neutral-100 dark:bg-neutral-900">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
+                <header class="bg-white dark:bg-neutral-800 shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
@@ -42,9 +42,9 @@
         
         <!-- Modal for server/site selection -->
         <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4 max-h-96 overflow-y-auto">
+            <div class="bg-white dark:bg-neutral-800 rounded-lg p-6 max-w-md w-full mx-4 max-h-96 overflow-y-auto">
                 <div class="flex justify-between items-center mb-4">
-                    <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100">
+                    <button onclick="closeModal()" class="text-neutral-400 hover:text-neutral-600 dark:text-neutral-300 dark:hover:text-neutral-100">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>

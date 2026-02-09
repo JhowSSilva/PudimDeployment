@@ -52,7 +52,7 @@
 
             <div class="bg-white rounded-lg shadow p-8">
                 <h2 class="text-2xl font-bold mb-2">Revisar Configuração</h2>
-                <p class="text-gray-600 mb-6">Confirme os detalhes antes de provisionar o servidor</p>
+                <p class="text-neutral-600 mb-6">Confirme os detalhes antes de provisionar o servidor</p>
 
                 <form action="{{ route('aws-provision.provision') }}" method="POST">
                     @csrf
@@ -73,7 +73,7 @@
 
                     <!-- Server Name -->
                     <div class="mb-6">
-                        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                        <label for="name" class="block text-sm font-medium text-neutral-700 mb-2">
                             Nome do Servidor *
                         </label>
                         <input 
@@ -81,7 +81,7 @@
                             name="name" 
                             id="name"
                             value="{{ old('name') }}"
-                            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            class="w-full border border-neutral-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                             placeholder="app-production-01"
                             required
                         >
@@ -90,23 +90,23 @@
                     <!-- Configuration Summary -->
                     <div class="space-y-4 mb-6">
                         <!-- AWS -->
-                        <div class="bg-gray-50 rounded-lg p-4">
-                            <h3 class="font-semibold text-gray-900 mb-3">AWS Configuration</h3>
+                        <div class="bg-neutral-50 rounded-lg p-4">
+                            <h3 class="font-semibold text-neutral-900 mb-3">AWS Configuration</h3>
                             <dl class="grid grid-cols-2 gap-3 text-sm">
                                 <div>
-                                    <dt class="text-gray-600">Credencial</dt>
-                                    <dd class="font-medium text-gray-900">{{ $credential->name }}</dd>
+                                    <dt class="text-neutral-600">Credencial</dt>
+                                    <dd class="font-medium text-neutral-900">{{ $credential->name }}</dd>
                                 </div>
                                 <div>
-                                    <dt class="text-gray-600">Região</dt>
-                                    <dd class="font-medium text-gray-900">{{ request('region') }}</dd>
+                                    <dt class="text-neutral-600">Região</dt>
+                                    <dd class="font-medium text-neutral-900">{{ request('region') }}</dd>
                                 </div>
                             </dl>
                         </div>
 
                         <!-- Instance -->
-                        <div class="bg-gray-50 rounded-lg p-4">
-                            <h3 class="font-semibold text-gray-900 mb-3 flex items-center">
+                        <div class="bg-neutral-50 rounded-lg p-4">
+                            <h3 class="font-semibold text-neutral-900 mb-3 flex items-center">
                                 Instance Configuration
                                 @if($instanceType->isGraviton())
                                     <span class="ml-2 px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded">GRAVITON</span>
@@ -114,12 +114,12 @@
                             </h3>
                             <dl class="grid grid-cols-2 gap-3 text-sm">
                                 <div>
-                                    <dt class="text-gray-600">Tipo</dt>
-                                    <dd class="font-medium text-gray-900">{{ $instanceType->name }}</dd>
+                                    <dt class="text-neutral-600">Tipo</dt>
+                                    <dd class="font-medium text-neutral-900">{{ $instanceType->name }}</dd>
                                 </div>
                                 <div>
-                                    <dt class="text-gray-600">Arquitetura</dt>
-                                    <dd class="font-medium text-gray-900">
+                                    <dt class="text-neutral-600">Arquitetura</dt>
+                                    <dd class="font-medium text-neutral-900">
                                         {{ $instanceType->architecture }}
                                         @if($instanceType->isGraviton())
                                             <span class="text-green-600">(40% economia)</span>
@@ -127,35 +127,35 @@
                                     </dd>
                                 </div>
                                 <div>
-                                    <dt class="text-gray-600">vCPU</dt>
-                                    <dd class="font-medium text-gray-900">{{ $instanceType->vcpu }}</dd>
+                                    <dt class="text-neutral-600">vCPU</dt>
+                                    <dd class="font-medium text-neutral-900">{{ $instanceType->vcpu }}</dd>
                                 </div>
                                 <div>
-                                    <dt class="text-gray-600">RAM</dt>
-                                    <dd class="font-medium text-gray-900">{{ $instanceType->memory_gib }} GB</dd>
+                                    <dt class="text-neutral-600">RAM</dt>
+                                    <dd class="font-medium text-neutral-900">{{ $instanceType->memory_gib }} GB</dd>
                                 </div>
                                 <div>
-                                    <dt class="text-gray-600">Disco</dt>
-                                    <dd class="font-medium text-gray-900">{{ request('disk_size') }} GB SSD</dd>
+                                    <dt class="text-neutral-600">Disco</dt>
+                                    <dd class="font-medium text-neutral-900">{{ request('disk_size') }} GB SSD</dd>
                                 </div>
                             </dl>
                         </div>
 
                         <!-- Stack -->
-                        <div class="bg-gray-50 rounded-lg p-4">
-                            <h3 class="font-semibold text-gray-900 mb-3">Software Stack</h3>
+                        <div class="bg-neutral-50 rounded-lg p-4">
+                            <h3 class="font-semibold text-neutral-900 mb-3">Software Stack</h3>
                             <dl class="grid grid-cols-2 gap-3 text-sm">
                                 <div>
-                                    <dt class="text-gray-600">Webserver</dt>
-                                    <dd class="font-medium text-gray-900">{{ strtoupper(request('webserver')) }}</dd>
+                                    <dt class="text-neutral-600">Webserver</dt>
+                                    <dd class="font-medium text-neutral-900">{{ strtoupper(request('webserver')) }}</dd>
                                 </div>
                                 <div>
-                                    <dt class="text-gray-600">PHP</dt>
-                                    <dd class="font-medium text-gray-900">{{ request('php_version') }}</dd>
+                                    <dt class="text-neutral-600">PHP</dt>
+                                    <dd class="font-medium text-neutral-900">{{ request('php_version') }}</dd>
                                 </div>
                                 <div>
-                                    <dt class="text-gray-600">Database</dt>
-                                    <dd class="font-medium text-gray-900">
+                                    <dt class="text-neutral-600">Database</dt>
+                                    <dd class="font-medium text-neutral-900">
                                         @if(request('database') === 'none')
                                             Nenhum
                                         @else
@@ -164,8 +164,8 @@
                                     </dd>
                                 </div>
                                 <div>
-                                    <dt class="text-gray-600">Cache</dt>
-                                    <dd class="font-medium text-gray-900">
+                                    <dt class="text-neutral-600">Cache</dt>
+                                    <dd class="font-medium text-neutral-900">
                                         @if(request('cache') === 'none')
                                             Nenhum
                                         @else
@@ -175,14 +175,14 @@
                                 </div>
                                 @if(request('nodejs'))
                                     <div>
-                                        <dt class="text-gray-600">Node.js</dt>
-                                        <dd class="font-medium text-gray-900">{{ request('nodejs') }}.x</dd>
+                                        <dt class="text-neutral-600">Node.js</dt>
+                                        <dd class="font-medium text-neutral-900">{{ request('nodejs') }}.x</dd>
                                     </div>
                                 @endif
                                 @if(request('extras'))
                                     <div>
-                                        <dt class="text-gray-600">Extras</dt>
-                                        <dd class="font-medium text-gray-900">{{ implode(', ', array_map('ucfirst', request('extras'))) }}</dd>
+                                        <dt class="text-neutral-600">Extras</dt>
+                                        <dd class="font-medium text-neutral-900">{{ implode(', ', array_map('ucfirst', request('extras'))) }}</dd>
                                     </div>
                                 @endif
                             </dl>
@@ -241,7 +241,7 @@
                     </div>
 
                     <div class="flex justify-between items-center pt-6 border-t">
-                        <button type="button" onclick="history.back()" class="text-gray-600 hover:text-gray-800">
+                        <button type="button" onclick="history.back()" class="text-neutral-600 hover:text-neutral-800">
                             ← Voltar
                         </button>
                         <button 

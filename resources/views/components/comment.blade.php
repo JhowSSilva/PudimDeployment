@@ -1,7 +1,7 @@
 @props(['comment', 'depth' => 0])
 
 <div class="comment-item {{ $depth > 0 ? 'ml-12' : '' }}" data-comment-id="{{ $comment->id }}">
-    <div class="flex gap-3 p-4 bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition">
+    <div class="flex gap-3 p-4 bg-white rounded-lg border border-neutral-200 hover:border-neutral-300 transition">
         <!-- Avatar -->
         <div class="flex-shrink-0">
             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold">
@@ -14,10 +14,10 @@
             <!-- Header -->
             <div class="flex items-center justify-between mb-2">
                 <div class="flex items-center gap-2">
-                    <span class="font-medium text-gray-900">{{ $comment->user->name }}</span>
-                    <span class="text-xs text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
+                    <span class="font-medium text-neutral-900">{{ $comment->user->name }}</span>
+                    <span class="text-xs text-neutral-500">{{ $comment->created_at->diffForHumans() }}</span>
                     @if($comment->is_edited)
-                        <span class="text-xs text-gray-400 italic">(editado)</span>
+                        <span class="text-xs text-neutral-400 italic">(editado)</span>
                     @endif
                 </div>
 
@@ -42,7 +42,7 @@
             </div>
 
             <!-- Body -->
-            <div class="comment-body text-sm text-gray-700 whitespace-pre-wrap">{{ $comment->body }}</div>
+            <div class="comment-body text-sm text-neutral-700 whitespace-pre-wrap">{{ $comment->body }}</div>
 
             <!-- Edit Form (hidden by default) -->
             <form 
@@ -53,7 +53,7 @@
                 <textarea 
                     id="edit-textarea-{{ $comment->id }}"
                     rows="3"
-                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+                    class="w-full rounded-md border-neutral-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
                 >{{ $comment->body }}</textarea>
                 <div class="flex items-center gap-2 mt-2">
                     <button 
@@ -65,7 +65,7 @@
                     <button 
                         type="button"
                         onclick="cancelEdit({{ $comment->id }})"
-                        class="px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded transition"
+                        class="px-3 py-1.5 text-xs font-medium text-neutral-700 bg-neutral-100 hover:bg-neutral-200 rounded transition"
                     >
                         Cancelar
                     </button>
@@ -74,7 +74,7 @@
 
             <!-- Mentions -->
             @if(!empty($comment->mentions))
-                <div class="flex items-center gap-1 mt-2 text-xs text-gray-500">
+                <div class="flex items-center gap-1 mt-2 text-xs text-neutral-500">
                     <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
                     </svg>
@@ -155,7 +155,7 @@ function updateComment(event, commentId) {
             const header = document.querySelector(`[data-comment-id="${commentId}"] .flex.items-center.gap-2`);
             if (!header.querySelector('.italic')) {
                 const edited = document.createElement('span');
-                edited.className = 'text-xs text-gray-400 italic';
+                edited.className = 'text-xs text-neutral-400 italic';
                 edited.textContent = '(editado)';
                 header.appendChild(edited);
             }

@@ -56,11 +56,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     Route::resource('servers', ServerWebController::class);
     
-    // Multi-language server routes (AJAX)
+    // Multi-language server routes
     Route::prefix('servers')->name('servers.')->group(function () {
-        Route::get('/languages/versions', [ServerController::class, 'getVersions'])->name('languages.versions');
-        Route::get('{server}/installation-progress', [ServerController::class, 'getInstallationProgress'])->name('installation.progress');
-        Route::post('{server}/validate-installation', [ServerController::class, 'validateInstallation'])->name('installation.validate');
+        Route::get('/create-multi-language', [ServerWebController::class, 'createMultiLanguage'])->name('create-multi-language');
+        Route::get('/language-versions/{language}', [ServerWebController::class, 'getLanguageVersions'])->name('language-versions');
+        Route::get('{server}/installation-progress', [ServerWebController::class, 'getInstallationProgress'])->name('installation.progress');
+        Route::post('{server}/validate-installation', [ServerWebController::class, 'validateInstallation'])->name('installation.validate');
     });
     
     Route::resource('sites', SiteWebController::class);

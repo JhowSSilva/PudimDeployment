@@ -34,7 +34,7 @@
                             <div class="flex flex-wrap gap-2 mb-2">
                                 <span class="px-3 py-1 rounded text-xs font-semibold
                                     {{ $integration->provider === 'slack' ? 'bg-purple-900 text-purple-300' : '' }}
-                                    {{ $integration->provider === 'discord' ? 'bg-indigo-900 text-indigo-300' : '' }}
+                                    {{ $integration->provider === 'discord' ? 'bg-primary-900 text-primary-300' : '' }}
                                     {{ $integration->provider === 'github' ? 'bg-neutral-600 text-neutral-300' : '' }}
                                     {{ $integration->provider === 'gitlab' ? 'bg-orange-900 text-orange-300' : '' }}
                                     {{ $integration->provider === 'email' ? 'bg-blue-900 text-blue-300' : '' }}
