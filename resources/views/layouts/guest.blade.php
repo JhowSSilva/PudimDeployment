@@ -7,8 +7,9 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <link rel="icon" type="image/svg+xml" href="{{ asset('paw.svg') }}">
+        <link rel="icon" type="image/svg+xml" href="{{ asset('paw-v2.svg') }}">
         <link rel="icon" href="{{ asset('favicon.svg') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
         <link rel="alternate icon" href="{{ asset('favicon.ico') }}">
 
         <!-- Fonts -->

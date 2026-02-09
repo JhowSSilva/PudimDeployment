@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Paw icon">
+  <defs>
+    <linearGradient id="pawGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#f59e0b;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="highlight" cx="40%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Toes -->
+  <circle cx="18" cy="17" r="5.2" fill="url(#pawGradient)" />
+  <circle cx="27" cy="12.6" r="5.6" fill="url(#pawGradient)" />
+  <circle cx="36.5" cy="17" r="5.2" fill="url(#pawGradient)" />
+  <circle cx="44.5" cy="21.6" r="4.6" fill="url(#pawGradient)" />
+
+  <!-- Main pad -->
+  <path d="M32 28c-6.2 0-12 4.8-12 10.6 0 6.9 5.6 9.4 12 9.4s12-2.5 12-9.4C44 32.8 38.2 28 32 28z" fill="url(#pawGradient)" />
+
+  <!-- Highlights -->
+  <ellipse cx="25" cy="14" rx="2.6" ry="1.8" fill="url(#highlight)" />
+  <ellipse cx="36" cy="16.2" rx="2.2" ry="1.5" fill="url(#highlight)" />
+  <ellipse cx="32" cy="30.5" rx="7.5" ry="5.2" fill="url(#highlight)" opacity="0.6" />
+
+  <!-- Soft inner shadow -->
+  <ellipse cx="32" cy="34" rx="10.5" ry="7.6" fill="#000" opacity="0.06" />
+</svg>
