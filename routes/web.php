@@ -36,6 +36,7 @@ use App\Http\Controllers\PipelineRunController;
 use App\Http\Controllers\DeploymentStrategyController;
 use App\Http\Controllers\IntegrationController;
 use App\Http\Controllers\DeploymentApprovalController;
+use App\Http\Controllers\InstanceRegistrationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -62,6 +63,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/language-versions/{language}', [ServerWebController::class, 'getLanguageVersions'])->name('language-versions');
         Route::get('{server}/installation-progress', [ServerWebController::class, 'getInstallationProgress'])->name('installation.progress');
         Route::post('{server}/validate-installation', [ServerWebController::class, 'validateInstallation'])->name('installation.validate');
+
+        // Instance registration (manual onboarding)
+        Route::post('/registration-tokens', [InstanceRegistrationController::class, 'store'])->name('registration-tokens.store');
+        Route::get('/bootstrap.sh', [InstanceRegistrationController::class, 'bootstrapScript'])->name('bootstrap');
     });
     
     Route::resource('sites', SiteWebController::class);
@@ -102,6 +107,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/aws/provision/step3', [AWSProvisionController::class, 'step3'])->name('aws-provision.step3');
     Route::post('/aws/provision/step4', [AWSProvisionController::class, 'step4'])->name('aws-provision.step4');
     Route::post('/aws/provision', [AWSProvisionController::class, 'provision'])->name('aws-provision.provision');
+
+    // Cloud provisioning web endpoints (session-authenticated)
+    Route::prefix('cloud/{provider}')->group(function () {
+        Route::get('/credentials', [\App\Http\Controllers\CloudProvisionController::class, 'credentials']);
+        Route::get('/regions', [\App\Http\Controllers\CloudProvisionController::class, 'regions']);
+        Route::get('/instance-types', [\App\Http\Controllers\CloudProvisionController::class, 'instanceTypes']);
+        Route::post('/provision', [\App\Http\Controllers\CloudProvisionController::class, 'provision']);
+    });
     
     // Azure Credentials
     Route::resource('azure-credentials', AzureCredentialController::class);

@@ -104,6 +104,95 @@
                         <p class="mt-1 text-sm text-error-400">{{ $message }}</p>
                     @enderror
                 </div>
+
+                <!-- Manual registration option -->
+                <div class="border-t pt-4">
+                    <h4 class="text-sm font-medium text-neutral-100 mb-2">Registrar instância existente</h4>
+                    <p class="text-sm text-neutral-400 mb-3">Deseja registrar uma máquina que você já possui? Gere um comando seguro e execute na instância. O script criará um usuário sudo, gerará as chaves e fará o registro automaticamente.</p>
+
+                    <div class="grid grid-cols-3 gap-3 items-center">
+                        <div class="col-span-2">
+                            <label for="deploy_user_input" class="block text-sm font-medium text-neutral-300">Nome do usuário sudo</label>
+                            <input id="deploy_user_input" type="text" value="deploy" class="mt-1 block w-full rounded-md border-neutral-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm">
+                        </div>
+                        <div class="flex items-end">
+                            <button id="generate-bootstrap" type="button" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">Gerar comando</button>
+                        </div>
+                    </div>
+
+                    <div id="bootstrap-result" class="mt-4 hidden">
+                        <label class="block text-sm font-medium text-neutral-300">Comando (execute na sua instância como root)</label>
+                        <div class="mt-2 relative bg-neutral-900 border border-neutral-700 rounded-md p-3">
+                            <pre id="bootstrap-command" class="whitespace-pre-wrap text-sm text-neutral-200"></pre>
+                            <button id="copy-bootstrap" class="absolute right-2 top-2 inline-flex items-center px-2 py-1 bg-primary-600 text-white rounded text-sm">Copiar</button>
+                        </div>
+                        <p id="bootstrap-error" class="mt-2 text-sm text-error-400 hidden"></p>
+                        <p class="text-xs text-neutral-500 mt-2">O comando baixa e executa um script seguro via HTTPS. O token expira em 24 horas e pode ser usado uma única vez.</p>
+                    </div>
+
+                    <!-- Provision from Cloud -->
+                    <div class="border-t pt-4 mt-6">
+                        <h4 class="text-sm font-medium text-neutral-100 mb-2">Criar a partir da sua conta na nuvem</h4>
+                        <p class="text-sm text-neutral-400 mb-3">Conecte suas credenciais e crie VMs diretamente na sua conta (AWS / GCP / Azure). Você poderá escolher arquitetura (arm/x86), região e tipo de instância.</p>
+
+                        <div class="grid grid-cols-3 gap-3 items-center">
+                            <div>
+                                <label class="block text-sm font-medium text-neutral-300">Provider</label>
+                                <select id="cloud-provider" class="mt-1 block w-full rounded-md border-neutral-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm">
+                                    <option value="">Selecione um provider</option>
+                                    <option value="aws">AWS</option>
+                                    <option value="gcp">GCP</option>
+                                    <option value="azure">Azure</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-neutral-300">Credencial</label>
+                                <select id="cloud-credential" class="mt-1 block w-full rounded-md border-neutral-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm">
+                                    <option value="">Selecione credencial</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-neutral-300">Região</label>
+                                <select id="cloud-region" class="mt-1 block w-full rounded-md border-neutral-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm">
+                                    <option value="">Selecione região</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-3 items-center mt-4">
+                            <div>
+                                <label class="block text-sm font-medium text-neutral-300">Arquitetura</label>
+                                <select id="cloud-arch" class="mt-1 block w-full rounded-md border-neutral-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm">
+                                    <option value="">Auto</option>
+                                    <option value="x86_64">x86 / x64</option>
+                                    <option value="arm64">ARM</option>
+                                </select>
+                            </div>
+
+                            <div class="col-span-2">
+                                <label class="block text-sm font-medium text-neutral-300">Tipo de instância</label>
+                                <select id="cloud-instance-type" class="mt-1 block w-full rounded-md border-neutral-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm">
+                                    <option value="">Selecione tipo</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-4 gap-3 items-center mt-4">
+                            <div>
+                                <label class="block text-sm font-medium text-neutral-300">Disk (GB)</label>
+                                <input id="cloud-disk" type="number" value="20" min="10" max="2000" class="mt-1 block w-full rounded-md border-neutral-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm">
+                            </div>
+
+                            <div class="col-span-3 flex items-end justify-end">
+                                <button id="provision-cloud" type="button" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-success-500 hover:bg-success-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Provisionar</button>
+                            </div>
+                        </div>
+
+                        <p id="cloud-provision-msg" class="mt-3 text-sm text-neutral-400 hidden"></p>
+                    </div>
+                </div>
             </div>
 
             <!-- Step 2: Programming Language -->
@@ -372,6 +461,183 @@
 
         // Initialize
         updateStepIndicator();
+
+        // Manual registration bootstrap command
+        document.getElementById('generate-bootstrap').addEventListener('click', async function () {
+            const button = this;
+            const deployUser = document.getElementById('deploy_user_input').value || 'deploy';                // include form fields so command can be generated before creating the server record
+                const name = document.getElementById('name').value || null;
+                const ip_address = document.getElementById('ip_address').value || null;
+                const ssh_port = document.getElementById('ssh_port').value || '22';
+                const os = document.getElementById('os').value || null;
+                const type = document.getElementById('type').value || null;            const errorEl = document.getElementById('bootstrap-error');
+
+            errorEl.classList.add('hidden');
+            errorEl.textContent = '';
+
+            button.disabled = true;
+            button.classList.add('opacity-70');
+
+            try {
+                // robust CSRF retrieval with server-side fallback
+                let csrf = null;
+                const meta = document.querySelector('meta[name="csrf-token"]');
+                if (meta && meta.getAttribute('content')) {
+                    csrf = meta.getAttribute('content');
+                } else {
+                    csrf = '{{ csrf_token() }}';
+                }
+
+                const res = await fetch('{{ route('servers.registration-tokens.store') }}', {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrf,
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ deploy_user: deployUser, name: name, ip_address: ip_address, ssh_port: ssh_port, os: os, type: type })
+                });
+
+                // read body for better errors
+                const text = await res.text();
+                let data = null;
+                try { data = JSON.parse(text); } catch (e) { data = null; }
+
+                if (!res.ok) {
+                    const message = (data && (data.message || data.error || JSON.stringify(data))) || text || 'Erro ao criar token';
+                    errorEl.textContent = 'Erro: ' + message;
+                    errorEl.classList.remove('hidden');
+                    console.error('Bootstrap token generation failed', res.status, message);
+                    return;
+                }
+
+                // success
+                document.getElementById('bootstrap-result').classList.remove('hidden');
+                document.getElementById('bootstrap-command').textContent = data.command;
+
+                const copyBtn = document.getElementById('copy-bootstrap');
+                copyBtn.onclick = function () {
+                    navigator.clipboard.writeText(data.command).then(() => {
+                        this.textContent = 'Copiado';
+                        setTimeout(() => this.textContent = 'Copiar', 2000);
+                    });
+                };
+
+            } catch (err) {
+                console.error(err);
+                errorEl.textContent = 'Não foi possível gerar o comando: ' + err.message;
+                errorEl.classList.remove('hidden');
+            } finally {
+                button.disabled = false;
+                button.classList.remove('opacity-70');
+            }
+        });
+
+        // Cloud provisioning UI handlers
+        const providerSelect = document.getElementById('cloud-provider');
+        const credentialSelect = document.getElementById('cloud-credential');
+        const regionSelect = document.getElementById('cloud-region');
+        const archSelect = document.getElementById('cloud-arch');
+        const instanceTypeSelect = document.getElementById('cloud-instance-type');
+        const diskInput = document.getElementById('cloud-disk');
+        const provisionBtn = document.getElementById('provision-cloud');
+        const provisionMsg = document.getElementById('cloud-provision-msg');
+
+        providerSelect.addEventListener('change', async function () {
+            const provider = this.value;
+            credentialSelect.innerHTML = '<option value="">Carregando...</option>';
+            regionSelect.innerHTML = '<option value="">Carregando...</option>';
+            instanceTypeSelect.innerHTML = '<option value="">Selecione tipo</option>';
+
+            if (!provider) return;
+
+            // fetch credentials & regions
+            const credRes = await fetch('/cloud/' + provider + '/credentials');
+            const creds = await credRes.json();
+            credentialSelect.innerHTML = '<option value="">Selecione credencial</option>' + (creds.credentials || []).map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+
+            const regRes = await fetch('/cloud/' + provider + '/regions');
+            const regs = await regRes.json();
+            regionSelect.innerHTML = '<option value="">Selecione região</option>' + (regs.regions || []).map(r => `<option value="${r}">${r}</option>`).join('');
+        });
+
+        archSelect.addEventListener('change', async function () {
+            await loadInstanceTypes();
+        });
+
+        regionSelect.addEventListener('change', async function () {
+            await loadInstanceTypes();
+        });
+
+        credentialSelect.addEventListener('change', async function () {
+            await loadInstanceTypes();
+        });
+
+        async function loadInstanceTypes() {
+            const provider = providerSelect.value;
+            if (!provider) return;
+            const arch = archSelect.value || null;
+            const q = new URLSearchParams();
+            if (arch) q.set('arch', arch);
+
+            const res = await fetch('/cloud/' + provider + '/instance-types?' + q.toString());
+            const body = await res.json();
+            instanceTypeSelect.innerHTML = '<option value="">Selecione tipo</option>' + (body.instance_types || []).map(t => `<option value="${t.name}">${t.name} — ${t.vcpu} vCPU • ${Math.round((t.ram_mb||0)/1024)} GB • ${t.architecture ?? 'unknown'}</option>`).join('');
+        }
+
+        provisionBtn.addEventListener('click', async function () {
+            const provider = providerSelect.value;
+            const credential = credentialSelect.value;
+            const region = regionSelect.value;
+            const instanceType = instanceTypeSelect.value;
+            const disk = parseInt(diskInput.value || 20, 10);
+            const name = document.getElementById('name').value || 'new-server-' + Date.now();
+            const arch = archSelect.value || null;
+
+            provisionMsg.classList.add('hidden');
+            provisionMsg.textContent = '';
+
+            if (!provider || !credential || !region || !instanceType) {
+                provisionMsg.textContent = 'Por favor selecione provider, credencial, região e tipo de instância.';
+                provisionMsg.classList.remove('hidden');
+                return;
+            }
+
+            provisionBtn.disabled = true;
+            provisionBtn.classList.add('opacity-70');
+
+            try {
+                const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                const res = await fetch('/cloud/' + provider + '/provision', {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrf,
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ name, credential_id: credential, region, instance_type: instanceType, disk_size: disk, arch })
+                });
+
+                const data = await res.json();
+                if (!res.ok) {
+                    provisionMsg.textContent = 'Erro ao iniciar provisionamento: ' + (data.error || JSON.stringify(data));
+                    provisionMsg.classList.remove('hidden');
+                } else {
+                    provisionMsg.textContent = 'Provisionamento iniciado — servidor criado com ID ' + data.server.id;
+                    provisionMsg.classList.remove('hidden');
+                    provisionMsg.classList.remove('text-neutral-400');
+                }
+            } catch (err) {
+                console.error(err);
+                provisionMsg.textContent = 'Erro ao comunicar com o servidor: ' + err.message;
+                provisionMsg.classList.remove('hidden');
+            } finally {
+                provisionBtn.disabled = false;
+                provisionBtn.classList.remove('opacity-70');
+            }
+        });
     </script>
     @endpush
 </x-layout>

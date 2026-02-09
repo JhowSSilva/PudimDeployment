@@ -110,6 +110,9 @@ Route::get('/health', function () {
     ], $healthy ? 200 : 503);
 });
 
+// Public registration endpoint used by the bootstrap script
+Route::post('/instances/register', [\App\Http\Controllers\InstanceRegistrationController::class, 'register']);
+
 Route::middleware(['auth:api', 'throttle:api'])->group(function () {
     
     // User info
@@ -211,6 +214,14 @@ Route::middleware(['auth:api', 'throttle:api'])->group(function () {
         Route::get('/logs', [DockerController::class, 'logs']);
         Route::get('/stats', [DockerController::class, 'stats']);
         Route::post('/exec', [DockerController::class, 'exec']);
+    });
+
+    // Cloud Provisioning API (AWS, GCP, Azure)
+    Route::prefix('cloud/{provider}')->group(function () {
+        Route::get('/credentials', [\App\Http\Controllers\CloudProvisionController::class, 'credentials']);
+        Route::get('/regions', [\App\Http\Controllers\CloudProvisionController::class, 'regions']);
+        Route::get('/instance-types', [\App\Http\Controllers\CloudProvisionController::class, 'instanceTypes']);
+        Route::post('/provision', [\App\Http\Controllers\CloudProvisionController::class, 'provision']);
     });
 
     // Laravel Tools
