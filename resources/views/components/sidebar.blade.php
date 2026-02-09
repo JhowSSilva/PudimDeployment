@@ -14,7 +14,10 @@
 
     <!-- Mobile menu button -->
     <button @click="sidebarOpen = !sidebarOpen" 
-            class="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg bg-neutral-900 text-white shadow-lg">
+            :aria-expanded="sidebarOpen"
+            aria-controls="main-sidebar"
+            aria-label="Toggle navigation menu"
+            class="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg bg-neutral-900 text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-neutral-900">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path x-show="!sidebarOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             <path x-show="sidebarOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" style="display: none;" />
@@ -23,22 +26,19 @@
 
     <!-- Sidebar -->
     <aside :class="{ 'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen }"
+           id="main-sidebar"
+           role="navigation"
+           aria-label="Main navigation"
            class="fixed top-0 left-0 z-50 w-72 h-screen bg-neutral-900 border-r border-neutral-800 transition-transform duration-300 ease-in-out lg:translate-x-0 flex flex-col overflow-hidden">
         
         <!-- Logo & Branding -->
-        <div class="flex items-center gap-3 px-6 py-5 border-b border-neutral-700 dark:border-neutral-800">
+        <div class="flex items-center gap-3 px-6 py-5 border-b border-neutral-700">
             <div class="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl flex items-center justify-center shadow-lg shadow-primary-600/20">
-                <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C10.9 2 10 2.9 10 4C10 4.3 10.1 4.6 10.2 4.9C8.9 5.5 8 6.7 8 8.1C8 9 8.4 9.8 9 10.3C8.4 10.8 8 11.5 8 12.4C8 13.1 8.3 13.7 8.7 14.2C7.7 14.9 7 16 7 17.3C7 19.3 8.7 21 10.7 21C11.1 21 11.5 20.9 11.9 20.8C12.2 20.9 12.6 21 13 21C15.2 21 17 19.2 17 17C17 15.9 16.5 14.9 15.7 14.2C16.1 13.7 16.4 13.1 16.4 12.4C16.4 11.5 16 10.8 15.4 10.3C16 9.8 16.4 9 16.4 8.1C16.4 6.7 15.5 5.5 14.2 4.9C14.3 4.6 14.4 4.3 14.4 4C14.4 2.9 13.5 2 12.4 2H12Z"/>
-                    <ellipse cx="10" cy="8" rx="1.2" ry="1.5" fill="white" opacity="0.3"/>
-                    <ellipse cx="14" cy="8" rx="1.2" ry="1.5" fill="white" opacity="0.3"/>
-                    <ellipse cx="9" cy="13" rx="1.2" ry="1.5" fill="white" opacity="0.3"/>
-                    <ellipse cx="15" cy="13" rx="1.2" ry="1.5" fill="white" opacity="0.3"/>
-                </svg>
+                <x-application-logo class="w-7 h-7 text-white" />
             </div>
             <div>
-                <h1 class="text-lg font-bold text-primary-600 dark:text-primary-400">Pudim Deployment</h1>
-                <p class="text-xs text-primary-700 dark:text-primary-500 font-medium">Cloud Management Platform</p>
+                <h1 class="text-lg font-bold text-primary-400">Pudim Deployment</h1>
+                <p class="text-xs text-primary-500 font-medium">Cloud Management Platform</p>
             </div>
         </div>
 
@@ -48,7 +48,7 @@
             <!-- Dashboard (Single Item) -->
             <div>
                 <a href="{{ route('dashboard') }}" 
-                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('dashboard') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('dashboard') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                     </svg>
@@ -59,18 +59,18 @@
             <!-- GERENCIAMENTO -->
             <div>
                 <div class="px-3 mb-2">
-                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">Gerenciamento</span>
+                    <span class="text-xs font-bold text-primary-500 uppercase tracking-wider">Gerenciamento</span>
                 </div>
                 <div class="space-y-1">
                     <a href="{{ route('servers.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('servers.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('servers.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
                         </svg>
                         <span class="font-medium">Servidores</span>
                     </a>
                     <a href="{{ route('sites.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('sites.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('sites.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
                         </svg>
@@ -84,32 +84,32 @@
             <!-- FERRAMENTAS -->
             <div>
                 <div class="px-3 mb-2">
-                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">Ferramentas</span>
+                    <span class="text-xs font-bold text-primary-500 uppercase tracking-wider">Ferramentas</span>
                 </div>
                 <div class="space-y-1">
                     <a href="{{ route('databases.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('databases.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('databases.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
                         </svg>
                         <span class="font-medium">Databases</span>
                     </a>
                     <a href="{{ route('queue-workers.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('queue-workers.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('queue-workers.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                         <span class="font-medium">Workers</span>
                     </a>
                     <a href="{{ route('ssl-certificates.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('ssl-certificates.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('ssl-certificates.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                         </svg>
                         <span class="font-medium">SSL</span>
                     </a>
                     <a href="{{ route('cloudflare-accounts.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cloudflare-accounts.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cloudflare-accounts.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M13.2 1.68c.71.18 1.36.53 1.89 1.03.53.5.92 1.14 1.13 1.84.79-.05 1.57.13 2.27.53.7.39 1.27.98 1.64 1.69.36.71.5 1.51.38 2.29-.11.78-.46 1.52-1 2.09 1.23.74 2.03 2.07 2.03 3.54 0 2.3-1.86 4.16-4.16 4.16H6.46c-2.76 0-5-2.24-5-5 0-1.85 1-3.46 2.49-4.33-.06-.27-.09-.54-.09-.82 0-2.07 1.68-3.75 3.75-3.75.34 0 .68.05 1 .14C9.53 2.84 11.23 1.68 13.2 1.68z"/>
                         </svg>
@@ -123,11 +123,11 @@
             <!-- SYNC -->
             <div>
                 <div class="px-3 mb-2">
-                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">Sync</span>
+                    <span class="text-xs font-bold text-primary-500 uppercase tracking-wider">Sync</span>
                 </div>
                 <div class="space-y-1">
                     <a href="{{ route('github.settings') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('github.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('github.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
                         </svg>
@@ -141,32 +141,32 @@
             <!-- CLOUD -->
             <div>
                 <div class="px-3 mb-2">
-                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">Cloud</span>
+                    <span class="text-xs font-bold text-primary-500 uppercase tracking-wider">Cloud</span>
                 </div>
                 <div class="space-y-1">
                     <a href="{{ route('aws-credentials.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('aws-credentials.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('aws-credentials.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 01-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 01-.287-.375 6.18 6.18 0 01-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.591-.894-.591-1.533 0-.678.239-1.226.726-1.644.487-.417 1.133-.627 1.955-.627.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.296.072-.583.16-.862.272a2.287 2.287 0 01-.28.104.407.407 0 01-.113.023c-.099 0-.151-.071-.151-.223v-.351c0-.119.016-.208.056-.264a.62.62 0 01.215-.168c.28-.144.615-.264 1.005-.36.391-.095.808-.144 1.253-.144.957 0 1.656.216 2.101.647.438.432.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.279-.512.056-.191.088-.423.088-.694v-.335a6.66 6.66 0 00-.735-.136 6.02 6.02 0 00-.75-.048c-.535 0-.926.104-1.189.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.822.296zm6.41.862c-.128 0-.215-.023-.271-.08-.057-.048-.104-.151-.145-.288l-1.595-5.257c-.04-.135-.063-.224-.063-.27 0-.112.056-.175.168-.175h.686c.135 0 .226.024.278.08.056.048.095.152.136.288l1.141 4.495 1.06-4.495c.032-.135.071-.24.127-.288a.554.554 0 01.287-.08h.559c.136 0 .227.024.287.08.057.048.104.152.128.288l1.076 4.543 1.173-4.543c.04-.135.087-.24.136-.288a.483.483 0 01.279-.08h.654c.111 0 .175.056.175.175 0 .048-.008.104-.023.168-.016.063-.04.135-.08.215l-1.636 5.257c-.04.135-.088.24-.144.288-.056.057-.15.08-.271.08h-.607c-.135 0-.226-.024-.286-.08-.057-.057-.104-.16-.128-.296l-1.053-4.368-1.044 4.36c-.032.135-.071.24-.127.296-.057.056-.15.08-.287.08h-.606zm10.116.215c-.407 0-.814-.048-1.205-.136-.39-.095-.678-.2-.853-.32a.69.69 0 01-.215-.231c-.032-.08-.048-.168-.048-.256v-.366c0-.151.056-.223.16-.223.048 0 .095.008.151.024.056.016.136.048.216.08.279.12.582.215.901.279.32.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 00.415-.758.777.777 0 00-.215-.559c-.144-.151-.415-.287-.83-.423l-1.19-.375c-.606-.191-1.053-.479-1.34-.83-.287-.36-.43-.758-.43-1.197 0-.35.071-.654.207-.917.144-.264.335-.486.575-.67.239-.184.51-.32.838-.415.319-.096.655-.144 1.012-.144.175 0 .359.008.535.032.183.024.35.056.518.088.16.04.312.08.455.127.144.048.256.096.336.144a.69.69 0 01.24.2.43.43 0 01.071.263v.335c0 .151-.056.23-.168.23-.064 0-.167-.031-.296-.103-.447-.207-.95-.311-1.517-.311-.455 0-.815.072-1.06.216-.247.144-.367.375-.367.71 0 .224.08.416.24.584.159.167.454.335.886.479l1.165.367c.598.191 1.037.455 1.3.798.264.343.39.75.39 1.213 0 .359-.072.686-.215.965-.144.288-.336.53-.583.734-.248.2-.543.36-.901.463-.36.111-.774.167-1.237.167z"/>
                         </svg>
                         <span class="font-medium">AWS</span>
                     </a>
                     <a href="{{ route('gcp-credentials.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('gcp-credentials.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('gcp-credentials.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12.19 2.38a9.344 9.344 0 0 1 9.27 10.848l-.705.097a8.174 8.174 0 0 0-8.107-9.27l-.458-1.675zm-.354 1.749a7.936 7.936 0 0 0-6.442 11.448l1.086-1.086a6.578 6.578 0 0 1 5.356-9.474l-.011-.888h.01zM2.741 13.199a9.354 9.354 0 0 1 1.667-5.094l1.086 1.086a7.936 7.936 0 0 0-.924 3.659l-1.829.349zm8.991 8.562a9.355 9.355 0 0 1-8.497-5.455l1.6-.914a7.936 7.936 0 0 0 7.223 4.701l-.326 1.668z"/>
                         </svg>
                         <span class="font-medium">GCP</span>
                     </a>
                     <a href="{{ route('azure-credentials.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('azure-credentials.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('azure-credentials.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M22.379 23.343a1.62 1.62 0 0 0 1.536-2.14v.002L17.35 1.76A1.62 1.62 0 0 0 15.816.657H8.184A1.62 1.62 0 0 0 6.65 1.76L.086 21.204a1.62 1.62 0 0 0 1.536 2.139h4.741a1.62 1.62 0 0 0 1.535-1.103l.977-2.892 4.947 3.675c.28.208.618.32.966.32h7.591z"/>
                         </svg>
                         <span class="font-medium">Azure</span>
                     </a>
                     <a href="{{ route('digitalocean-credentials.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('digitalocean-credentials.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('digitalocean-credentials.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12.04 0C5.408-.02.005 5.37.005 11.992h4.638c0-4.923 4.882-8.731 10.064-6.855a6.95 6.95 0 014.147 4.148c1.889 5.177-1.924 10.055-6.84 10.064v-4.61H7.391v4.623h4.61V24c7.86 0 13.967-7.588 11.397-15.83-1.115-3.59-3.985-6.446-7.575-7.575A12.8 12.8 0 0012.039 0zM7.39 19.362H3.828v3.564H7.39zm-3.563 0v-2.978H.85v2.978z"/>
                         </svg>
@@ -180,11 +180,11 @@
             <!-- BACKUP -->
             <div>
                 <div class="px-3 mb-2">
-                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">Backup</span>
+                    <span class="text-xs font-bold text-primary-500 uppercase tracking-wider">Backup</span>
                 </div>
                 <div class="space-y-1">
                     <a href="{{ route('backups.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('backups.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('backups.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
                         </svg>
@@ -198,11 +198,11 @@
             <!-- TERMINAL -->
             <div>
                 <div class="px-3 mb-2">
-                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">Terminal</span>
+                    <span class="text-xs font-bold text-primary-500 uppercase tracking-wider">Terminal</span>
                 </div>
                 <div class="space-y-1">
                     <a href="{{ route('terminal.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('terminal.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('terminal.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
@@ -216,25 +216,25 @@
             <!-- MONITORAMENTO -->
             <div>
                 <div class="px-3 mb-2">
-                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">Monitoramento</span>
+                    <span class="text-xs font-bold text-primary-500 uppercase tracking-wider">Monitoramento</span>
                 </div>
                 <div class="space-y-1">
                     <a href="{{ route('monitoring.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('monitoring.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('monitoring.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                         <span class="font-medium">Monitoring</span>
                     </a>
                     <a href="{{ route('alerts.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('alerts.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('alerts.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
                         </svg>
                         <span class="font-medium">Alerts</span>
                     </a>
                     <a href="{{ route('activity.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('activity.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('activity.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
@@ -248,25 +248,25 @@
             <!-- AUTO-SCALING -->
             <div>
                 <div class="px-3 mb-2">
-                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">Auto-scaling</span>
+                    <span class="text-xs font-bold text-primary-500 uppercase tracking-wider">Auto-scaling</span>
                 </div>
                 <div class="space-y-1">
                     <a href="{{ route('scaling.pools.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('scaling.pools.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('scaling.pools.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
                         </svg>
                         <span class="font-medium">Server Pools</span>
                     </a>
                     <a href="{{ route('scaling.load-balancers.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('scaling.load-balancers.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('scaling.load-balancers.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
                         </svg>
                         <span class="font-medium">Load Balancers</span>
                     </a>
                     <a href="{{ route('scaling.policies.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('scaling.policies.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('scaling.policies.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                         </svg>
@@ -280,32 +280,32 @@
             <!-- CI/CD -->
             <div>
                 <div class="px-3 mb-2">
-                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">CI/CD</span>
+                    <span class="text-xs font-bold text-primary-500 uppercase tracking-wider">CI/CD</span>
                 </div>
                 <div class="space-y-1">
                     <a href="{{ route('cicd.pipelines.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cicd.pipelines.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cicd.pipelines.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
                         </svg>
                         <span class="font-medium">Pipelines</span>
                     </a>
                     <a href="{{ route('cicd.deployment-strategies.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cicd.deployment-strategies.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cicd.deployment-strategies.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
                         <span class="font-medium">Estratégias</span>
                     </a>
                     <a href="{{ route('cicd.integrations.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cicd.integrations.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cicd.integrations.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                         <span class="font-medium">Integrações</span>
                     </a>
                     <a href="{{ route('cicd.deployment-approvals.index') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cicd.deployment-approvals.*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('cicd.deployment-approvals.*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
@@ -319,11 +319,11 @@
             <!-- PLANOS -->
             <div>
                 <div class="px-3 mb-2">
-                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">Planos</span>
+                    <span class="text-xs font-bold text-primary-500 uppercase tracking-wider">Planos</span>
                 </div>
                 <div class="space-y-1">
                     <a href="{{ route('billing.plans') }}" 
-                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('billing.plans*') ? 'bg-amber-600 text-white shadow-lg shadow-amber-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-amber-600' }}">
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all {{ request()->routeIs('billing.plans*') ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20' : 'text-neutral-400 hover:bg-neutral-800 hover:text-primary-400' }}">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
@@ -338,7 +338,7 @@
             <div x-data="{ userMenuOpen: false }" class="relative">
                 <button @click="userMenuOpen = !userMenuOpen" 
                         class="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg transition-all hover:bg-neutral-800 text-neutral-300">
-                    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center text-white font-bold text-sm">
+                    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary-600 to-primary-700 flex items-center justify-center text-white font-bold text-sm">
                         {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
                     </div>
                     <div class="flex-1 text-left">
@@ -382,7 +382,7 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" 
-                                class="w-full text-left px-4 py-2.5 text-sm text-red-400 hover:bg-neutral-700 hover:text-red-300 transition-colors border-t border-neutral-700">
+                                class="w-full text-left px-4 py-2.5 text-sm text-error-400 hover:bg-neutral-700 hover:text-error-300 transition-colors duration-200 border-t border-neutral-700">
                             <div class="flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
@@ -399,7 +399,7 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const sidebar = document.querySelector('aside nav');
-                const activeItem = sidebar?.querySelector('a.bg-amber-600');
+                const activeItem = sidebar?.querySelector('a.bg-primary-600');
                 
                 if (activeItem && sidebar) {
                     // Aguarda um frame para garantir que o DOM está renderizado

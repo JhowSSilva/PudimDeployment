@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Paw favicon">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <filter id="padShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <rect width="64" height="64" rx="12" fill="url(#bgGrad)" />
+
+  <g transform="translate(0,4)" fill="#ffffff" filter="url(#padShadow)">
+    <circle cx="20" cy="18" r="4.6" />
+    <circle cx="32" cy="13" r="5" />
+    <circle cx="44" cy="18" r="4.6" />
+    <circle cx="48" cy="26" r="3.6" />
+    <path d="M32 26c-5.5 0-11 3.8-11 9 0 4.9 5 6.5 11 6.5s11-1.6 11-6.5c0-5.2-5.5-9-11-9z" />
+  </g>
+</svg>
