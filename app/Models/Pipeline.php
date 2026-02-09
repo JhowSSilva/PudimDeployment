@@ -30,6 +30,8 @@ class Pipeline extends Model
         'trigger_config' => 'array',
         'environment_variables' => 'array',
         'auto_deploy' => 'boolean',
+        'timeout_minutes' => 'integer',
+        'retention_days' => 'integer',
         'last_run_at' => 'datetime',
     ];
 
@@ -54,9 +56,9 @@ class Pipeline extends Model
         return $this->hasMany(PipelineRun::class)->latest();
     }
 
-    public function latestRun(): HasMany
+    public function latestRun(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasMany(PipelineRun::class)->latest()->limit(1);
+        return $this->hasOne(PipelineRun::class)->latestOfMany();
     }
 
     // Business Logic

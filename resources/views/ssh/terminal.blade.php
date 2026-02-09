@@ -11,7 +11,7 @@
             <div class="flex-1">
                 <label for="server_id" class="block text-sm font-medium text-neutral-300 mb-2">Servidor</label>
                 <select name="server_id" id="server_id" required
-                        class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-white focus:ring-2 focus:ring-primary-500">
                     <option value="">Selecione um servidor</option>
                     @foreach($servers as $server)
                         <option value="{{ $server->id }}" data-ip="{{ $server->ip_address }}">
@@ -24,7 +24,7 @@
             <div class="w-48">
                 <label for="ssh_key_id" class="block text-sm font-medium text-neutral-300 mb-2">Chave SSH</label>
                 <select name="ssh_key_id" id="ssh_key_id"
-                        class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-white focus:ring-2 focus:ring-primary-500">
                     <option value="">Padrão</option>
                     @foreach($sshKeys as $key)
                         <option value="{{ $key->id }}">{{ $key->name }}</option>
@@ -32,7 +32,7 @@
                 </select>
             </div>
 
-            <button type="submit" id="connectBtn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            <button type="submit" id="connectBtn" class="px-6 py-2 bg-info-600 text-white rounded-lg hover:bg-info-700">
                 Conectar
             </button>
         </form>
@@ -42,13 +42,13 @@
         <div class="bg-neutral-800 px-4 py-2 flex justify-between items-center border-b border-neutral-700">
             <div class="flex items-center gap-2">
                 <div class="flex gap-1.5">
-                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-amber-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-error-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-primary-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-success-500"></div>
                 </div>
                 <span class="text-neutral-400 text-sm ml-4" id="connectionStatus">Desconectado</span>
             </div>
-            <button id="disconnectBtn" class="text-sm text-red-400 hover:text-red-300">
+            <button id="disconnectBtn" class="text-sm text-error-400 hover:text-error-300">
                 Desconectar
             </button>
         </div>

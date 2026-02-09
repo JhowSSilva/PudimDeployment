@@ -47,6 +47,11 @@ class VerifyWebhookSignature
         $payload = $request->getContent();
         $secret = config('services.github.webhook_secret');
         
+        if (empty($secret)) {
+            Log::error('GitHub webhook secret not configured');
+            abort(500, 'Webhook secret not configured');
+        }
+
         $computed = 'sha256=' . hash_hmac('sha256', $payload, $secret);
         
         if (!hash_equals($computed, $signature)) {
@@ -73,6 +78,11 @@ class VerifyWebhookSignature
 
         $payload = $request->getContent();
         $secret = config('services.stripe.webhook.secret');
+
+        if (empty($secret)) {
+            Log::error('Stripe webhook secret not configured');
+            abort(500, 'Webhook secret not configured');
+        }
 
         try {
             \Stripe\Webhook::constructEvent($payload, $signature, $secret);
@@ -119,6 +129,11 @@ class VerifyWebhookSignature
         $payload = $request->getContent();
         $secret = config('services.cloudflare.webhook_secret');
         
+        if (empty($secret)) {
+            Log::error('Cloudflare webhook secret not configured');
+            abort(500, 'Webhook secret not configured');
+        }
+
         $computed = hash_hmac('sha256', $timestamp . '.' . $payload, $secret);
         
         if (!hash_equals($computed, $signature)) {

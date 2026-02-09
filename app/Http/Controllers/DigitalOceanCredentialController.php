@@ -35,6 +35,8 @@ class DigitalOceanCredentialController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create', DigitalOceanCredential::class);
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'api_token' => 'required|string|max:255',
@@ -64,6 +66,8 @@ class DigitalOceanCredentialController extends Controller
 
     public function edit(DigitalOceanCredential $digitaloceanCredential)
     {
+        $this->authorize('view', $digitaloceanCredential);
+
         $regions = [
             'nyc1' => 'New York 1',
             'nyc3' => 'New York 3',
@@ -82,6 +86,8 @@ class DigitalOceanCredentialController extends Controller
 
     public function update(Request $request, DigitalOceanCredential $digitaloceanCredential)
     {
+        $this->authorize('update', $digitaloceanCredential);
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'api_token' => 'nullable|string|max:255',
@@ -107,6 +113,8 @@ class DigitalOceanCredentialController extends Controller
 
     public function destroy(DigitalOceanCredential $digitaloceanCredential)
     {
+        $this->authorize('delete', $digitaloceanCredential);
+
         $digitaloceanCredential->delete();
 
         return redirect()->route('digitalocean-credentials.index')

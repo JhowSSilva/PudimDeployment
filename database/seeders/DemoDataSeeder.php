@@ -16,6 +16,11 @@ class DemoDataSeeder extends Seeder
      */
     public function run(): void
     {
+        if (app()->environment('production')) {
+            $this->command->warn('DemoDataSeeder is disabled in production.');
+            return;
+        }
+
         // Criar usuário de teste
         $user = User::firstOrCreate(
             ['email' => 'admin@example.com'],

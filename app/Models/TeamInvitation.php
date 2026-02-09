@@ -23,6 +23,10 @@ class TeamInvitation extends Model
         'expires_at' => 'datetime',
     ];
 
+    protected $hidden = [
+        'token',
+    ];
+
     protected static function boot()
     {
         parent::boot();

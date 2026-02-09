@@ -48,6 +48,8 @@ class AWSCredentialController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', AWSCredential::class);
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'access_key_id' => 'required|string|max:255',
@@ -91,7 +93,7 @@ class AWSCredentialController extends Controller
      */
     public function show(AWSCredential $awsCredential)
     {
-        //
+        $this->authorize('view', $awsCredential);
     }
 
     /**
@@ -99,6 +101,8 @@ class AWSCredentialController extends Controller
      */
     public function edit(AWSCredential $awsCredential)
     {
+        $this->authorize('view', $awsCredential);
+
         $regions = [
             'us-east-1' => 'US East (N. Virginia)',
             'us-east-2' => 'US East (Ohio)',
@@ -124,6 +128,8 @@ class AWSCredentialController extends Controller
      */
     public function update(Request $request, AWSCredential $awsCredential)
     {
+        $this->authorize('update', $awsCredential);
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'access_key_id' => 'nullable|string|max:255',
@@ -170,6 +176,8 @@ class AWSCredentialController extends Controller
      */
     public function destroy(AWSCredential $awsCredential)
     {
+        $this->authorize('delete', $awsCredential);
+
         if ($awsCredential->servers()->count() > 0) {
             return back()->withErrors(['error' => 'Não é possível excluir credenciais com servidores associados.']);
         }

@@ -10,6 +10,22 @@ use Illuminate\Http\JsonResponse;
 
 class ArtisanController extends Controller
 {
+    /**
+     * Allowed artisan commands.
+     */
+    private const ALLOWED_COMMANDS = [
+        'list', 'env', 'about',
+        'config:clear', 'config:cache',
+        'cache:clear', 'cache:forget',
+        'route:clear', 'route:cache', 'route:list',
+        'view:clear', 'view:cache',
+        'optimize', 'optimize:clear',
+        'queue:failed', 'queue:retry', 'queue:restart',
+        'migrate', 'migrate:status',
+        'schedule:list',
+        'down', 'up',
+    ];
+
     public function __construct(
         private ArtisanService $artisanService
     ) {}
@@ -19,10 +35,20 @@ class ArtisanController extends Controller
      */
     public function runCommand(Site $site, Request $request): JsonResponse
     {
+        $this->authorize('update', $site);
+
         try {
             $validated = $request->validate([
-                'command' => 'required|string'
+                'command' => 'required|string|max:500'
             ]);
+
+            $baseCommand = explode(' ', trim($validated['command']))[0];
+            if (!in_array($baseCommand, self::ALLOWED_COMMANDS)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Command '{$baseCommand}' is not allowed."
+                ], 422);
+            }
 
             $result = $this->artisanService->runCommand($site, $validated['command']);
             return response()->json([

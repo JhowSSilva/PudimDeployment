@@ -13,35 +13,57 @@ class DashboardController extends Controller
     public function index()
     {
         $currentTeam = auth()->user()->getCurrentTeam();
+        $teamId = $currentTeam?->id;
         
-        // Team servers
-        $servers = Server::where('team_id', $currentTeam?->id)->latest()->get();
+        // Aggregate counts via DB queries (avoids loading all records)
+        $serverQuery = Server::where('team_id', $teamId);
+        $totalServers = (clone $serverQuery)->count();
+        $serversOnline = (clone $serverQuery)->where('status', 'online')->count();
+        $serversOffline = (clone $serverQuery)->where('status', 'offline')->count();
+        $serversProvisioning = (clone $serverQuery)->where('provision_status', 'provisioning')->count();
+        $totalSites = Site::where('team_id', $teamId)->count();
         
-        // Team sites
-        $sites = Site::where('team_id', $currentTeam?->id)->latest()->get();
+        // Load only 5 servers/sites for display with eager loading
+        $servers = Server::where('team_id', $teamId)
+            ->with(['latestMetric', 'sites'])
+            ->latest()
+            ->limit(5)
+            ->get();
+        
+        $sites = Site::where('team_id', $teamId)
+            ->with(['server', 'latestDeployment', 'activeSslCertificate'])
+            ->latest()
+            ->limit(5)
+            ->get();
         
         // Recent team activities
-        $recentActivities = ActivityLog::where('team_id', $currentTeam?->id)
+        $recentActivities = ActivityLog::where('team_id', $teamId)
             ->with('user')
             ->latest()
             ->limit(10)
             ->get();
         
-        // Generate language statistics
-        $languageStats = $this->generateLanguageStats($servers);
+        // Language stats only need a few columns
+        $allServers = Server::where('team_id', $teamId)
+            ->select('id', 'team_id', 'programming_language', 'language_version', 'status', 'provision_status')
+            ->get();
+        $languageStats = $this->generateLanguageStats($allServers);
+        
+        // Get site IDs for deployments without loading full site models
+        $siteIds = Site::where('team_id', $teamId)->pluck('id');
         
         $data = [
             'currentTeam' => $currentTeam,
-            'totalServers' => $servers->count(),
-            'serversOnline' => $servers->where('status', 'online')->count(),
-            'serversOffline' => $servers->where('status', 'offline')->count(),
-            'serversProvisioning' => $servers->where('provision_status', 'provisioning')->count(),
-            'totalSites' => $sites->count(),
-            'servers' => $servers->take(5),
-            'sites' => $sites->take(5),
+            'totalServers' => $totalServers,
+            'serversOnline' => $serversOnline,
+            'serversOffline' => $serversOffline,
+            'serversProvisioning' => $serversProvisioning,
+            'totalSites' => $totalSites,
+            'servers' => $servers,
+            'sites' => $sites,
             'recentActivities' => $recentActivities,
             'languageStats' => $languageStats,
-            'recentDeployments' => Deployment::whereIn('site_id', $sites->pluck('id'))
+            'recentDeployments' => Deployment::whereIn('site_id', $siteIds)
                 ->with(['site', 'user'])
                 ->latest()
                 ->limit(5)

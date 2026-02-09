@@ -7,8 +7,8 @@
 
 <div {{ $attributes->merge(['class' => 'text-center py-12']) }}>
     @isset($icon)
-        <div class="w-16 h-16 bg-neutral-800 dark:bg-neutral-700 rounded-full flex items-center justify-center mx-auto mb-4">
-            <div class="w-8 h-8 text-neutral-400 dark:text-neutral-500">
+        <div class="w-16 h-16 bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-4 ring-1 ring-neutral-700">
+            <div class="w-8 h-8 text-neutral-500">
                 {{ $icon }}
             </div>
         </div>

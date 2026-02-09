@@ -10,7 +10,7 @@
             <!-- Header -->
             <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-700">
                 <div class="flex items-center gap-3">
-                    <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                     </svg>
                     <h3 class="text-lg font-semibold text-white">File Transfer</h3>
@@ -26,7 +26,7 @@
             <div class="flex h-[70vh]">
                 <!-- Upload Panel -->
                 <div class="w-1/2 p-6 border-r border-neutral-700">
-                    <h4 class="text-sm font-semibold text-amber-600 mb-4 flex items-center gap-2">
+                    <h4 class="text-sm font-semibold text-primary-500 mb-4 flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                         </svg>
@@ -37,7 +37,7 @@
                     <div @drop.prevent="handleDrop($event)" 
                          @dragover.prevent="dragover = true" 
                          @dragleave.prevent="dragover = false"
-                         :class="dragover ? 'border-amber-600 bg-amber-600/10' : 'border-neutral-600'"
+                         :class="dragover ? 'border-primary-500 bg-primary-500/10' : 'border-neutral-600'"
                          class="border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer"
                          @click="$refs.fileInput.click()">
                         <svg class="w-12 h-12 mx-auto mb-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -52,7 +52,7 @@
                     <div class="mt-4">
                         <label class="block text-xs text-neutral-400 mb-2">Remote Path</label>
                         <input type="text" x-model="uploadPath" 
-                               class="w-full bg-neutral-900 border border-neutral-700 rounded px-3 py-2 text-sm text-white focus:ring-2 focus:ring-amber-600 focus:border-transparent"
+                               class="w-full bg-neutral-900 border border-neutral-700 rounded px-3 py-2 text-sm text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                placeholder="/home/user/uploads/">
                     </div>
 
@@ -69,7 +69,7 @@
                                         <span class="text-white truncate" x-text="file.name"></span>
                                         <span class="text-neutral-500" x-text="formatSize(file.size)"></span>
                                     </div>
-                                    <button @click="removeFile(index)" class="text-red-400 hover:text-red-300 ml-2">
+                                    <button @click="removeFile(index)" class="text-error-400 hover:text-error-300 ml-2">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                         </svg>
@@ -81,7 +81,7 @@
 
                     <!-- Upload Button -->
                     <button @click="uploadFiles()" :disabled="selectedFiles.length === 0 || uploading"
-                            class="w-full mt-4 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                            class="w-full mt-4 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                         <svg x-show="!uploading" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                         </svg>
@@ -94,7 +94,7 @@
 
                 <!-- Browser/Download Panel -->
                 <div class="w-1/2 p-6 flex flex-col">
-                    <h4 class="text-sm font-semibold text-green-600 mb-4 flex items-center gap-2">
+                    <h4 class="text-sm font-semibold text-success-500 mb-4 flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                         </svg>
@@ -104,7 +104,7 @@
                     <!-- Current Path -->
                     <div class="flex items-center gap-2 mb-4">
                         <input type="text" x-model="browsePath" @keyup.enter="loadFiles()"
-                               class="flex-1 bg-neutral-900 border border-neutral-700 rounded px-3 py-2 text-sm text-white focus:ring-2 focus:ring-green-600 focus:border-transparent"
+                               class="flex-1 bg-neutral-900 border border-neutral-700 rounded px-3 py-2 text-sm text-white focus:ring-2 focus:ring-success-500 focus:border-transparent"
                                placeholder="/home/user/">
                         <button @click="loadFiles()" :disabled="loading"
                                 class="px-3 py-2 bg-neutral-700 text-white rounded hover:bg-neutral-600 transition disabled:opacity-50">
@@ -145,7 +145,7 @@
                                         <tr class="hover:bg-neutral-800/50 text-white">
                                             <td class="px-3 py-2">
                                                 <div class="flex items-center gap-2">
-                                                    <svg x-show="file.type === 'directory'" class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <svg x-show="file.type === 'directory'" class="w-4 h-4 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
                                                     </svg>
                                                     <svg x-show="file.type === 'file'" class="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -157,11 +157,11 @@
                                             <td class="px-3 py-2 text-neutral-400" x-text="file.size"></td>
                                             <td class="px-3 py-2 text-right">
                                                 <button x-show="file.type === 'directory'" @click="navigateTo(file.name)"
-                                                        class="text-blue-400 hover:text-blue-300">
+                                                        class="text-info-400 hover:text-info-300">
                                                     Open
                                                 </button>
                                                 <button x-show="file.type === 'file'" @click="downloadFile(file.name)"
-                                                        class="text-green-400 hover:text-green-300">
+                                                        class="text-success-400 hover:text-success-300">
                                                     Download
                                                 </button>
                                             </td>

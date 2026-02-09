@@ -3,7 +3,7 @@
         <h2 class="text-2xl font-bold text-white">
             {{ __('Criar Estratégia de Deployment') }}
         </h2>
-        <a href="{{ route('cicd.deployment-strategies.index') }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-blue-300 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
+        <a href="{{ route('cicd.deployment-strategies.index') }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-info-600 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
             Voltar
         </a>
     </div>
@@ -14,20 +14,20 @@
 
             <div class="mb-4">
                 <label class="block text-neutral-300 text-sm font-bold mb-2">Nome</label>
-                <input type="text" name="name" value="{{ old('name') }}" required class="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 text-white rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                <input type="text" name="name" value="{{ old('name') }}" required class="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 text-white rounded-md focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50">
                 @error('name')
-                    <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                    <p class="text-error-400 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
             <div class="mb-4">
                 <label class="block text-neutral-300 text-sm font-bold mb-2">Descrição</label>
-                <textarea name="description" rows="3" class="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 text-white rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">{{ old('description') }}</textarea>
+                <textarea name="description" rows="3" class="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 text-white rounded-md focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50">{{ old('description') }}</textarea>
             </div>
 
             <div class="mb-4">
                 <label class="block text-neutral-300 text-sm font-bold mb-2">Site</label>
-                <select name="site_id" required class="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 text-white rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                <select name="site_id" required class="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 text-white rounded-md focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50">
                     <option value="">Selecione um site</option>
                     @foreach($sites as $site)
                         <option value="{{ $site->id }}">{{ $site->name }} ({{ $site->domain }})</option>
@@ -37,7 +37,7 @@
 
             <div class="mb-4">
                 <label class="block text-neutral-300 text-sm font-bold mb-2">Tipo de Estratégia</label>
-                <select name="type" x-model="strategyType" required class="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 text-white rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                <select name="type" x-model="strategyType" required class="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 text-white rounded-md focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50">
                     <option value="blue_green">Blue-Green (Zero Downtime)</option>
                     <option value="canary">Canary (Gradual)</option>
                     <option value="rolling">Rolling (Sequencial)</option>
@@ -98,7 +98,7 @@
             </div>
 
             <div class="flex justify-end">
-                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                <button type="submit" class="px-4 py-2 bg-info-600 text-white rounded-md hover:bg-info-700">
                     Criar Estratégia
                 </button>
             </div>

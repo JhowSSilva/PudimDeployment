@@ -22,7 +22,7 @@
             <!-- Notifications List -->
             <div class="space-y-3">
                 @forelse($notifications as $notification)
-                    <div class="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 {{ !$notification->is_read ? 'ring-2 ring-primary-100 dark:ring-primary-900' : '' }} overflow-hidden transition">
+                    <div class="bg-neutral-800 rounded-xl border border-neutral-700 {{ !$notification->is_read ? 'ring-2 ring-primary-100' : '' }} overflow-hidden transition">
                         <div class="p-6">
                             <div class="flex items-start gap-4">
                                 <div class="flex-shrink-0 text-3xl">
@@ -31,19 +31,19 @@
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-start justify-between gap-4">
                                         <div class="flex-1">
-                                            <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">
+                                            <h3 class="text-lg font-semibold text-neutral-100">
                                                 {{ $notification->title }}
                                                 @if(!$notification->is_read)
-                                                    <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200">
+                                                    <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-800">
                                                         Nova
                                                     </span>
                                                 @endif
                                             </h3>
-                                            <p class="mt-2 text-neutral-600 dark:text-neutral-300">
+                                            <p class="mt-2 text-neutral-400">
                                                 {{ $notification->message }}
                                             </p>
                                         </div>
-                                        <span class="text-sm text-neutral-500 dark:text-neutral-400 whitespace-nowrap">
+                                        <span class="text-sm text-neutral-500 whitespace-nowrap">
                                             {{ $notification->created_at->diffForHumans() }}
                                         </span>
                                     </div>
@@ -51,7 +51,7 @@
                                     <div class="mt-4 flex items-center gap-4">
                                         @if($notification->action_url)
                                             <a href="{{ $notification->action_url }}" 
-                                               class="inline-flex items-center text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400">
+                                               class="inline-flex items-center text-sm font-medium text-primary-600 hover:text-primary-700">
                                                 {{ $notification->action_text ?? 'Ver detalhes' }}
                                                 <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                 @empty
-                    <div class="bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 p-12 text-center">
+                    <div class="bg-neutral-800 rounded-xl border border-neutral-700 p-12 text-center">
                         <svg class="mx-auto h-16 w-16 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
                         </svg>

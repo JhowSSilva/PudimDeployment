@@ -30,10 +30,10 @@
          x-transition:enter="transition ease-out duration-200"
          x-transition:enter-start="opacity-0"
          x-transition:enter-end="opacity-100"
-         class="fixed inset-0 bg-white/80 backdrop-blur-sm z-50 flex items-center justify-center">
+         class="fixed inset-0 bg-neutral-900/80 backdrop-blur-sm z-50 flex items-center justify-center">
         <div class="flex flex-col items-center gap-4">
             <x-loading size="lg" />
-            <p class="text-sm text-neutral-600 font-medium">Loading...</p>
+            <p class="text-sm text-neutral-400 font-medium">Carregando...</p>
         </div>
     </div>
     

@@ -26,6 +26,7 @@ class DeploymentApproval extends Model
     protected $casts = [
         'required_approvers' => 'array',
         'approval_history' => 'array',
+        'required_approvals' => 'integer',
         'requested_at' => 'datetime',
         'expires_at' => 'datetime',
         'reviewed_at' => 'datetime',

@@ -27,6 +27,12 @@ class Integration extends Model
         'config' => 'array',
         'events' => 'array',
         'last_triggered_at' => 'datetime',
+        'trigger_count' => 'integer',
+    ];
+
+    protected $hidden = [
+        'webhook_secret',
+        'config',
     ];
 
     // Relationships

@@ -9,11 +9,20 @@ use Illuminate\Auth\Access\Response;
 class LoadBalancerPolicy
 {
     /**
+     * Check if user belongs to the load balancer's team.
+     */
+    private function belongsToTeam(User $user, LoadBalancer $loadBalancer): bool
+    {
+        $currentTeam = $user->getCurrentTeam();
+        return $currentTeam && $loadBalancer->team_id === $currentTeam->id;
+    }
+
+    /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +30,7 @@ class LoadBalancerPolicy
      */
     public function view(User $user, LoadBalancer $loadBalancer): bool
     {
-        return false;
+        return $this->belongsToTeam($user, $loadBalancer);
     }
 
     /**
@@ -29,7 +38,8 @@ class LoadBalancerPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        $currentTeam = $user->getCurrentTeam();
+        return $currentTeam && $currentTeam->userCan($user, 'create-resources');
     }
 
     /**
@@ -37,7 +47,10 @@ class LoadBalancerPolicy
      */
     public function update(User $user, LoadBalancer $loadBalancer): bool
     {
-        return false;
+        $currentTeam = $user->getCurrentTeam();
+        return $currentTeam 
+            && $loadBalancer->team_id === $currentTeam->id
+            && $currentTeam->userCan($user, 'create-resources');
     }
 
     /**
@@ -45,7 +58,10 @@ class LoadBalancerPolicy
      */
     public function delete(User $user, LoadBalancer $loadBalancer): bool
     {
-        return false;
+        $currentTeam = $user->getCurrentTeam();
+        return $currentTeam 
+            && $loadBalancer->team_id === $currentTeam->id
+            && $currentTeam->userCan($user, 'delete-resources');
     }
 
     /**
@@ -53,7 +69,7 @@ class LoadBalancerPolicy
      */
     public function restore(User $user, LoadBalancer $loadBalancer): bool
     {
-        return false;
+        return $this->delete($user, $loadBalancer);
     }
 
     /**
@@ -61,6 +77,9 @@ class LoadBalancerPolicy
      */
     public function forceDelete(User $user, LoadBalancer $loadBalancer): bool
     {
-        return false;
+        $currentTeam = $user->getCurrentTeam();
+        return $currentTeam 
+            && $loadBalancer->team_id === $currentTeam->id
+            && $currentTeam->isOwner($user);
     }
 }

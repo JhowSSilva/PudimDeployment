@@ -9,11 +9,20 @@ use Illuminate\Auth\Access\Response;
 class ScalingPolicyPolicy
 {
     /**
+     * Check if user belongs to the scaling policy's team.
+     */
+    private function belongsToTeam(User $user, ScalingPolicy $scalingPolicy): bool
+    {
+        $currentTeam = $user->getCurrentTeam();
+        return $currentTeam && $scalingPolicy->team_id === $currentTeam->id;
+    }
+
+    /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +30,7 @@ class ScalingPolicyPolicy
      */
     public function view(User $user, ScalingPolicy $scalingPolicy): bool
     {
-        return false;
+        return $this->belongsToTeam($user, $scalingPolicy);
     }
 
     /**
@@ -29,7 +38,8 @@ class ScalingPolicyPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        $currentTeam = $user->getCurrentTeam();
+        return $currentTeam && $currentTeam->userCan($user, 'create-resources');
     }
 
     /**
@@ -37,7 +47,10 @@ class ScalingPolicyPolicy
      */
     public function update(User $user, ScalingPolicy $scalingPolicy): bool
     {
-        return false;
+        $currentTeam = $user->getCurrentTeam();
+        return $currentTeam 
+            && $scalingPolicy->team_id === $currentTeam->id
+            && $currentTeam->userCan($user, 'create-resources');
     }
 
     /**
@@ -45,7 +58,10 @@ class ScalingPolicyPolicy
      */
     public function delete(User $user, ScalingPolicy $scalingPolicy): bool
     {
-        return false;
+        $currentTeam = $user->getCurrentTeam();
+        return $currentTeam 
+            && $scalingPolicy->team_id === $currentTeam->id
+            && $currentTeam->userCan($user, 'delete-resources');
     }
 
     /**
@@ -53,7 +69,7 @@ class ScalingPolicyPolicy
      */
     public function restore(User $user, ScalingPolicy $scalingPolicy): bool
     {
-        return false;
+        return $this->delete($user, $scalingPolicy);
     }
 
     /**
@@ -61,6 +77,9 @@ class ScalingPolicyPolicy
      */
     public function forceDelete(User $user, ScalingPolicy $scalingPolicy): bool
     {
-        return false;
+        $currentTeam = $user->getCurrentTeam();
+        return $currentTeam 
+            && $scalingPolicy->team_id === $currentTeam->id
+            && $currentTeam->isOwner($user);
     }
 }

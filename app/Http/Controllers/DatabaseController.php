@@ -31,6 +31,8 @@ class DatabaseController extends Controller
      */
     public function index(Server $server)
     {
+        $this->authorize('view', $server);
+
         $databases = $server->databases()
             ->with('users')
             ->latest()
@@ -44,6 +46,8 @@ class DatabaseController extends Controller
      */
     public function create(Server $server)
     {
+        $this->authorize('view', $server);
+
         return view('databases.create', compact('server'));
     }
 
@@ -52,6 +56,8 @@ class DatabaseController extends Controller
      */
     public function store(Server $server, Request $request)
     {
+        $this->authorize('manage', $server);
+
         $request->validate([
             'name' => 'required|string|max:64|regex:/^[a-zA-Z0-9_]+$/',
             'type' => 'required|in:mysql,postgresql',
@@ -76,6 +82,8 @@ class DatabaseController extends Controller
      */
     public function show(Server $server, Database $database)
     {
+        $this->authorize('view', $server);
+
         $database->load('users');
         return view('databases.show', compact('server', 'database'));
     }
@@ -85,6 +93,8 @@ class DatabaseController extends Controller
      */
     public function destroy(Server $server, Database $database)
     {
+        $this->authorize('delete', $server);
+
         $databaseService = new DatabaseService($server);
         $result = $databaseService->deleteDatabase($database);
 
@@ -101,6 +111,8 @@ class DatabaseController extends Controller
      */
     public function createUser(Server $server, Database $database, Request $request)
     {
+        $this->authorize('manage', $server);
+
         $request->validate([
             'username' => 'required|string|max:32|regex:/^[a-zA-Z0-9_]+$/',
             'password' => 'required|string|min:8|max:255',
@@ -128,6 +140,8 @@ class DatabaseController extends Controller
      */
     public function deleteUser(Server $server, Database $database, DatabaseUser $user)
     {
+        $this->authorize('manage', $server);
+
         $databaseService = new DatabaseService($server);
         $result = $databaseService->deleteUser($user);
 
@@ -143,6 +157,8 @@ class DatabaseController extends Controller
      */
     public function backup(Server $server, Database $database, Request $request)
     {
+        $this->authorize('manage', $server);
+
         $request->validate([
             'backup_name' => 'nullable|string|max:255|regex:/^[a-zA-Z0-9_-]+$/',
         ]);
@@ -168,6 +184,8 @@ class DatabaseController extends Controller
      */
     public function sync(Server $server, Request $request)
     {
+        $this->authorize('manage', $server);
+
         $request->validate([
             'type' => 'required|in:mysql,postgresql',
         ]);

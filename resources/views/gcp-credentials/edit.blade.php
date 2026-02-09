@@ -8,8 +8,8 @@
                     </svg>
                     Voltar às credenciais
                 </a>
-                <h1 class="text-3xl font-bold text-neutral-900">Editar Credencial Google Cloud</h1>
-                <p class="text-neutral-600 mt-1">Atualize as informações da credencial</p>
+                <h1 class="text-3xl font-bold text-neutral-100">Editar Credencial Google Cloud</h1>
+                <p class="text-neutral-400 mt-1">Atualize as informações da credencial</p>
             </div>
 
             <x-card>
@@ -18,18 +18,18 @@
                     @method('PUT')
                     
                     <div>
-                        <label for="name" class="block text-sm font-medium text-neutral-700 mb-2">Nome</label>
+                        <label for="name" class="block text-sm font-medium text-neutral-300 mb-2">Nome</label>
                         <input type="text" name="name" id="name" value="{{ old('name', $gcpCredential->name) }}" required 
-                               class="w-full rounded-lg border border-neutral-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                               class="w-full rounded-lg border border-neutral-600 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                         @error('name')
                             <p class="text-error-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div>
-                        <label for="project_id" class="block text-sm font-medium text-neutral-700 mb-2">Project ID</label>
+                        <label for="project_id" class="block text-sm font-medium text-neutral-300 mb-2">Project ID</label>
                         <input type="text" name="project_id" id="project_id" value="{{ old('project_id', $gcpCredential->project_id) }}" required 
-                               class="w-full rounded-lg border border-neutral-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                               class="w-full rounded-lg border border-neutral-600 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                         <p class="text-neutral-500 text-sm mt-1">ID do projeto Google Cloud</p>
                         @error('project_id')
                             <p class="text-error-600 text-sm mt-1">{{ $message }}</p>
@@ -37,9 +37,9 @@
                     </div>
 
                     <div>
-                        <label for="service_account_json" class="block text-sm font-medium text-neutral-700 mb-2">Service Account JSON</label>
+                        <label for="service_account_json" class="block text-sm font-medium text-neutral-300 mb-2">Service Account JSON</label>
                         <textarea name="service_account_json" id="service_account_json" rows="8" 
-                                  class="w-full rounded-lg border border-neutral-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 font-mono text-sm"
+                                  class="w-full rounded-lg border border-neutral-600 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 font-mono text-sm"
                                   placeholder="Deixe em branco para manter o valor atual">{{ old('service_account_json') }}</textarea>
                         <p class="text-neutral-500 text-sm mt-1">Deixe em branco para manter o JSON atual</p>
                         @error('service_account_json')
@@ -48,9 +48,9 @@
                     </div>
 
                     <div>
-                        <label for="region" class="block text-sm font-medium text-neutral-700 mb-2">Região Padrão</label>
+                        <label for="region" class="block text-sm font-medium text-neutral-300 mb-2">Região Padrão</label>
                         <select name="region" id="region" required 
-                                class="w-full rounded-lg border border-neutral-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                class="w-full rounded-lg border border-neutral-600 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                             @foreach($regions as $code => $name)
                                 <option value="{{ $code }}" {{ old('region', $gcpCredential->region) === $code ? 'selected' : '' }}>{{ $name }}</option>
                             @endforeach
@@ -62,14 +62,14 @@
 
                     <div class="flex items-center">
                         <input type="checkbox" name="is_default" id="is_default" value="1" {{ old('is_default', $gcpCredential->is_default) ? 'checked' : '' }}
-                               class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-neutral-300 rounded">
-                        <label for="is_default" class="ml-2 block text-sm text-neutral-700">
+                               class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-neutral-600 rounded">
+                        <label for="is_default" class="ml-2 block text-sm text-neutral-300">
                             Definir como credencial padrão
                         </label>
                     </div>
 
                     <div class="flex justify-end gap-4 pt-6">
-                        <a href="{{ route('gcp-credentials.index') }}" class="px-6 py-2 border border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 transition-colors">
+                        <a href="{{ route('gcp-credentials.index') }}" class="px-6 py-2 border border-neutral-600 text-neutral-300 rounded-lg hover:bg-neutral-700 transition-colors">
                             Cancelar
                         </a>
                         <button type="submit" class="px-6 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg font-medium transition-colors">

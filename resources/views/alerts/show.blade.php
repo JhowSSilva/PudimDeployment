@@ -265,7 +265,7 @@
                 <!-- Comments List -->
                 <div id="comments-container" class="space-y-4">
                     <div class="text-center py-8 text-neutral-400">
-                        <svg class="mx-auto h-12 w-12 text-neutral-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="mx-auto h-12 w-12 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                         </svg>
                         <p class="mt-2">Carregando comentários...</p>
@@ -276,6 +276,12 @@
     </div>
 
     <script>
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
         function loadComments(commentableType, commentableId) {
             fetch(`/comments/get?commentable_type=${commentableType}&commentable_id=${commentableId}`)
                 .then(response => response.json())
@@ -290,7 +296,7 @@
                     } else {
                         container.innerHTML = `
                             <div class="text-center py-8 text-neutral-400">
-                                <svg class="mx-auto h-12 w-12 text-neutral-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg class="mx-auto h-12 w-12 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                                 </svg>
                                 <p class="mt-2">Nenhum comentário ainda. Seja o primeiro!</p>
@@ -312,16 +318,16 @@
                     <div class="flex gap-3 p-4 bg-neutral-800 rounded-lg border border-neutral-700 hover:border-neutral-600 transition">
                         <div class="flex-shrink-0">
                             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold">
-                                ${comment.user.name.charAt(0).toUpperCase()}
+                                ${escapeHtml(comment.user.name.charAt(0).toUpperCase())}
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-2 mb-2">
-                                <span class="font-medium text-neutral-100">${comment.user.name}</span>
-                                <span class="text-xs text-neutral-400">${comment.time_since}</span>
+                                <span class="font-medium text-neutral-100">${escapeHtml(comment.user.name)}</span>
+                                <span class="text-xs text-neutral-400">${escapeHtml(comment.time_since)}</span>
                                 ${comment.is_edited ? '<span class="text-xs text-neutral-500 italic">(editado)</span>' : ''}
                             </div>
-                            <div class="comment-body text-sm text-neutral-300 whitespace-pre-wrap">${comment.body}</div>
+                            <div class="comment-body text-sm text-neutral-300 whitespace-pre-wrap">${escapeHtml(comment.body)}</div>
                         </div>
                     </div>
                     ${replies}

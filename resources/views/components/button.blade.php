@@ -10,7 +10,7 @@
 ])
 
 @php
-$baseClasses = 'inline-flex items-center justify-center font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+$baseClasses = 'inline-flex items-center justify-center font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-900 disabled:opacity-50 disabled:cursor-not-allowed';
 
 // Size variants
 $sizeClasses = [
@@ -21,11 +21,12 @@ $sizeClasses = [
 
 // Color variants
 $variantClasses = [
-    'primary' => 'bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white shadow-sm hover:shadow-primary focus:ring-primary-500 transform hover:scale-[1.02] active:scale-[0.98]',
-    'secondary' => 'bg-neutral-700 hover:bg-neutral-600 active:bg-neutral-500 text-neutral-100 border border-neutral-600 hover:border-neutral-500 shadow-sm focus:ring-primary-500',
-    'ghost' => 'bg-transparent hover:bg-neutral-800 active:bg-neutral-700 text-neutral-300 hover:text-neutral-100 focus:ring-primary-500',
-    'danger' => 'bg-error-600 hover:bg-error-700 active:bg-error-800 text-white shadow-sm hover:shadow-error focus:ring-error-500 transform hover:scale-[1.02] active:scale-[0.98]',
-    'success' => 'bg-success-600 hover:bg-success-700 active:bg-success-800 text-white shadow-sm hover:shadow-success focus:ring-success-500 transform hover:scale-[1.02] active:scale-[0.98]',
+    'primary' => 'bg-primary-600 hover:bg-primary-500 active:bg-primary-700 text-white shadow-sm hover:shadow-primary focus:ring-primary-500',
+    'secondary' => 'bg-neutral-700 hover:bg-neutral-600 active:bg-neutral-9000 text-neutral-100 border border-neutral-600 hover:border-neutral-500 shadow-sm focus:ring-neutral-500',
+    'ghost' => 'bg-transparent hover:bg-neutral-800 active:bg-neutral-700 text-neutral-300 hover:text-neutral-100 focus:ring-neutral-500',
+    'danger' => 'bg-error-600 hover:bg-error-500 active:bg-error-700 text-white shadow-sm hover:shadow-error focus:ring-error-500',
+    'success' => 'bg-success-600 hover:bg-success-500 active:bg-success-700 text-white shadow-sm hover:shadow-success focus:ring-success-500',
+    'warning' => 'bg-warning-600 hover:bg-warning-500 active:bg-warning-700 text-white shadow-sm hover:shadow-warning focus:ring-warning-500',
 ];
 
 $classes = $baseClasses . ' ' . ($sizeClasses[$size] ?? $sizeClasses['md']) . ' ' . ($variantClasses[$variant] ?? $variantClasses['primary']);

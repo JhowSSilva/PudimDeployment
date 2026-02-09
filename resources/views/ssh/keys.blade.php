@@ -3,13 +3,13 @@
         <h2 class="text-2xl font-bold text-white">
             {{ __('Chaves SSH') }}
         </h2>
-        <button @click="showModal = true" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+        <button @click="showModal = true" class="px-4 py-2 bg-info-600 text-white rounded-lg hover:bg-info-700 transition-colors">
             Nova Chave SSH
         </button>
     </div>
 
     @if(session('success'))
-        <div class="mb-4 p-4 bg-green-900/50 border border-green-500 text-green-200 rounded-lg">
+        <div class="mb-4 p-4 bg-success-900/50 border border-green-500 text-success-300 rounded-lg">
             {{ session('success') }}
         </div>
     @endif
@@ -40,11 +40,11 @@
                             </div>
 
                             <div class="mt-3">
-                                <button @click="showKey{{ $key->id }} = !showKey{{ $key->id }}" class="text-sm text-blue-400 hover:text-blue-300">
+                                <button @click="showKey{{ $key->id }} = !showKey{{ $key->id }}" class="text-sm text-info-400 hover:text-info-300">
                                     <span x-text="showKey{{ $key->id }} ? 'Ocultar chave' : 'Ver chave pública'"></span>
                                 </button>
                                 <div x-show="showKey{{ $key->id }}" x-cloak class="mt-2 p-3 bg-neutral-900 rounded overflow-x-auto">
-                                    <code class="text-xs text-green-400">{{ $key->public_key }}</code>
+                                    <code class="text-xs text-success-400">{{ $key->public_key }}</code>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                             <form action="{{ route('ssh.keys.destroy', $key) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta chave?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700">
+                                <button type="submit" class="px-3 py-1 bg-error-500 text-white rounded text-sm hover:bg-error-700">
                                     Excluir
                                 </button>
                             </form>
@@ -112,22 +112,22 @@
                         <div>
                             <label for="name" class="block text-sm font-medium text-neutral-300 mb-2">Nome</label>
                             <input type="text" name="name" id="name" required
-                                   class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500">
+                                   class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-white focus:ring-2 focus:ring-primary-500">
                         </div>
 
                         <div>
                             <label for="public_key" class="block text-sm font-medium text-neutral-300 mb-2">Chave Pública</label>
                             <textarea name="public_key" id="public_key" rows="5" required placeholder="ssh-rsa AAAAB3..."
-                                      class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-white font-mono text-xs focus:ring-2 focus:ring-blue-500"></textarea>
+                                      class="w-full px-4 py-2 bg-neutral-700 border border-neutral-600 rounded-lg text-white font-mono text-xs focus:ring-2 focus:ring-primary-500"></textarea>
                             <p class="mt-1 text-xs text-neutral-500">Cole o conteúdo da sua chave pública SSH (normalmente ~/.ssh/id_rsa.pub)</p>
                         </div>
                     </div>
 
                     <div class="mt-6 flex gap-3">
-                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        <button type="submit" class="px-6 py-2 bg-info-600 text-white rounded-lg hover:bg-info-700">
                             Adicionar Chave
                         </button>
-                        <button type="button" @click="showModal = false" class="px-6 py-2 bg-neutral-600 text-white rounded-lg hover:bg-neutral-500">
+                        <button type="button" @click="showModal = false" class="px-6 py-2 bg-neutral-600 text-white rounded-lg hover:bg-neutral-7000">
                             Cancelar
                         </button>
                     </div>

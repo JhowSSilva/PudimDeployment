@@ -17,30 +17,30 @@
         </div>
 
         @if(session('success'))
-            <div class="mb-6 rounded-md bg-green-50 p-4">
+            <div class="mb-6 rounded-md bg-success-900/20 p-4">
                 <div class="flex">
                     <div class="flex-shrink-0">
-                        <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                        <svg class="h-5 w-5 text-success-400" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
+                        <p class="text-sm font-medium text-success-400">{{ session('success') }}</p>
                     </div>
                 </div>
             </div>
         @endif
 
         @if($errors->has('delete'))
-            <div class="mb-6 rounded-md bg-red-50 p-4">
+            <div class="mb-6 rounded-md bg-error-900/20 p-4">
                 <div class="flex">
                     <div class="flex-shrink-0">
-                        <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                        <svg class="h-5 w-5 text-error-400" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <p class="text-sm font-medium text-red-800">{{ $errors->first('delete') }}</p>
+                        <p class="text-sm font-medium text-error-400">{{ $errors->first('delete') }}</p>
                     </div>
                 </div>
             </div>
@@ -66,11 +66,11 @@
                                             <div class="flex items-center space-x-2">
                                                 <h3 class="text-lg font-medium text-white truncate">{{ $account->name }}</h3>
                                                 @if($account->is_active)
-                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success-900/30 text-success-400">
                                                         Ativa
                                                     </span>
                                                 @else
-                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-neutral-100 text-neutral-800">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-neutral-700 text-neutral-800">
                                                         Inativa
                                                     </span>
                                                 @endif
@@ -101,7 +101,7 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center space-x-2">
-                                    <a href="{{ route('cloudflare-accounts.edit', $account) }}" class="inline-flex items-center px-3 py-2 border border-neutral-300 shadow-sm text-sm leading-4 font-medium rounded-md text-neutral-700 bg-white hover:bg-neutral-50 transition-colors">
+                                    <a href="{{ route('cloudflare-accounts.edit', $account) }}" class="inline-flex items-center px-3 py-2 border border-neutral-600 shadow-sm text-sm leading-4 font-medium rounded-md text-neutral-300 bg-neutral-800 hover:bg-neutral-700 transition-colors">
                                         <svg class="-ml-0.5 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                         </svg>
@@ -110,7 +110,7 @@
                                     <form action="{{ route('cloudflare-accounts.destroy', $account) }}" method="POST" class="inline" onsubmit="return confirm('Tem certeza que deseja remover esta conta?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="inline-flex items-center px-3 py-2 border border-red-300 shadow-sm text-sm leading-4 font-medium rounded-md text-red-700 bg-white hover:bg-red-50 transition-colors">
+                                        <button type="submit" class="inline-flex items-center px-3 py-2 border border-error-600 shadow-sm text-sm leading-4 font-medium rounded-md text-error-400 bg-neutral-800 hover:bg-error-900/30 transition-colors">
                                             <svg class="-ml-0.5 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                             </svg>
@@ -125,7 +125,7 @@
 
                 <!-- Pagination -->
                 @if($accounts->hasPages())
-                    <div class="bg-white px-4 py-3 border-t border-neutral-200 sm:px-6">
+                    <div class="bg-neutral-800 px-4 py-3 border-t border-neutral-700 sm:px-6">
                         {{ $accounts->links() }}
                     </div>
                 @endif
@@ -134,7 +134,7 @@
                     <svg class="mx-auto h-12 w-12 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-neutral-900">Nenhuma conta cadastrada</h3>
+                    <h3 class="mt-2 text-sm font-medium text-neutral-100">Nenhuma conta cadastrada</h3>
                     <p class="mt-1 text-sm text-neutral-500">Comece adicionando uma nova conta Cloudflare.</p>
                     <div class="mt-6">
                         <a href="{{ route('cloudflare-accounts.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700">

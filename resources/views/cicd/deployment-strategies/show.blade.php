@@ -4,17 +4,17 @@
             Estratégia: {{ $deploymentStrategy->name }}
         </h2>
         <div class="flex gap-2">
-            <a href="{{ route('cicd.deployment-strategies.edit', $deploymentStrategy) }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-blue-300 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
+            <a href="{{ route('cicd.deployment-strategies.edit', $deploymentStrategy) }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-info-600 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
                 Editar
             </a>
-            <a href="{{ route('cicd.deployment-strategies.index') }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-blue-300 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
+            <a href="{{ route('cicd.deployment-strategies.index') }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-info-600 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
                 Voltar
             </a>
         </div>
     </div>
 
     @if(session('success'))
-        <div class="mb-4 p-4 bg-green-900/50 border border-green-500 text-green-200 rounded-lg">
+        <div class="mb-4 p-4 bg-success-900/50 border border-green-500 text-success-300 rounded-lg">
             {{ session('success') }}
         </div>
     @endif
@@ -26,9 +26,9 @@
                 <div>
                     <span class="text-neutral-400">Tipo:</span>
                     <span class="ml-2 px-3 py-1 rounded text-xs font-semibold
-                        {{ $deploymentStrategy->type === 'blue_green' ? 'bg-blue-900 text-blue-300' : '' }}
-                        {{ $deploymentStrategy->type === 'canary' ? 'bg-yellow-900 text-yellow-300' : '' }}
-                        {{ $deploymentStrategy->type === 'rolling' ? 'bg-green-900 text-green-300' : '' }}
+                        {{ $deploymentStrategy->type === 'blue_green' ? 'bg-info-900 text-info-300' : '' }}
+                        {{ $deploymentStrategy->type === 'canary' ? 'bg-warning-900 text-warning-300' : '' }}
+                        {{ $deploymentStrategy->type === 'rolling' ? 'bg-success-900 text-success-300' : '' }}
                         {{ $deploymentStrategy->type === 'recreate' ? 'bg-neutral-600 text-neutral-300' : '' }}">
                         {{ ucfirst(str_replace('_', ' ', $deploymentStrategy->type)) }}
                     </span>
@@ -50,16 +50,16 @@
             <h3 class="text-lg font-semibold text-white mb-4">Configurações</h3>
             
             @if($deploymentStrategy->isBlueGreen())
-                <div class="p-4 bg-blue-900/20 border border-blue-700 rounded-lg">
-                    <h4 class="text-blue-300 font-semibold mb-3">Blue-Green Deployment</h4>
+                <div class="p-4 bg-info-900/20 border border-blue-700 rounded-lg">
+                    <h4 class="text-info-300 font-semibold mb-3">Blue-Green Deployment</h4>
                     <div>
                         <span class="text-neutral-400">Tempo de espera:</span>
                         <span class="text-white ml-2">{{ $deploymentStrategy->config['blue_green']['wait_time'] ?? 30 }}s</span>
                     </div>
                 </div>
             @elseif($deploymentStrategy->isCanary())
-                <div class="p-4 bg-yellow-900/20 border border-yellow-700 rounded-lg">
-                    <h4 class="text-yellow-300 font-semibold mb-3">Canary Deployment</h4>
+                <div class="p-4 bg-warning-900/20 border border-yellow-700 rounded-lg">
+                    <h4 class="text-warning-300 font-semibold mb-3">Canary Deployment</h4>
                     <div class="space-y-2">
                         <div>
                             <span class="text-neutral-400">Percentage inicial:</span>
@@ -76,8 +76,8 @@
                     </div>
                 </div>
             @elseif($deploymentStrategy->isRolling())
-                <div class="p-4 bg-green-900/20 border border-green-700 rounded-lg">
-                    <h4 class="text-green-300 font-semibold mb-3">Rolling Deployment</h4>
+                <div class="p-4 bg-success-900/20 border border-green-700 rounded-lg">
+                    <h4 class="text-success-300 font-semibold mb-3">Rolling Deployment</h4>
                     <div>
                         <span class="text-neutral-400">Tamanho do lote:</span>
                         <span class="text-white ml-2">{{ $deploymentStrategy->config['rolling']['max_batch_size'] ?? 1 }}</span>

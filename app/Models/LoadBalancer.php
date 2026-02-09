@@ -41,6 +41,14 @@ class LoadBalancer extends Model
     ];
 
     protected $casts = [
+        'port' => 'integer',
+        'health_check_interval' => 'integer',
+        'health_check_timeout' => 'integer',
+        'healthy_threshold' => 'integer',
+        'unhealthy_threshold' => 'integer',
+        'session_ttl' => 'integer',
+        'total_requests' => 'integer',
+        'failed_requests' => 'integer',
         'ssl_enabled' => 'boolean',
         'health_check_enabled' => 'boolean',
         'sticky_sessions' => 'boolean',

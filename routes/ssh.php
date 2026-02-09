@@ -5,7 +5,7 @@ use App\Http\Controllers\SSHKeyController;
 use Illuminate\Support\Facades\Route;
 
 // Rotas de Terminal SSH (requerem autenticação)
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     // Views
     Route::get('/ssh/terminal', [SSHTerminalController::class, 'index'])->name('ssh.terminal');
     Route::get('/ssh/keys', [SSHTerminalController::class, 'keys'])->name('ssh.keys');

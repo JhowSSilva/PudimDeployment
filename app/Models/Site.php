@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Crypt;
 
 class Site extends Model
@@ -160,15 +161,20 @@ class Site extends Model
         return $this->hasMany(DockerContainer::class);
     }
 
-    public function activeSslCertificate(): ?SSLCertificate
+    public function activeSslCertificate(): HasOne
     {
-        return $this->sslCertificates()->where('status', 'active')->first();
+        return $this->hasOne(SSLCertificate::class)->ofMany(
+            ['id' => 'max'],
+            function ($query) {
+                $query->where('status', 'active');
+            }
+        );
     }
 
     // Helper methods
-    public function latestDeployment(): ?Deployment
+    public function latestDeployment(): HasOne
     {
-        return $this->deployments()->latest()->first();
+        return $this->hasOne(Deployment::class)->latestOfMany();
     }
 
     public function successfulDeployments(): HasMany

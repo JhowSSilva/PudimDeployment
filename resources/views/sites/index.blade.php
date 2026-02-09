@@ -19,13 +19,13 @@
                 </div>
                 <div class="flex items-center space-x-3">
                     <!-- View Mode Toggle -->
-                    <div class="flex items-center bg-white border border-neutral-300 rounded-lg p-1">
-                        <button @click="viewMode = 'grid'" :class="viewMode === 'grid' ? 'bg-neutral-100 text-neutral-900' : 'text-neutral-600 hover:text-neutral-900'" class="px-3 py-1.5 rounded-md transition-all duration-150">
+                    <div class="flex items-center bg-neutral-800 border border-neutral-700 rounded-lg p-1">
+                        <button @click="viewMode = 'grid'" :class="viewMode === 'grid' ? 'bg-neutral-700 text-neutral-100' : 'text-neutral-400 hover:text-neutral-100'" class="px-3 py-1.5 rounded-md transition-all duration-150">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
                             </svg>
                         </button>
-                        <button @click="viewMode = 'list'" :class="viewMode === 'list' ? 'bg-neutral-100 text-neutral-900' : 'text-neutral-600 hover:text-neutral-900'" class="px-3 py-1.5 rounded-md transition-all duration-150">
+                        <button @click="viewMode = 'list'" :class="viewMode === 'list' ? 'bg-neutral-700 text-neutral-100' : 'text-neutral-400 hover:text-neutral-100'" class="px-3 py-1.5 rounded-md transition-all duration-150">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                             </svg>
@@ -158,7 +158,7 @@
                         <!-- SSL & Deployment Status -->
                         <div class="p-6 bg-neutral-900/50">
                             <div class="flex items-center justify-between mb-3">
-                                <span class="text-xs font-medium text-neutral-600">SSL Certificate</span>
+                                <span class="text-xs font-medium text-neutral-400">SSL Certificate</span>
                                 @if($site->ssl_enabled ?? false)
                                     <x-badge variant="success" size="sm">Ativo</x-badge>
                                 @else
@@ -168,7 +168,7 @@
                             
                             @if($site->latest_deployment_at)
                                 <div class="flex items-center justify-between">
-                                    <span class="text-xs font-medium text-neutral-600">Último Deploy</span>
+                                    <span class="text-xs font-medium text-neutral-400">Último Deploy</span>
                                     <span class="text-xs text-neutral-500">{{ $site->latest_deployment_at->diffForHumans() }}</span>
                                 </div>
                             @else
@@ -179,7 +179,7 @@
                         </div>
                         
                         <!-- Actions -->
-                        <div class="p-4 bg-white border-t border-neutral-200">
+                        <div class="p-4 bg-neutral-800 border-t border-neutral-700">
                             <div class="flex items-center justify-between space-x-2">
                                 <x-button href="{{ route('sites.show', $site) }}" variant="secondary" size="sm" class="flex-1">
                                     Ver Detalhes
@@ -191,7 +191,7 @@
                                         </svg>
                                     </x-button>
                                 @endif
-                                <button class="p-2 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-all duration-150" title="Mais ações">
+                                <button class="p-2 text-neutral-400 hover:text-neutral-100 hover:bg-neutral-700 rounded-lg transition-all duration-150" title="Mais ações">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
                                     </svg>
@@ -207,36 +207,36 @@
             <div x-show="viewMode === 'list'" x-cloak>
                 <x-card padding="false">
                     <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-neutral-200">
-                            <thead class="bg-neutral-50">
+                        <table class="min-w-full divide-y divide-neutral-700">
+                            <thead class="bg-neutral-900">
                                 <tr>
-                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">Site</th>
-                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">Servidor</th>
-                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">Git</th>
-                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">Status</th>
-                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">SSL</th>
-                                    <th class="px-6 py-3.5 text-right text-xs font-semibold text-neutral-600 uppercase tracking-wider">Ações</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-400 uppercase tracking-wider">Site</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-400 uppercase tracking-wider">Servidor</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-400 uppercase tracking-wider">Git</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-400 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-400 uppercase tracking-wider">SSL</th>
+                                    <th class="px-6 py-3.5 text-right text-xs font-semibold text-neutral-400 uppercase tracking-wider">Ações</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-neutral-100 bg-white">
+                            <tbody class="divide-y divide-neutral-700 bg-neutral-800">
                                 @foreach($sites as $site)
-                                    <tr class="hover:bg-neutral-50 transition-colors duration-150">
+                                    <tr class="hover:bg-neutral-700 transition-colors duration-150">
                                         <td class="px-6 py-4">
                                             <div class="flex items-center">
-                                                <div class="flex-shrink-0 w-10 h-10 bg-neutral-100 rounded-lg flex items-center justify-center">
-                                                    <svg class="w-5 h-5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <div class="flex-shrink-0 w-10 h-10 bg-neutral-700 rounded-lg flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
                                                     </svg>
                                                 </div>
                                                 <div class="ml-3 max-w-xs">
-                                                    <p class="text-sm font-semibold text-neutral-900 truncate">{{ $site->name }}</p>
+                                                    <p class="text-sm font-semibold text-neutral-100 truncate">{{ $site->name }}</p>
                                                     <a href="http://{{ $site->domain }}" target="_blank" class="text-sm text-primary-600 hover:text-primary-700 truncate block">
                                                         {{ $site->domain }}
                                                     </a>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-900">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-100">
                                             {{ $site->server->name }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">

@@ -4,17 +4,17 @@
             Integração: {{ $integration->name }}
         </h2>
         <div class="flex gap-2">
-            <a href="{{ route('cicd.integrations.edit', $integration) }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-blue-300 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
+            <a href="{{ route('cicd.integrations.edit', $integration) }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-info-600 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
                 Editar
             </a>
-            <a href="{{ route('cicd.integrations.index') }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-blue-300 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
+            <a href="{{ route('cicd.integrations.index') }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-info-600 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
                 Voltar
             </a>
         </div>
     </div>
 
     @if(session('success'))
-        <div class="mb-4 p-4 bg-green-900/50 border border-green-500 text-green-200 rounded-lg">
+        <div class="mb-4 p-4 bg-success-900/50 border border-green-500 text-success-300 rounded-lg">
             {{ session('success') }}
         </div>
     @endif
@@ -23,7 +23,7 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div class="bg-neutral-800 p-4 rounded-lg border border-neutral-700">
             <div class="text-neutral-400 text-sm">Status</div>
-            <div class="text-lg font-semibold {{ $integration->status === 'active' ? 'text-green-400' : 'text-neutral-400' }}">
+            <div class="text-lg font-semibold {{ $integration->status === 'active' ? 'text-success-400' : 'text-neutral-400' }}">
                 {{ ucfirst($integration->status) }}
             </div>
         </div>
@@ -112,7 +112,7 @@
                 <h3 class="text-lg font-semibold text-white mb-4">Eventos Configurados</h3>
                 <div class="flex flex-wrap gap-2">
                     @foreach($integration->events as $event)
-                        <span class="px-3 py-1 bg-blue-900 text-blue-300 rounded text-sm">
+                        <span class="px-3 py-1 bg-info-900 text-info-300 rounded text-sm">
                             {{ ucfirst(str_replace('_', ' ', $event)) }}
                         </span>
                     @endforeach

@@ -21,7 +21,7 @@
                     </p>
                     <div class="mt-6">
                         <a href="{{ route('servers.create') }}" 
-                           class="inline-flex items-center px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition shadow-lg shadow-amber-600/20">
+                           class="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition shadow-lg shadow-primary-600/20">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
@@ -34,11 +34,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($servers as $server)
                         <a href="{{ route('terminal.show', $server) }}" 
-                           class="group block bg-white rounded-lg shadow hover:shadow-xl transition-all p-6 border border-neutral-200 hover:border-amber-600">
+                           class="group block bg-neutral-800 rounded-lg shadow hover:shadow-xl transition-all p-6 border border-neutral-700 hover:border-primary-600">
                             <div class="flex items-start gap-4">
                                 <!-- Icon -->
                                 <div class="flex-shrink-0">
-                                    <div class="w-12 h-12 bg-neutral-900 rounded-lg flex items-center justify-center group-hover:bg-amber-600 transition-colors">
+                                    <div class="w-12 h-12 bg-neutral-900 rounded-lg flex items-center justify-center group-hover:bg-primary-600 transition-colors">
                                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                         </svg>
@@ -47,7 +47,7 @@
 
                                 <!-- Content -->
                                 <div class="flex-1 min-w-0">
-                                    <h3 class="text-lg font-semibold text-white group-hover:text-amber-400 transition-colors truncate">
+                                    <h3 class="text-lg font-semibold text-white group-hover:text-primary-400 transition-colors truncate">
                                         {{ $server->name }}
                                     </h3>
                                     <p class="text-sm text-neutral-300 mt-1">
@@ -56,13 +56,13 @@
                                     <div class="mt-3 flex items-center gap-3">
                                         <!-- Status -->
                                         <span class="inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full
-                                            {{ $server->status === 'online' ? 'bg-green-100 text-green-800' : '' }}
-                                            {{ $server->status === 'offline' ? 'bg-red-100 text-red-800' : '' }}
-                                            {{ $server->status === 'provisioning' ? 'bg-yellow-100 text-yellow-800' : '' }}">
+                                            {{ $server->status === 'online' ? 'bg-success-900/30 text-success-400' : '' }}
+                                            {{ $server->status === 'offline' ? 'bg-error-900/30 text-error-400' : '' }}
+                                            {{ $server->status === 'provisioning' ? 'bg-warning-900/30 text-warning-400' : '' }}">
                                             <span class="w-1.5 h-1.5 rounded-full mr-1.5
-                                                {{ $server->status === 'online' ? 'bg-green-500' : '' }}
-                                                {{ $server->status === 'offline' ? 'bg-red-500' : '' }}
-                                                {{ $server->status === 'provisioning' ? 'bg-yellow-500' : '' }}"></span>
+                                                {{ $server->status === 'online' ? 'bg-success-500' : '' }}
+                                                {{ $server->status === 'offline' ? 'bg-error-500' : '' }}
+                                                {{ $server->status === 'provisioning' ? 'bg-warning-500' : '' }}"></span>
                                             {{ ucfirst($server->status) }}
                                         </span>
 
@@ -83,7 +83,7 @@
 
                                 <!-- Arrow Icon -->
                                 <div class="flex-shrink-0">
-                                    <svg class="w-5 h-5 text-neutral-400 group-hover:text-amber-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 text-neutral-400 group-hover:text-primary-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                     </svg>
                                 </div>

@@ -5,20 +5,20 @@
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-4">
                     <a href="{{ route('terminal.index') }}" 
-                       class="p-2 rounded-lg hover:bg-neutral-100 transition-colors text-neutral-600 hover:text-neutral-900">
+                       class="p-2 rounded-lg hover:bg-neutral-700 transition-colors text-neutral-400 hover:text-neutral-100">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
                     </a>
                     <div>
-                        <h2 class="text-xl font-bold text-neutral-900">{{ $server->name }}</h2>
-                        <p class="text-sm text-neutral-600">{{ $server->ip_address }}</p>
+                        <h2 class="text-xl font-bold text-neutral-100">{{ $server->name }}</h2>
+                        <p class="text-sm text-neutral-400">{{ $server->ip_address }}</p>
                     </div>
                 </div>
                 
                 <div class="flex items-center gap-2">
-                    <span class="inline-flex items-center px-3 py-1.5 text-sm font-semibold rounded-lg bg-green-100 text-green-800">
-                        <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                    <span class="inline-flex items-center px-3 py-1.5 text-sm font-semibold rounded-lg bg-success-900/30 text-success-400">
+                        <span class="w-2 h-2 rounded-full bg-success-500 mr-2"></span>
                         Connected
                     </span>
                 </div>
@@ -30,7 +30,7 @@
             </div>
 
             <!-- Instructions -->
-            <div class="mt-4 flex items-center justify-between text-sm text-neutral-600">
+            <div class="mt-4 flex items-center justify-between text-sm text-neutral-400">
                 <div class="flex items-center gap-4">
                     <span>
                         <kbd class="px-2 py-1 bg-neutral-200 rounded text-xs font-mono">Ctrl + C</kbd> 
@@ -45,7 +45,7 @@
                         Autocompletar
                     </span>
                 </div>
-                <div class="text-amber-600 font-semibold">
+                <div class="text-primary-600 font-semibold">
                     SSH Terminal
                 </div>
             </div>

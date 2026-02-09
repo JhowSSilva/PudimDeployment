@@ -3,7 +3,7 @@
         <h2 class="text-2xl font-bold text-white">
             {{ __('Integrações') }}
         </h2>
-        <a href="{{ route('cicd.integrations.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
+        <a href="{{ route('cicd.integrations.create') }}" class="inline-flex items-center px-4 py-2 bg-info-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-info-700 active:bg-info-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
             </svg>
@@ -12,7 +12,7 @@
     </div>
 
     @if(session('success'))
-        <div class="mb-4 p-4 bg-green-900/50 border border-green-500 text-green-200 rounded-lg">
+        <div class="mb-4 p-4 bg-success-900/50 border border-green-500 text-success-300 rounded-lg">
             {{ session('success') }}
         </div>
     @endif
@@ -26,7 +26,7 @@
                             <div class="flex items-center gap-2 mb-2">
                                 <h3 class="text-lg font-semibold text-white">{{ $integration->name }}</h3>
                                 @if($integration->status === 'active')
-                                    <span class="px-2 py-1 rounded text-xs bg-green-900 text-green-300">Ativo</span>
+                                    <span class="px-2 py-1 rounded text-xs bg-success-900 text-success-300">Ativo</span>
                                 @else
                                     <span class="px-2 py-1 rounded text-xs bg-neutral-600 text-neutral-400">Inativo</span>
                                 @endif
@@ -37,9 +37,9 @@
                                     {{ $integration->provider === 'discord' ? 'bg-primary-900 text-primary-300' : '' }}
                                     {{ $integration->provider === 'github' ? 'bg-neutral-600 text-neutral-300' : '' }}
                                     {{ $integration->provider === 'gitlab' ? 'bg-orange-900 text-orange-300' : '' }}
-                                    {{ $integration->provider === 'email' ? 'bg-blue-900 text-blue-300' : '' }}
-                                    {{ $integration->provider === 'webhook' ? 'bg-green-900 text-green-300' : '' }}
-                                    {{ $integration->provider === 'custom' ? 'bg-amber-900 text-amber-300' : '' }}">
+                                    {{ $integration->provider === 'email' ? 'bg-info-900 text-info-300' : '' }}
+                                    {{ $integration->provider === 'webhook' ? 'bg-success-900 text-success-300' : '' }}
+                                    {{ $integration->provider === 'custom' ? 'bg-primary-900 text-primary-300' : '' }}">
                                     {{ ucfirst($integration->provider) }}
                                 </span>
                             </div>
@@ -48,17 +48,17 @@
                         <div class="ml-4 flex gap-2">
                             <form action="{{ route('cicd.integrations.toggle', $integration) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="px-3 py-1 {{ $integration->status === 'active' ? 'bg-yellow-600' : 'bg-green-600' }} text-white rounded text-sm hover:opacity-80">
+                                <button type="submit" class="px-3 py-1 {{ $integration->status === 'active' ? 'bg-warning-500' : 'bg-success-500' }} text-white rounded text-sm hover:opacity-80">
                                     {{ $integration->status === 'active' ? 'Desativar' : 'Ativar' }}
                                 </button>
                             </form>
                             <form action="{{ route('cicd.integrations.test', $integration) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+                                <button type="submit" class="px-3 py-1 bg-info-600 text-white rounded text-sm hover:bg-info-700">
                                     Testar
                                 </button>
                             </form>
-                            <a href="{{ route('cicd.integrations.show', $integration) }}" class="px-3 py-1 bg-neutral-600 text-white rounded text-sm hover:bg-neutral-500">
+                            <a href="{{ route('cicd.integrations.show', $integration) }}" class="px-3 py-1 bg-neutral-600 text-white rounded text-sm hover:bg-neutral-7000">
                                 Detalhes
                             </a>
                         </div>
@@ -70,7 +70,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
                     <p>Nenhuma integração criada ainda.</p>
-                    <a href="{{ route('cicd.integrations.create') }}" class="text-blue-400 hover:text-blue-300 mt-2 inline-block">
+                    <a href="{{ route('cicd.integrations.create') }}" class="text-info-400 hover:text-info-300 mt-2 inline-block">
                         Criar sua primeira integração →
                     </a>
                 </div>

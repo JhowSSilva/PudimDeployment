@@ -204,7 +204,7 @@ class StackInstallationServiceTest extends TestCase
         $result = $this->stackService->install($server, []);
         
         $this->assertEquals('success', $result['status']);
-        $this->assertStringContains('PHP stack installed successfully', $result['message']);
+        $this->assertStringContainsString('PHP stack installed successfully', $result['message']);
     }
 
     public function test_installation_with_nodejs_language()
@@ -229,7 +229,7 @@ class StackInstallationServiceTest extends TestCase
         $result = $this->stackService->install($server, []);
         
         $this->assertEquals('success', $result['status']);
-        $this->assertStringContains('Node.js stack installed successfully', $result['message']);
+        $this->assertStringContainsString('Node.js stack installed successfully', $result['message']);
     }
 
     public function test_installation_with_python_language()
@@ -254,6 +254,6 @@ class StackInstallationServiceTest extends TestCase
         $result = $this->stackService->install($server, []);
         
         $this->assertEquals('success', $result['status']);
-        $this->assertStringContains('Python stack installed successfully', $result['message']);
+        $this->assertStringContainsString('Python stack installed successfully', $result['message']);
     }
 }

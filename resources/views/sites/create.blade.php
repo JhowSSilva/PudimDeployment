@@ -60,7 +60,7 @@
                         @endif
                     </select>
                     @error('server_id')
-                        <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-error-400">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -71,7 +71,7 @@
                         class="mt-1 block w-full rounded-md border-neutral-600 bg-neutral-900 text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm @error('name') border-red-500 @enderror"
                         placeholder="Minha Aplicação">
                     @error('name')
-                        <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-error-400">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -82,7 +82,7 @@
                         class="mt-1 block w-full rounded-md border-neutral-600 bg-neutral-900 text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm @error('domain') border-red-500 @enderror"
                         placeholder="exemplo.com.br">
                     @error('domain')
-                        <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-error-400">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -132,7 +132,7 @@
                         placeholder="https://github.com/usuario/projeto.git">
                     <p class="mt-1 text-xs text-neutral-400">Preenche automaticamente ao selecionar um repositório GitHub acima</p>
                     @error('git_repository')
-                        <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-error-400">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -143,7 +143,7 @@
                         <input type="text" name="git_branch" id="git_branch" value="{{ old('git_branch', 'main') }}"
                             class="mt-1 block w-full rounded-md border-neutral-600 bg-neutral-900 text-white shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm @error('git_branch') border-red-500 @enderror">
                         @error('git_branch')
-                            <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-error-400">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -159,7 +159,7 @@
                             <option value="7.4" {{ old('php_version') == '7.4' ? 'selected' : '' }}>PHP 7.4</option>
                         </select>
                         @error('php_version')
-                            <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-error-400">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -172,7 +172,7 @@
                         placeholder="ghp_xxxxxxxxxxxx">
                     <p class="mt-1 text-xs text-neutral-400">Necessário para repositórios privados</p>
                     @error('git_token')
-                        <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-error-400">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -184,7 +184,7 @@
                         placeholder="/public">
                     <p class="mt-1 text-xs text-neutral-400">Pasta pública do projeto (geralmente /public para Laravel)</p>
                     @error('document_root')
-                        <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-error-400">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -210,7 +210,7 @@
                                 <a href="{{ route('cloudflare-accounts.create') }}" target="_blank" class="text-primary-400 hover:text-primary-300 underline">Adicionar nova conta</a>
                             </p>
                             @error('cloudflare_account_id')
-                                <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+                                <p class="mt-1 text-sm text-error-400">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -269,15 +269,15 @@
                             </div>
                         </div>
 
-                        <div class="bg-blue-900/20 border-l-4 border-blue-500 p-4">
+                        <div class="bg-info-900/20 border-l-4 border-blue-500 p-4">
                             <div class="flex">
                                 <div class="flex-shrink-0">
-                                    <svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg class="h-5 w-5 text-info-400" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
                                     </svg>
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm text-blue-300">
+                                    <p class="text-sm text-info-300">
                                         <strong>Cloudflare API Token necessário:</strong> Configure CLOUDFLARE_API_TOKEN no arquivo .env
                                     </p>
                                 </div>

@@ -34,6 +34,15 @@ class HealthCheck extends Model
     ];
 
     protected $casts = [
+        'port' => 'integer',
+        'timeout' => 'integer',
+        'expected_status' => 'integer',
+        'response_time' => 'integer',
+        'consecutive_successes' => 'integer',
+        'consecutive_failures' => 'integer',
+        'total_checks' => 'integer',
+        'successful_checks' => 'integer',
+        'failed_checks' => 'integer',
         'uptime_percentage' => 'decimal:2',
         'last_checked_at' => 'datetime',
         'last_success_at' => 'datetime',

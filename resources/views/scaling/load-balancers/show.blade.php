@@ -4,17 +4,17 @@
             {{ $loadBalancer->name }}
         </h2>
         <div class="flex gap-2">
-            <a href="{{ route('scaling.load-balancers.edit', $loadBalancer) }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            <a href="{{ route('scaling.load-balancers.edit', $loadBalancer) }}" class="px-4 py-2 bg-info-600 text-white rounded-lg hover:bg-info-700">
                 Editar
             </a>
-            <a href="{{ route('scaling.load-balancers.index') }}" class="px-4 py-2 bg-neutral-600 text-white rounded-lg hover:bg-neutral-500">
+            <a href="{{ route('scaling.load-balancers.index') }}" class="px-4 py-2 bg-neutral-600 text-white rounded-lg hover:bg-neutral-7000">
                 Voltar
             </a>
         </div>
     </div>
 
     @if(session('success'))
-        <div class="mb-4 p-4 bg-green-900/50 border border-green-500 text-green-200 rounded-lg">
+        <div class="mb-4 p-4 bg-success-900/50 border border-green-500 text-success-300 rounded-lg">
             {{ session('success') }}
         </div>
     @endif
@@ -25,7 +25,7 @@
             <div class="space-y-3 text-sm">
                 <div class="flex justify-between">
                     <span class="text-neutral-400">Status:</span>
-                    <span class="px-3 py-1 rounded text-xs font-semibold {{ $loadBalancer->status === 'active' ? 'bg-green-900 text-green-300' : 'bg-red-900 text-red-300' }}">
+                    <span class="px-3 py-1 rounded text-xs font-semibold {{ $loadBalancer->status === 'active' ? 'bg-success-900 text-success-300' : 'bg-error-900 text-error-300' }}">
                         {{ ucfirst($loadBalancer->status) }}
                     </span>
                 </div>
@@ -65,7 +65,7 @@
                         <span class="text-white">{{ $loadBalancer->serverPool->servers->count() }}</span>
                     </div>
                     <div class="mt-4">
-                        <a href="{{ route('scaling.pools.show', $loadBalancer->serverPool) }}" class="text-blue-400 hover:text-blue-300 text-sm">
+                        <a href="{{ route('scaling.pools.show', $loadBalancer->serverPool) }}" class="text-info-400 hover:text-info-300 text-sm">
                             Ver detalhes do pool →
                         </a>
                     </div>

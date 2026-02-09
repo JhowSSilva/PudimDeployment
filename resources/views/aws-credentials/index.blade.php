@@ -27,9 +27,9 @@
         @endif
 
         @if($errors->any())
-            <div class="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 text-red-700 px-5 py-4 rounded-xl mb-6 shadow-sm">
+            <div class="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 text-error-400 px-5 py-4 rounded-xl mb-6 shadow-sm">
                 <div class="flex items-center">
-                    <div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center mr-3">
+                    <div class="w-8 h-8 rounded-full bg-error-500 flex items-center justify-center mr-3">
                         <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"></path>
                         </svg>
@@ -61,10 +61,10 @@
         @else
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($credentials as $credential)
-                    <div class="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-neutral-200 hover:border-primary-300 transform hover:scale-[1.02]">
+                    <div class="group bg-neutral-800/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-neutral-700 hover:border-primary-300 transform hover:scale-[1.02]">
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex-1">
-                                <h3 class="text-lg font-bold text-neutral-900 mb-1">{{ $credential->name }}</h3>
+                                <h3 class="text-lg font-bold text-neutral-100 mb-1">{{ $credential->name }}</h3>
                                 <div class="flex items-center text-sm text-neutral-500">
                                     <svg class="w-4 h-4 mr-1.5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
@@ -74,27 +74,27 @@
                                 </div>
                             </div>
                             @if($credential->is_active)
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 border border-green-200">
-                                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5 animate-pulse"></span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-green-100 to-emerald-100 text-success-400 border border-green-200">
+                                    <span class="w-1.5 h-1.5 bg-success-500 rounded-full mr-1.5 animate-pulse"></span>
                                     Ativa
                                 </span>
                             @else
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-neutral-100 text-neutral-600 border border-neutral-200">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-neutral-700 text-neutral-400 border border-neutral-700">
                                     Inativa
                                 </span>
                             @endif
                         </div>
 
                         @if($credential->description)
-                            <p class="text-sm text-neutral-600 mb-4 line-clamp-2">{{ $credential->description }}</p>
+                            <p class="text-sm text-neutral-400 mb-4 line-clamp-2">{{ $credential->description }}</p>
                         @endif
 
                         <div class="space-y-3 mb-5">
-                            <div class="flex items-center text-sm bg-neutral-50 rounded-lg p-2.5">
+                            <div class="flex items-center text-sm bg-neutral-900 rounded-lg p-2.5">
                                 <svg class="w-4 h-4 text-primary-500 mr-2.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
                                 </svg>
-                                <code class="text-xs bg-white px-2.5 py-1 rounded font-mono text-neutral-700 border border-neutral-200">{{ $credential->masked_access_key }}</code>
+                                <code class="text-xs bg-neutral-700 px-2.5 py-1 rounded font-mono text-neutral-300 border border-neutral-700">{{ $credential->masked_access_key }}</code>
                             </div>
                             
                             <div class="flex items-center text-sm">
@@ -104,8 +104,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <span class="text-neutral-900 font-semibold">{{ $credential->servers_count }}</span>
-                                    <span class="text-neutral-600 ml-1">servidor(es)</span>
+                                    <span class="text-neutral-100 font-semibold">{{ $credential->servers_count }}</span>
+                                    <span class="text-neutral-400 ml-1">servidor(es)</span>
                                 </div>
                             </div>
 
@@ -120,13 +120,13 @@
                         </div>
 
                         <div class="flex space-x-2 pt-4 border-t border-neutral-100">
-                            <a href="{{ route('aws-credentials.edit', $credential) }}" class="flex-1 text-center bg-neutral-100 hover:bg-neutral-200 text-neutral-700 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all">
+                            <a href="{{ route('aws-credentials.edit', $credential) }}" class="flex-1 text-center bg-neutral-700 hover:bg-neutral-200 text-neutral-300 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all">
                                 Editar
                             </a>
                             <form action="{{ route('aws-credentials.destroy', $credential) }}" method="POST" class="flex-1" onsubmit="return confirm('Tem certeza que deseja excluir esta credencial?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="w-full bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all">
+                                <button type="submit" class="w-full bg-error-900/20 hover:bg-error-900/30 text-error-400 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all">
                                     Excluir
                                 </button>
                             </form>

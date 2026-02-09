@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth'])->prefix('backups')->name('backups.')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('backups')->name('backups.')->group(function () {
     
     // Backup Configurations
     Route::get('/', [BackupConfigurationController::class, 'index'])->name('index');

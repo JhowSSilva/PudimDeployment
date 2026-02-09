@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Crypt;
 
 class Server extends Model
@@ -82,6 +83,9 @@ class Server extends Model
 
     protected $casts = [
         'ssh_port' => 'integer',
+        'cpu_cores' => 'integer',
+        'ram_mb' => 'integer',
+        'disk_gb' => 'integer',
         'last_ping_at' => 'datetime',
         'metadata' => 'array',
         'disk_size' => 'integer',
@@ -220,9 +224,9 @@ class Server extends Model
         return $this->architecture === 'arm64';
     }
 
-    public function latestMetric(): ?ServerMetric
+    public function latestMetric(): HasOne
     {
-        return $this->metrics()->latest()->first();
+        return $this->hasOne(ServerMetric::class)->latestOfMany();
     }
 
     public function getFormattedMonthlyCostAttribute(): string

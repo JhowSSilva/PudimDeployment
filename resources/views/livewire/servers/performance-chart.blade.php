@@ -1,8 +1,8 @@
-<div class="bg-white rounded-lg shadow p-6">
+<div class="bg-neutral-800 rounded-lg shadow p-6">
     <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold text-neutral-900">Performance Chart</h3>
+        <h3 class="text-lg font-semibold text-neutral-100">Performance Chart</h3>
         <div class="flex items-center space-x-2">
-            <select wire:model.live="period" class="text-sm border-neutral-300 rounded-md">
+            <select wire:model.live="period" class="text-sm border-neutral-600 rounded-md">
                 <option value="24h">Last 24 Hours</option>
                 <option value="7d">Last 7 Days</option>
             </select>

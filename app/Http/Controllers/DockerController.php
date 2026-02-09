@@ -20,6 +20,8 @@ class DockerController extends Controller
      */
     public function index(Request $request, Server $server)
     {
+        $this->authorize('view', $server);
+
         $all = $request->boolean('all', false);
 
         try {
@@ -43,6 +45,8 @@ class DockerController extends Controller
      */
     public function tracked(Server $server)
     {
+        $this->authorize('view', $server);
+
         $containers = DockerContainer::where('server_id', $server->id)
             ->with(['site'])
             ->orderBy('created_at', 'desc')
@@ -59,6 +63,8 @@ class DockerController extends Controller
      */
     public function sync(Server $server)
     {
+        $this->authorize('manage', $server);
+
         try {
             $synced = $this->dockerManager->syncContainers($server);
 
@@ -81,6 +87,8 @@ class DockerController extends Controller
      */
     public function store(Request $request, Server $server)
     {
+        $this->authorize('manage', $server);
+
         $validated = $request->validate([
             'site_id' => 'nullable|exists:sites,id',
             'name' => 'required|string',
@@ -123,6 +131,8 @@ class DockerController extends Controller
      */
     public function show(DockerContainer $container)
     {
+        $this->authorize('view', $container->server);
+
         $container->load(['server', 'site']);
 
         return response()->json([
@@ -136,6 +146,8 @@ class DockerController extends Controller
      */
     public function start(DockerContainer $container)
     {
+        $this->authorize('manage', $container->server);
+
         try {
             $this->dockerManager->startContainer($container);
 
@@ -158,6 +170,8 @@ class DockerController extends Controller
      */
     public function stop(DockerContainer $container)
     {
+        $this->authorize('manage', $container->server);
+
         try {
             $timeout = request()->input('timeout', 10);
             $this->dockerManager->stopContainer($container, $timeout);
@@ -181,6 +195,8 @@ class DockerController extends Controller
      */
     public function restart(DockerContainer $container)
     {
+        $this->authorize('manage', $container->server);
+
         try {
             $timeout = request()->input('timeout', 10);
             $this->dockerManager->restartContainer($container, $timeout);
@@ -204,6 +220,8 @@ class DockerController extends Controller
      */
     public function destroy(DockerContainer $container)
     {
+        $this->authorize('delete', $container->server);
+
         try {
             $force = request()->boolean('force', false);
             $volumes = request()->boolean('volumes', false);
@@ -228,6 +246,8 @@ class DockerController extends Controller
      */
     public function logs(DockerContainer $container)
     {
+        $this->authorize('view', $container->server);
+
         try {
             $lines = request()->input('lines', 100);
             $logs = $this->dockerManager->getLogs($container, $lines);
@@ -250,6 +270,8 @@ class DockerController extends Controller
      */
     public function stats(DockerContainer $container)
     {
+        $this->authorize('view', $container->server);
+
         try {
             $stats = $this->dockerManager->getStats($container);
 
@@ -271,6 +293,8 @@ class DockerController extends Controller
      */
     public function exec(Request $request, DockerContainer $container)
     {
+        $this->authorize('manage', $container->server);
+
         $validated = $request->validate([
             'command' => 'required|string',
             'interactive' => 'nullable|boolean',
@@ -301,6 +325,8 @@ class DockerController extends Controller
      */
     public function images(Server $server)
     {
+        $this->authorize('view', $server);
+
         try {
             $images = $this->dockerManager->listImages($server);
 
@@ -322,6 +348,8 @@ class DockerController extends Controller
      */
     public function pullImage(Request $request, Server $server)
     {
+        $this->authorize('manage', $server);
+
         $validated = $request->validate([
             'image' => 'required|string',
             'tag' => 'nullable|string',
@@ -352,6 +380,8 @@ class DockerController extends Controller
      */
     public function removeImage(Request $request, Server $server)
     {
+        $this->authorize('manage', $server);
+
         $validated = $request->validate([
             'image_id' => 'required|string',
             'force' => 'nullable|boolean',
@@ -382,6 +412,8 @@ class DockerController extends Controller
      */
     public function volumes(Server $server)
     {
+        $this->authorize('view', $server);
+
         try {
             $volumes = $this->dockerManager->listVolumes($server);
 
@@ -403,6 +435,8 @@ class DockerController extends Controller
      */
     public function createVolume(Request $request, Server $server)
     {
+        $this->authorize('manage', $server);
+
         $validated = $request->validate([
             'name' => 'required|string',
             'driver' => 'nullable|string',
@@ -433,6 +467,8 @@ class DockerController extends Controller
      */
     public function removeVolume(Request $request, Server $server)
     {
+        $this->authorize('manage', $server);
+
         $validated = $request->validate([
             'name' => 'required|string',
             'force' => 'nullable|boolean',
@@ -463,6 +499,8 @@ class DockerController extends Controller
      */
     public function networks(Server $server)
     {
+        $this->authorize('view', $server);
+
         try {
             $networks = $this->dockerManager->listNetworks($server);
 
@@ -484,6 +522,8 @@ class DockerController extends Controller
      */
     public function createNetwork(Request $request, Server $server)
     {
+        $this->authorize('manage', $server);
+
         $validated = $request->validate([
             'name' => 'required|string',
             'driver' => 'nullable|string',
@@ -514,6 +554,8 @@ class DockerController extends Controller
      */
     public function removeNetwork(Request $request, Server $server)
     {
+        $this->authorize('manage', $server);
+
         $validated = $request->validate([
             'name' => 'required|string',
         ]);

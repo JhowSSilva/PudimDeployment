@@ -32,6 +32,12 @@ class BackupNotificationSetting extends Model
         'discord_enabled' => 'boolean',
     ];
 
+    protected $hidden = [
+        'webhook_url',
+        'slack_webhook',
+        'discord_webhook',
+    ];
+
     /**
      * Get the backup configuration
      */

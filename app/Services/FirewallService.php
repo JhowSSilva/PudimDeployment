@@ -62,14 +62,31 @@ class FirewallService
     public function addRule(int $port, string $protocol = 'tcp', ?string $source = null, ?string $comment = null): array
     {
         try {
-            $command = "ufw allow {$port}/{$protocol}";
+            // Validate protocol
+            if (!in_array($protocol, ['tcp', 'udp'], true)) {
+                throw new \InvalidArgumentException('Protocol must be tcp or udp');
+            }
+
+            // Validate port range
+            if ($port < 1 || $port > 65535) {
+                throw new \InvalidArgumentException('Port must be between 1 and 65535');
+            }
+
+            $safePort = (int) $port;
+            $command = "ufw allow {$safePort}/{$protocol}";
             
             if ($source) {
-                $command = "ufw allow from {$source} to any port {$port} proto {$protocol}";
+                // Validate source is a valid IP/CIDR
+                if (!filter_var($source, FILTER_VALIDATE_IP) && !preg_match('/^\d{1,3}(\.\d{1,3}){3}\/\d{1,2}$/', $source)) {
+                    throw new \InvalidArgumentException('Source must be a valid IP address or CIDR range');
+                }
+                $command = "ufw allow from " . escapeshellarg($source) . " to any port {$safePort} proto {$protocol}";
             }
 
             if ($comment) {
-                $command .= " comment '{$comment}'";
+                // Sanitize comment — allow only alphanumeric, spaces, hyphens
+                $safeComment = preg_replace('/[^a-zA-Z0-9 _-]/', '', $comment);
+                $command .= " comment " . escapeshellarg($safeComment);
             }
 
             $result = $this->ssh->execute($command);
@@ -106,7 +123,8 @@ class FirewallService
     public function removeRule(int $port, string $protocol = 'tcp'): array
     {
         try {
-            $command = "ufw delete allow {$port}/{$protocol}";
+            $safePort = (int) $port;
+            $command = "ufw delete allow {$safePort}/{$protocol}";
             $result = $this->ssh->execute($command);
 
             Log::info('Firewall rule removed', [

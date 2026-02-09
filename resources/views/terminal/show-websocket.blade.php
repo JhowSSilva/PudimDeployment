@@ -9,15 +9,15 @@
             <div class="flex items-center px-4 gap-2 overflow-x-auto">
                 <template x-for="(terminal, index) in terminals" :key="terminal.serverId">
                     <div @click="switchTerminal(index)"
-                         :class="activeTerminal === index ? 'bg-neutral-700 border-amber-600' : 'bg-neutral-800/50 border-transparent hover:bg-neutral-750'"
+                         :class="activeTerminal === index ? 'bg-neutral-700 border-primary-600' : 'bg-neutral-800/50 border-transparent hover:bg-neutral-750'"
                          class="flex items-center gap-2 px-4 py-2 border-b-2 text-sm cursor-pointer transition group min-w-fit">
-                        <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
                         </svg>
                         <span :class="activeTerminal === index ? 'text-white' : 'text-neutral-400'" x-text="terminal.serverName"></span>
                         <button @click.stop="closeTerminal(index)" 
                                 x-show="terminals.length > 1"
-                                class="ml-2 text-neutral-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition">
+                                class="ml-2 text-neutral-500 hover:text-error-400 opacity-0 group-hover:opacity-100 transition">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
@@ -53,8 +53,8 @@
                     
                     <!-- Connection Status -->
                     <div class="flex items-center gap-2">
-                        <div :class="currentTerminal?.connected ? 'bg-green-500' : 'bg-red-500'" class="w-2 h-2 rounded-full"></div>
-                        <span :class="currentTerminal?.connected ? 'text-green-400' : 'text-red-400'">
+                        <div :class="currentTerminal?.connected ? 'bg-success-500' : 'bg-error-500'" class="w-2 h-2 rounded-full"></div>
+                        <span :class="currentTerminal?.connected ? 'text-success-400' : 'text-error-400'">
                             <span x-text="currentTerminal?.connected ? 'Connected (WebSocket)' : 'Disconnected'"></span>
                         </span>
                     </div>
@@ -79,7 +79,7 @@
                 <span><kbd class="px-2 py-0.5 bg-neutral-700 rounded">Ctrl + D</kbd> Exit</span>
                 <span><kbd class="px-2 py-0.5 bg-neutral-700 rounded">↑/↓</kbd> History</span>
             </div>
-            <div class="text-amber-600 font-semibold">SSH Terminal (WebSocket)</div>
+            <div class="text-primary-600 font-semibold">SSH Terminal (WebSocket)</div>
         </div>
     </div>
 

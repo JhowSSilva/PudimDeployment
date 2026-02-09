@@ -95,17 +95,17 @@ class RateLimitingTest extends TestCase
         $user = User::factory()->create();
         Passport::actingAs($user);
 
-        // Attempt to exceed rate limit
-        // Note: This test is conceptual as we don't want to actually make 60+ requests
-        // In production, you'd use a mocked rate limiter or integration tests
-        
+        // Simulate hitting the rate limit by filling up the limiter
+        $key = 'api:' . $user->id;
+        $limit = 60;
+
+        for ($i = 0; $i < $limit; $i++) {
+            RateLimiter::hit($key);
+        }
+
         $response = $this->getJson('/api/user');
-        
-        $this->assertContains(
-            $response->status(),
-            [200, 429],
-            'Response should be either successful or rate limited'
-        );
+
+        $response->assertStatus(429);
     }
 
     /** @test */
@@ -132,10 +132,13 @@ class RateLimitingTest extends TestCase
     {
         // Unauthenticated request to a public endpoint
         $response = $this->get('/ping');
-        
+
         $response->assertStatus(200);
-        
-        // Should not have authentication but still be rate limited by IP
-        $this->assertTrue(true, 'Unauthenticated requests should be rate limited by IP');
+
+        // Verify rate limit headers are present on the response
+        $this->assertTrue(
+            $response->headers->has('X-RateLimit-Limit') || $response->headers->has('RateLimit-Limit'),
+            'Unauthenticated responses should include rate limit headers'
+        );
     }
 }

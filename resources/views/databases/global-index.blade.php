@@ -34,15 +34,15 @@
                                 <div class="flex items-center justify-between mb-4">
                                     <div class="flex items-center">
                                         <div class="bg-primary-900/40 p-2 rounded-lg mr-4">
-                                            <svg class="h-6 w-6 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="h-6 w-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
                                             </svg>
                                         </div>
                                         <div>
-                                            <h3 class="text-lg font-medium text-neutral-900 dark:text-white">
+                                            <h3 class="text-lg font-medium text-neutral-100">
                                                 {{ $server->name }}
                                             </h3>
-                                            <p class="text-sm text-neutral-500 dark:text-neutral-400">
+                                            <p class="text-sm text-neutral-500">
                                                 {{ $server->ip_address }}
                                             </p>
                                         </div>
@@ -54,32 +54,32 @@
                                 </div>
 
                                 @if($server->databases->isEmpty())
-                                    <div class="text-center py-4 text-neutral-500 dark:text-neutral-400 text-sm">
+                                    <div class="text-center py-4 text-neutral-500 text-sm">
                                         Nenhum banco de dados configurado neste servidor
                                     </div>
                                 @else
                                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                         @foreach($server->databases as $database)
-                                            <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4">
+                                            <div class="border border-neutral-700 rounded-lg p-4">
                                                 <div class="flex items-center justify-between mb-2">
                                                     <div class="flex items-center">
-                                                        <svg class="h-5 w-5 text-primary-600 dark:text-primary-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <svg class="h-5 w-5 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
                                                         </svg>
-                                                        <h4 class="font-medium text-neutral-900 dark:text-white">
+                                                        <h4 class="font-medium text-neutral-100">
                                                             {{ $database->name }}
                                                         </h4>
                                                     </div>
                                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
-                                                               {{ $database->type === 'mysql' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200' : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' }}">
+                                                               {{ $database->type === 'mysql' ? 'bg-orange-100 text-orange-800' : 'bg-info-900/30 text-info-400' }}">
                                                         {{ strtoupper($database->type) }}
                                                     </span>
                                                 </div>
-                                                <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-3">
+                                                <p class="text-sm text-neutral-500 mb-3">
                                                     {{ $database->users->count() }} {{ Str::plural('usuário', $database->users->count()) }}
                                                 </p>
                                                 <a href="{{ route('servers.databases.show', [$server, $database]) }}" 
-                                                   class="text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-200 text-sm font-medium">
+                                                   class="text-primary-600 hover:text-primary-800 text-sm font-medium">
                                                     Ver Detalhes →
                                                 </a>
                                             </div>

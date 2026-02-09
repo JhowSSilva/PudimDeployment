@@ -30,6 +30,8 @@ class QueueWorkerController extends Controller
      */
     public function index(Server $server)
     {
+        $this->authorize('view', $server);
+
         $workers = $server->queueWorkers()
             ->latest()
             ->get();
@@ -46,6 +48,8 @@ class QueueWorkerController extends Controller
      */
     public function create(Server $server)
     {
+        $this->authorize('view', $server);
+
         return view('queue-workers.create', compact('server'));
     }
 
@@ -54,6 +58,8 @@ class QueueWorkerController extends Controller
      */
     public function store(Server $server, Request $request)
     {
+        $this->authorize('manage', $server);
+
         $request->validate([
             'queue' => 'required|string|max:255',
             'processes' => 'required|integer|min:1|max:10',
@@ -92,6 +98,8 @@ class QueueWorkerController extends Controller
      */
     public function show(Server $server, QueueWorker $worker)
     {
+        $this->authorize('view', $server);
+
         $queueService = new QueueWorkerService($server);
         $statusResult = $queueService->getWorkerStatus($worker);
         
@@ -108,6 +116,8 @@ class QueueWorkerController extends Controller
      */
     public function stop(Server $server, QueueWorker $worker)
     {
+        $this->authorize('manage', $server);
+
         $queueService = new QueueWorkerService($server);
         $result = $queueService->stopWorker($worker);
 
@@ -123,6 +133,8 @@ class QueueWorkerController extends Controller
      */
     public function restart(Server $server, QueueWorker $worker)
     {
+        $this->authorize('manage', $server);
+
         $queueService = new QueueWorkerService($server);
         $result = $queueService->restartWorker($worker);
 
@@ -138,6 +150,8 @@ class QueueWorkerController extends Controller
      */
     public function destroy(Server $server, QueueWorker $worker)
     {
+        $this->authorize('delete', $server);
+
         // Stop worker first if running
         if ($worker->isRunning()) {
             $queueService = new QueueWorkerService($server);
@@ -155,6 +169,8 @@ class QueueWorkerController extends Controller
      */
     public function restartAll(Server $server)
     {
+        $this->authorize('manage', $server);
+
         $queueService = new QueueWorkerService($server);
         $result = $queueService->restartAllWorkers();
 
@@ -170,6 +186,8 @@ class QueueWorkerController extends Controller
      */
     public function failedJobs(Server $server): JsonResponse
     {
+        $this->authorize('view', $server);
+
         $queueService = new QueueWorkerService($server);
         $result = $queueService->getFailedJobs();
 
@@ -181,6 +199,8 @@ class QueueWorkerController extends Controller
      */
     public function retryFailedJobs(Server $server, Request $request)
     {
+        $this->authorize('manage', $server);
+
         $request->validate([
             'job_ids' => 'nullable|array',
             'job_ids.*' => 'string',
@@ -201,6 +221,8 @@ class QueueWorkerController extends Controller
      */
     public function clearFailedJobs(Server $server)
     {
+        $this->authorize('manage', $server);
+
         $queueService = new QueueWorkerService($server);
         $result = $queueService->clearFailedJobs();
 
@@ -216,6 +238,8 @@ class QueueWorkerController extends Controller
      */
     public function logs(Server $server, QueueWorker $worker): JsonResponse
     {
+        $this->authorize('view', $server);
+
         $queueService = new QueueWorkerService($server);
         $result = $queueService->getWorkerStatus($worker);
 
@@ -231,6 +255,8 @@ class QueueWorkerController extends Controller
      */
     public function stats(Server $server): JsonResponse
     {
+        $this->authorize('view', $server);
+
         $queueService = new QueueWorkerService($server);
         $result = $queueService->getQueueStats();
 

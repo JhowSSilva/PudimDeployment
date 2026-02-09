@@ -2,7 +2,7 @@
 $latestMetric = $server->latestMetric();
 @endphp
 
-<div class="bg-white shadow rounded-lg p-6">
+<div class="bg-neutral-800 shadow rounded-lg p-6">
     <div class="flex items-center justify-between mb-4">
         <div class="flex items-center space-x-3">
             <div class="flex-shrink-0">
@@ -25,15 +25,15 @@ $latestMetric = $server->latestMetric();
                 @endif
             </div>
             <div>
-                <h3 class="text-lg font-semibold text-neutral-900">{{ $server->name }}</h3>
+                <h3 class="text-lg font-semibold text-neutral-100">{{ $server->name }}</h3>
                 <p class="text-sm text-neutral-500">{{ $server->ip_address }}{{ $server->os_type ? ' • ' . $server->os_type . ' ' . $server->os_version : '' }}</p>
             </div>
         </div>
         <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium 
-            @if($server->status === 'online') bg-green-100 text-green-800
-            @elseif($server->status === 'offline') bg-red-100 text-red-800
-            @elseif($server->status === 'provisioning') bg-yellow-100 text-yellow-800
-            @else bg-neutral-100 text-neutral-800
+            @if($server->status === 'online') bg-success-900/30 text-success-400
+            @elseif($server->status === 'offline') bg-error-900/30 text-error-400
+            @elseif($server->status === 'provisioning') bg-warning-900/30 text-warning-400
+            @else bg-neutral-700 text-neutral-800
             @endif">
             {{ ucfirst($server->status) }}
         </span>
@@ -46,18 +46,18 @@ $latestMetric = $server->latestMetric();
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-medium text-neutral-500">CPU</span>
                     <span class="text-xs font-semibold 
-                        @if($latestMetric->cpu_usage > 80) text-red-600
+                        @if($latestMetric->cpu_usage > 80) text-error-400
                         @elseif($latestMetric->cpu_usage > 60) text-yellow-600
-                        @else text-green-600
+                        @else text-success-400
                         @endif">
                         {{ number_format($latestMetric->cpu_usage, 1) }}%
                     </span>
                 </div>
                 <div class="mt-2 w-full bg-neutral-200 rounded-full h-2">
                     <div class="h-2 rounded-full 
-                        @if($latestMetric->cpu_usage > 80) bg-red-600
-                        @elseif($latestMetric->cpu_usage > 60) bg-yellow-600
-                        @else bg-green-600
+                        @if($latestMetric->cpu_usage > 80) bg-error-500
+                        @elseif($latestMetric->cpu_usage > 60) bg-warning-500
+                        @else bg-success-500
                         @endif"
                         style="width: {{ min($latestMetric->cpu_usage, 100) }}%"></div>
                 </div>
@@ -68,18 +68,18 @@ $latestMetric = $server->latestMetric();
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-medium text-neutral-500">RAM</span>
                     <span class="text-xs font-semibold 
-                        @if($latestMetric->memory_usage_percentage > 80) text-red-600
+                        @if($latestMetric->memory_usage_percentage > 80) text-error-400
                         @elseif($latestMetric->memory_usage_percentage > 60) text-yellow-600
-                        @else text-green-600
+                        @else text-success-400
                         @endif">
                         {{ number_format($latestMetric->memory_usage_percentage, 1) }}%
                     </span>
                 </div>
                 <div class="mt-2 w-full bg-neutral-200 rounded-full h-2">
                     <div class="h-2 rounded-full 
-                        @if($latestMetric->memory_usage_percentage > 80) bg-red-600
-                        @elseif($latestMetric->memory_usage_percentage > 60) bg-yellow-600
-                        @else bg-green-600
+                        @if($latestMetric->memory_usage_percentage > 80) bg-error-500
+                        @elseif($latestMetric->memory_usage_percentage > 60) bg-warning-500
+                        @else bg-success-500
                         @endif"
                         style="width: {{ min($latestMetric->memory_usage_percentage, 100) }}%"></div>
                 </div>
@@ -90,18 +90,18 @@ $latestMetric = $server->latestMetric();
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-medium text-neutral-500">Disco</span>
                     <span class="text-xs font-semibold 
-                        @if($latestMetric->disk_usage_percentage > 80) text-red-600
+                        @if($latestMetric->disk_usage_percentage > 80) text-error-400
                         @elseif($latestMetric->disk_usage_percentage > 60) text-yellow-600
-                        @else text-green-600
+                        @else text-success-400
                         @endif">
                         {{ number_format($latestMetric->disk_usage_percentage, 1) }}%
                     </span>
                 </div>
                 <div class="mt-2 w-full bg-neutral-200 rounded-full h-2">
                     <div class="h-2 rounded-full 
-                        @if($latestMetric->disk_usage_percentage > 80) bg-red-600
-                        @elseif($latestMetric->disk_usage_percentage > 60) bg-yellow-600
-                        @else bg-green-600
+                        @if($latestMetric->disk_usage_percentage > 80) bg-error-500
+                        @elseif($latestMetric->disk_usage_percentage > 60) bg-warning-500
+                        @else bg-success-500
                         @endif"
                         style="width: {{ min($latestMetric->disk_usage_percentage, 100) }}%"></div>
                 </div>

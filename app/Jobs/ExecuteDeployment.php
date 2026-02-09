@@ -22,12 +22,17 @@ class ExecuteDeployment implements ShouldQueue
     /**
      * The number of times the job may be attempted.
      */
-    public int $tries = 1;
+    public int $tries = 3;
 
     /**
      * The number of seconds the job can run before timing out.
      */
-    public int $timeout = 600; // 10 minutes
+    public int $timeout = 600;
+
+    /**
+     * The backoff times (in seconds) between retries.
+     */
+    public array $backoff = [30, 60, 120];
 
     /**
      * Create a new job instance.

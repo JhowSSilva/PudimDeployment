@@ -99,8 +99,8 @@
                             Distribuídos em {{ $totalServers }} {{ Str::plural('servidor', $totalServers) }}
                         </p>
                     </div>
-                    <div class="w-14 h-14 bg-info-50 group-hover:bg-info-100 rounded-xl flex items-center justify-center transition-colors duration-200">
-                        <svg class="w-7 h-7 text-info-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-14 h-14 bg-info-900/30 group-hover:bg-info-800/40 rounded-xl flex items-center justify-center transition-colors duration-200">
+                        <svg class="w-7 h-7 text-info-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
                         </svg>
                     </div>
@@ -220,11 +220,11 @@
         <div class="lg:col-span-2 space-y-8">
             <!-- Servers List -->
             <x-card padding="false">
-                <div class="p-6 border-b border-neutral-200">
+                <div class="p-6 border-b border-neutral-700">
                     <div class="flex items-center justify-between">
                         <div>
-                            <h2 class="text-lg font-semibold text-neutral-900">Servidores</h2>
-                            <p class="text-sm text-neutral-600 mt-1">Gerenciamento e monitoramento</p>
+                            <h2 class="text-lg font-semibold text-neutral-100">Servidores</h2>
+                            <p class="text-sm text-neutral-400 mt-1">Gerenciamento e monitoramento</p>
                         </div>
                         <x-button href="{{ route('servers.create') }}" variant="secondary" size="sm">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -237,31 +237,31 @@
 
                 <div class="overflow-x-auto">
                     @if($servers->count() > 0)
-                        <table class="min-w-full divide-y divide-neutral-200">
-                            <thead class="bg-neutral-50">
+                        <table class="min-w-full divide-y divide-neutral-700">
+                            <thead class="bg-neutral-900">
                                 <tr>
-                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">Servidor</th>
-                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">Status</th>
-                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">CPU</th>
-                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">Memória</th>
-                                    <th class="px-6 py-3.5 text-right text-xs font-semibold text-neutral-600 uppercase tracking-wider">Ações</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-400 uppercase tracking-wider">Servidor</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-400 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-400 uppercase tracking-wider">CPU</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-400 uppercase tracking-wider">Memória</th>
+                                    <th class="px-6 py-3.5 text-right text-xs font-semibold text-neutral-400 uppercase tracking-wider">Ações</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-neutral-100 bg-white">
+                            <tbody class="divide-y divide-neutral-700 bg-neutral-800">
                                 @foreach($servers as $server)
                                     @php
                                         $metric = $server->latestMetric();
                                     @endphp
-                                    <tr class="hover:bg-neutral-50 transition-colors duration-150">
+                                    <tr class="hover:bg-neutral-900 transition-colors duration-150">
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
-                                                <div class="flex-shrink-0 w-10 h-10 bg-neutral-100 rounded-lg flex items-center justify-center">
-                                                    <svg class="w-5 h-5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <div class="flex-shrink-0 w-10 h-10 bg-neutral-700 rounded-lg flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
                                                     </svg>
                                                 </div>
                                                 <div class="ml-3">
-                                                    <p class="text-sm font-semibold text-neutral-900">{{ $server->name }}</p>
+                                                    <p class="text-sm font-semibold text-neutral-100">{{ $server->name }}</p>
                                                     <p class="text-sm text-neutral-500">{{ $server->ip_address }}</p>
                                                 </div>
                                             </div>
@@ -277,11 +277,11 @@
                                                 <x-badge variant="neutral" :dot="true">{{ ucfirst($server->status) }}</x-badge>
                                             @endif
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-600">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-400">
                                             @if($metric)
                                                 <div class="flex items-center space-x-2">
                                                     <span class="font-medium">{{ number_format($metric->cpu_usage, 1) }}%</span>
-                                                    <div class="w-16 h-2 bg-neutral-200 rounded-full overflow-hidden">
+                                                    <div class="w-16 h-2 bg-neutral-700 rounded-full overflow-hidden">
                                                         <div class="h-full {{ $metric->cpu_usage > 80 ? 'bg-error-500' : ($metric->cpu_usage > 60 ? 'bg-warning-500' : 'bg-success-500') }} transition-all duration-300" style="width: {{ min($metric->cpu_usage, 100) }}%"></div>
                                                     </div>
                                                 </div>
@@ -289,11 +289,11 @@
                                                 <span class="text-neutral-400">-</span>
                                             @endif
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-600">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-400">
                                             @if($metric)
                                                 <div class="flex items-center space-x-2">
                                                     <span class="font-medium">{{ number_format($metric->memory_usage_percentage, 1) }}%</span>
-                                                    <div class="w-16 h-2 bg-neutral-200 rounded-full overflow-hidden">
+                                                    <div class="w-16 h-2 bg-neutral-700 rounded-full overflow-hidden">
                                                         <div class="h-full {{ $metric->memory_usage_percentage > 80 ? 'bg-error-500' : ($metric->memory_usage_percentage > 60 ? 'bg-warning-500' : 'bg-primary-500') }} transition-all duration-300" style="width: {{ min($metric->memory_usage_percentage, 100) }}%"></div>
                                                     </div>
                                                 </div>
@@ -330,31 +330,31 @@
             <!-- Recent Deployments -->
             @if($recentDeployments->count() > 0)
                 <x-card padding="false">
-                    <div class="p-6 border-b border-neutral-200">
-                        <h2 class="text-lg font-semibold text-neutral-900">Deployments Recentes</h2>
-                        <p class="text-sm text-neutral-600 mt-1">Últimas implantações realizadas</p>
+                    <div class="p-6 border-b border-neutral-700">
+                        <h2 class="text-lg font-semibold text-neutral-100">Deployments Recentes</h2>
+                        <p class="text-sm text-neutral-400 mt-1">Últimas implantações realizadas</p>
                     </div>
                     <div class="p-6">
                         <div class="space-y-4">
                             @foreach($recentDeployments as $deployment)
-                                <div class="flex items-center justify-between py-3 border-b border-neutral-100 last:border-0">
+                                <div class="flex items-center justify-between py-3 border-b border-neutral-700 last:border-0">
                                     <div class="flex items-center space-x-4 flex-1">
                                         <div class="flex-shrink-0">
                                             @if($deployment->status === 'success')
-                                                <div class="w-10 h-10 bg-success-50 rounded-lg flex items-center justify-center">
-                                                    <svg class="w-5 h-5 text-success-600" fill="currentColor" viewBox="0 0 20 20">
+                                                <div class="w-10 h-10 bg-success-900/30 rounded-lg flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-success-400" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                                     </svg>
                                                 </div>
                                             @elseif($deployment->status === 'failed')
-                                                <div class="w-10 h-10 bg-error-50 rounded-lg flex items-center justify-center">
-                                                    <svg class="w-5 h-5 text-error-600" fill="currentColor" viewBox="0 0 20 20">
+                                                <div class="w-10 h-10 bg-error-900/30 rounded-lg flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-error-400" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
                                                     </svg>
                                                 </div>
                                             @else
-                                                <div class="w-10 h-10 bg-info-50 rounded-lg flex items-center justify-center">
-                                                    <svg class="w-5 h-5 text-info-600 animate-spin" fill="none" viewBox="0 0 24 24">
+                                                <div class="w-10 h-10 bg-info-900/30 rounded-lg flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-info-400 animate-spin" fill="none" viewBox="0 0 24 24">
                                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                                     </svg>
@@ -362,9 +362,9 @@
                                             @endif
                                         </div>
                                         <div class="flex-1 min-w-0">
-                                            <p class="text-sm font-semibold text-neutral-900 truncate">{{ $deployment->site->name }}</p>
+                                            <p class="text-sm font-semibold text-neutral-100 truncate">{{ $deployment->site->name }}</p>
                                             <div class="flex items-center space-x-3 mt-1">
-                                                <code class="text-xs text-neutral-500 font-mono bg-neutral-100 px-2 py-0.5 rounded">{{ Str::limit($deployment->commit_hash, 8, '') }}</code>
+                                                <code class="text-xs text-neutral-500 font-mono bg-neutral-700 px-2 py-0.5 rounded">{{ Str::limit($deployment->commit_hash, 8, '') }}</code>
                                                 <span class="text-xs text-neutral-500">{{ $deployment->created_at->diffForHumans() }}</span>
                                             </div>
                                         </div>
@@ -392,8 +392,8 @@
         <div class="space-y-6">
             <!-- Recent Activity -->
             <x-card padding="false">
-                <div class="p-6 border-b border-neutral-200">
-                    <h2 class="text-lg font-semibold text-neutral-900">Atividades Recentes</h2>
+                <div class="p-6 border-b border-neutral-700">
+                    <h2 class="text-lg font-semibold text-neutral-100">Atividades Recentes</h2>
                 </div>
                 <div class="p-6">
                     @if($recentActivities->count() > 0)
@@ -401,16 +401,16 @@
                             @foreach($recentActivities as $activity)
                                 <div class="flex space-x-3">
                                     <div class="flex-shrink-0">
-                                        <div class="w-8 h-8 bg-primary-50 rounded-full flex items-center justify-center">
-                                            <svg class="w-4 h-4 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <div class="w-8 h-8 bg-primary-900/30 rounded-full flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-primary-400" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                                             </svg>
                                         </div>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <p class="text-sm text-neutral-900">
+                                        <p class="text-sm text-neutral-100">
                                             <span class="font-semibold">{{ $activity->user->name }}</span>
-                                            <span class="text-neutral-600"> {{ $activity->description }}</span>
+                                            <span class="text-neutral-400"> {{ $activity->description }}</span>
                                         </p>
                                         <p class="text-xs text-neutral-500 mt-1">{{ $activity->created_at->diffForHumans() }}</p>
                                     </div>
@@ -425,7 +425,7 @@
 
             <!-- Quick Actions -->
             <x-card>
-                <h3 class="text-sm font-semibold text-neutral-900 mb-4">Ações Rápidas</h3>
+                <h3 class="text-sm font-semibold text-neutral-100 mb-4">Ações Rápidas</h3>
                 <div class="space-y-2">
                     <x-button href="{{ route('servers.create') }}" variant="secondary" class="w-full justify-start">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

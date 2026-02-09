@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-3">
-                    <span class="px-3 py-1 text-xs font-medium rounded-full {{ $server->status === 'online' ? 'bg-green-900 text-green-200' : 'bg-red-900 text-red-200' }}">
+                    <span class="px-3 py-1 text-xs font-medium rounded-full {{ $server->status === 'online' ? 'bg-success-900 text-success-300' : 'bg-error-900 text-error-300' }}">
                         {{ $server->status }}
                     </span>
                     <button onclick="clearTerminal()" class="px-4 py-2 bg-neutral-700 hover:bg-neutral-600 text-white rounded-lg text-sm font-medium transition">

@@ -19,13 +19,13 @@
                 </div>
                 <div class="flex items-center space-x-3">
                     <!-- View Mode Toggle -->
-                    <div class="flex items-center bg-white border border-neutral-300 rounded-lg p-1">
-                        <button @click="viewMode = 'grid'" :class="viewMode === 'grid' ? 'bg-neutral-100 text-neutral-900' : 'text-neutral-600 hover:text-neutral-900'" class="px-3 py-1.5 rounded-md transition-all duration-150">
+                    <div class="flex items-center bg-neutral-800 border border-neutral-700 rounded-lg p-1">
+                        <button @click="viewMode = 'grid'" :class="viewMode === 'grid' ? 'bg-neutral-700 text-neutral-100' : 'text-neutral-400 hover:text-neutral-100'" class="px-3 py-1.5 rounded-md transition-all duration-150">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
                             </svg>
                         </button>
-                        <button @click="viewMode = 'list'" :class="viewMode === 'list' ? 'bg-neutral-100 text-neutral-900' : 'text-neutral-600 hover:text-neutral-900'" class="px-3 py-1.5 rounded-md transition-all duration-150">
+                        <button @click="viewMode = 'list'" :class="viewMode === 'list' ? 'bg-neutral-700 text-neutral-100' : 'text-neutral-400 hover:text-neutral-100'" class="px-3 py-1.5 rounded-md transition-all duration-150">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                             </svg>
@@ -149,7 +149,7 @@
                                             {{ number_format($metric->cpu_usage, 1) }}%
                                         </span>
                                     </div>
-                                    <div class="w-full h-2 bg-neutral-200 rounded-full overflow-hidden">
+                                    <div class="w-full h-2 bg-neutral-700 rounded-full overflow-hidden">
                                         <div class="h-full transition-all duration-500 {{ $metric->cpu_usage > 80 ? 'bg-error-500' : ($metric->cpu_usage > 60 ? 'bg-warning-500' : 'bg-success-500') }}" style="width: {{ min($metric->cpu_usage, 100) }}%"></div>
                                     </div>
                                 </div>
@@ -157,12 +157,12 @@
                                 <!-- Memory -->
                                 <div>
                                     <div class="flex items-center justify-between mb-2">
-                                        <span class="text-xs font-medium text-neutral-600">Memória</span>
+                                        <span class="text-xs font-medium text-neutral-300">Memória</span>
                                         <span class="text-xs font-semibold {{ $metric->memory_usage_percentage > 80 ? 'text-error-600' : ($metric->memory_usage_percentage > 60 ? 'text-warning-600' : 'text-primary-600') }}">
                                             {{ number_format($metric->memory_usage_percentage, 1) }}%
                                         </span>
                                     </div>
-                                    <div class="w-full h-2 bg-neutral-200 rounded-full overflow-hidden">
+                                    <div class="w-full h-2 bg-neutral-700 rounded-full overflow-hidden">
                                         <div class="h-full transition-all duration-500 {{ $metric->memory_usage_percentage > 80 ? 'bg-error-500' : ($metric->memory_usage_percentage > 60 ? 'bg-warning-500' : 'bg-primary-500') }}" style="width: {{ min($metric->memory_usage_percentage, 100) }}%"></div>
                                     </div>
                                 </div>
@@ -170,29 +170,29 @@
                                 <!-- Disk -->
                                 <div>
                                     <div class="flex items-center justify-between mb-2">
-                                        <span class="text-xs font-medium text-neutral-600">Disco</span>
-                                        <span class="text-xs font-semibold text-neutral-600">
+                                        <span class="text-xs font-medium text-neutral-300">Disco</span>
+                                        <span class="text-xs font-semibold text-neutral-300">
                                             {{ number_format($metric->disk_used_gb, 1) }}GB / {{ number_format($metric->disk_total_gb, 1) }}GB
                                         </span>
                                     </div>
-                                    <div class="w-full h-2 bg-neutral-200 rounded-full overflow-hidden">
+                                    <div class="w-full h-2 bg-neutral-700 rounded-full overflow-hidden">
                                         <div class="h-full bg-info-500 transition-all duration-500" style="width: {{ $metric->disk_total_gb > 0 ? min(($metric->disk_used_gb / $metric->disk_total_gb) * 100, 100) : 0 }}%"></div>
                                     </div>
                                 </div>
                             </div>
                         @else
-                            <div class="p-6 bg-neutral-50">
+                            <div class="p-6 bg-neutral-900">
                                 <p class="text-xs text-neutral-500 text-center">Métricas não disponíveis</p>
                             </div>
                         @endif
                         
                         <!-- Actions -->
-                        <div class="p-4 bg-white border-t border-neutral-200">
+                        <div class="p-4 bg-neutral-800 border-t border-neutral-700">
                             <div class="flex items-center justify-between space-x-2">
                                 <x-button href="{{ route('servers.show', $server) }}" variant="secondary" size="sm" class="flex-1">
                                     Ver Detalhes
                                 </x-button>
-                                <button class="p-2 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-all duration-150" title="Mais ações">
+                                <button class="p-2 text-neutral-400 hover:text-neutral-100 hover:bg-neutral-700 rounded-lg transition-all duration-150" title="Mais ações">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
                                     </svg>
@@ -207,41 +207,41 @@
             <div x-show="viewMode === 'list'" x-cloak>
                 <x-card padding="false">
                     <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-neutral-200">
-                            <thead class="bg-neutral-50">
+                        <table class="min-w-full divide-y divide-neutral-700">
+                            <thead class="bg-neutral-900">
                                 <tr>
-                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">Servidor</th>
-                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">IP / Porta</th>
-                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">Sistema</th>
-                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">Status</th>
-                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-600 uppercase tracking-wider">Métricas</th>
-                                    <th class="px-6 py-3.5 text-right text-xs font-semibold text-neutral-600 uppercase tracking-wider">Ações</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-300 uppercase tracking-wider">Servidor</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-300 uppercase tracking-wider">IP / Porta</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-300 uppercase tracking-wider">Sistema</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-300 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-neutral-300 uppercase tracking-wider">Métricas</th>
+                                    <th class="px-6 py-3.5 text-right text-xs font-semibold text-neutral-300 uppercase tracking-wider">Ações</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-neutral-100 bg-white">
+                            <tbody class="divide-y divide-neutral-700 bg-neutral-800">
                                 @foreach($servers as $server)
                                     @php
                                         $metric = $server->latestMetric();
                                     @endphp
-                                    <tr class="hover:bg-neutral-50 transition-colors duration-150">
+                                    <tr class="hover:bg-neutral-900 transition-colors duration-150">
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
-                                                <div class="flex-shrink-0 w-10 h-10 bg-neutral-100 rounded-lg flex items-center justify-center">
-                                                    <svg class="w-5 h-5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <div class="flex-shrink-0 w-10 h-10 bg-neutral-700 rounded-lg flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
                                                     </svg>
                                                 </div>
                                                 <div class="ml-3">
-                                                    <p class="text-sm font-semibold text-neutral-900">{{ $server->name }}</p>
+                                                    <p class="text-sm font-semibold text-neutral-100">{{ $server->name }}</p>
                                                     <p class="text-sm text-neutral-500">{{ $server->ssh_user }}</p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <p class="text-sm text-neutral-900">{{ $server->ip_address }}</p>
+                                            <p class="text-sm text-neutral-100">{{ $server->ip_address }}</p>
                                             <p class="text-sm text-neutral-500">Porta {{ $server->ssh_port }}</p>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-900">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-neutral-100">
                                             {{ $server->os_type ?? 'N/A' }} {{ $server->os_version }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -259,15 +259,15 @@
                                             @if($metric)
                                                 <div class="space-y-1.5">
                                                     <div class="flex items-center space-x-2">
-                                                        <span class="text-xs text-neutral-600 w-12">CPU:</span>
-                                                        <div class="w-20 h-1.5 bg-neutral-200 rounded-full overflow-hidden">
+                                                        <span class="text-xs text-neutral-400 w-12">CPU:</span>
+                                                        <div class="w-20 h-1.5 bg-neutral-700 rounded-full overflow-hidden">
                                                             <div class="h-full {{ $metric->cpu_usage > 80 ? 'bg-error-500' : 'bg-success-500' }}" style="width: {{ min($metric->cpu_usage, 100) }}%"></div>
                                                         </div>
                                                         <span class="text-xs font-medium">{{ number_format($metric->cpu_usage, 0) }}%</span>
                                                     </div>
                                                     <div class="flex items-center space-x-2">
-                                                        <span class="text-xs text-neutral-600 w-12">RAM:</span>
-                                                        <div class="w-20 h-1.5 bg-neutral-200 rounded-full overflow-hidden">
+                                                        <span class="text-xs text-neutral-400 w-12">RAM:</span>
+                                                        <div class="w-20 h-1.5 bg-neutral-700 rounded-full overflow-hidden">
                                                             <div class="h-full bg-primary-500" style="width: {{ min($metric->memory_usage_percentage, 100) }}%"></div>
                                                         </div>
                                                         <span class="text-xs font-medium">{{ number_format($metric->memory_usage_percentage, 0) }}%</span>

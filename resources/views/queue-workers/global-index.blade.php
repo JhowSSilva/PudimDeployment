@@ -34,15 +34,15 @@
                                 <div class="flex items-center justify-between mb-4">
                                     <div class="flex items-center">
                                         <div class="bg-primary-900/40 p-2 rounded-lg mr-4">
-                                            <svg class="h-6 w-6 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="h-6 w-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
                                             </svg>
                                         </div>
                                         <div>
-                                            <h3 class="text-lg font-medium text-neutral-900 dark:text-white">
+                                            <h3 class="text-lg font-medium text-neutral-100">
                                                 {{ $server->name }}
                                             </h3>
-                                            <p class="text-sm text-neutral-500 dark:text-neutral-400">
+                                            <p class="text-sm text-neutral-500">
                                                 {{ $server->ip_address }}
                                             </p>
                                         </div>
@@ -54,37 +54,37 @@
                                 </div>
 
                                 @if($server->queueWorkers->isEmpty())
-                                    <div class="text-center py-4 text-neutral-500 dark:text-neutral-400 text-sm">
+                                    <div class="text-center py-4 text-neutral-500 text-sm">
                                         Nenhum queue worker configurado neste servidor
                                     </div>
                                 @else
                                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                         @foreach($server->queueWorkers as $worker)
-                                            <div class="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4">
+                                            <div class="border border-neutral-700 rounded-lg p-4">
                                                 <div class="flex items-center justify-between mb-2">
                                                     <div class="flex items-center">
-                                                        <svg class="h-5 w-5 text-primary-600 dark:text-primary-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <svg class="h-5 w-5 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                                         </svg>
-                                                        <h4 class="font-medium text-neutral-900 dark:text-white">
+                                                        <h4 class="font-medium text-neutral-100">
                                                             {{ $worker->queue }}
                                                         </h4>
                                                     </div>
                                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
-                                                               {{ $worker->status === 'running' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 
-                                                                  ($worker->status === 'stopped' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : 
-                                                                   'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200') }}">
+                                                               {{ $worker->status === 'running' ? 'bg-success-900/30 text-success-400' : 
+                                                                  ($worker->status === 'stopped' ? 'bg-error-900/30 text-error-400' : 
+                                                                   'bg-warning-900/30 text-warning-400') }}">
                                                         {{ ucfirst($worker->status) }}
                                                     </span>
                                                 </div>
-                                                <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-2">
+                                                <p class="text-sm text-neutral-500 mb-2">
                                                     {{ $worker->max_jobs ?? 'Unlimited' }} jobs máximos
                                                 </p>
-                                                <p class="text-sm text-neutral-500 dark:text-neutral-400 mb-3">
+                                                <p class="text-sm text-neutral-500 mb-3">
                                                     Timeout: {{ $worker->timeout }}s
                                                 </p>
                                                 <a href="{{ route('servers.queue-workers.show', [$server, $worker]) }}" 
-                                                   class="text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-200 text-sm font-medium">
+                                                   class="text-primary-600 hover:text-primary-800 text-sm font-medium">
                                                     Ver Detalhes →
                                                 </a>
                                             </div>

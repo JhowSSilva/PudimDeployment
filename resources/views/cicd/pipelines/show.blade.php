@@ -4,17 +4,17 @@
             Pipeline: {{ $pipeline->name }}
         </h2>
         <div class="flex gap-2">
-            <a href="{{ route('cicd.pipelines.edit', $pipeline) }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-blue-300 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
+            <a href="{{ route('cicd.pipelines.edit', $pipeline) }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-info-600 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
                 Editar
             </a>
-            <a href="{{ route('cicd.pipelines.index') }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-blue-300 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
+            <a href="{{ route('cicd.pipelines.index') }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-info-600 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
                 Voltar
             </a>
         </div>
     </div>
 
     @if(session('success'))
-        <div class="mb-4 p-4 bg-green-900/50 border border-green-500 text-green-200 rounded-lg">
+        <div class="mb-4 p-4 bg-success-900/50 border border-green-500 text-success-300 rounded-lg">
             {{ session('success') }}
         </div>
     @endif
@@ -27,11 +27,11 @@
         </div>
         <div class="bg-neutral-800 p-4 rounded-lg border border-neutral-700">
             <div class="text-neutral-400 text-sm">Taxa de Sucesso</div>
-            <div class="text-2xl font-bold text-green-400">{{ number_format($pipeline->getSuccessRate(), 1) }}%</div>
+            <div class="text-2xl font-bold text-success-400">{{ number_format($pipeline->getSuccessRate(), 1) }}%</div>
         </div>
         <div class="bg-neutral-800 p-4 rounded-lg border border-neutral-700">
             <div class="text-neutral-400 text-sm">Status</div>
-            <div class="text-lg font-semibold {{ $pipeline->status === 'active' ? 'text-green-400' : 'text-neutral-400' }}">
+            <div class="text-lg font-semibold {{ $pipeline->status === 'active' ? 'text-success-400' : 'text-neutral-400' }}">
                 {{ ucfirst($pipeline->status) }}
             </div>
         </div>
@@ -79,7 +79,7 @@
                             <h4 class="font-semibold text-white">{{ $stage->order }}. {{ $stage->name }}</h4>
                             <p class="text-sm text-neutral-400">Tipo: {{ ucfirst($stage->type) }}</p>
                             @if($stage->parallel)
-                                <span class="text-xs text-blue-400">Paralelo</span>
+                                <span class="text-xs text-info-400">Paralelo</span>
                             @endif
                             @if($stage->allow_failure)
                                 <span class="text-xs text-yellow-400">Permite Falha</span>
@@ -96,7 +96,7 @@
         <div class="p-6 text-neutral-300">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-semibold text-white">Execuções Recentes</h3>
-                <a href="{{ route('cicd.pipeline-runs.index', $pipeline) }}" class="text-blue-400 hover:text-blue-300 text-sm">
+                <a href="{{ route('cicd.pipeline-runs.index', $pipeline) }}" class="text-info-400 hover:text-info-300 text-sm">
                     Ver todas →
                 </a>
             </div>
@@ -106,15 +106,15 @@
                         <div>
                             <span class="text-white font-semibold">#{{ $run->id }}</span>
                             <span class="ml-2 px-2 py-1 rounded text-xs
-                                {{ $run->status === 'success' ? 'bg-green-900 text-green-300' : '' }}
-                                {{ $run->status === 'failed' ? 'bg-red-900 text-red-300' : '' }}
-                                {{ $run->status === 'running' ? 'bg-blue-900 text-blue-300 animate-pulse' : '' }}
+                                {{ $run->status === 'success' ? 'bg-success-900 text-success-300' : '' }}
+                                {{ $run->status === 'failed' ? 'bg-error-900 text-error-300' : '' }}
+                                {{ $run->status === 'running' ? 'bg-info-900 text-info-300 animate-pulse' : '' }}
                                 {{ $run->status === 'pending' ? 'bg-neutral-600 text-neutral-300' : '' }}">
                                 {{ ucfirst($run->status) }}
                             </span>
                             <span class="ml-2 text-neutral-400 text-sm">{{ $run->created_at->diffForHumans() }}</span>
                         </div>
-                        <a href="{{ route('cicd.pipeline-runs.show', $run) }}" class="text-blue-400 hover:text-blue-300 text-sm">
+                        <a href="{{ route('cicd.pipeline-runs.show', $run) }}" class="text-info-400 hover:text-info-300 text-sm">
                             Detalhes
                         </a>
                     </div>

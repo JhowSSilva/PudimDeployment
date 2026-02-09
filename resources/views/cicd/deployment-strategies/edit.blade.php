@@ -3,7 +3,7 @@
         <h2 class="text-2xl font-bold text-white">
             {{ __('Editar Estratégia de Deployment') }}
         </h2>
-        <a href="{{ route('cicd.deployment-strategies.show', $deploymentStrategy) }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-blue-300 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
+        <a href="{{ route('cicd.deployment-strategies.show', $deploymentStrategy) }}" class="inline-flex items-center px-3 py-2 bg-neutral-800 border border-neutral-700 rounded-md font-semibold text-xs text-neutral-300 uppercase tracking-widest shadow-sm hover:bg-neutral-700 focus:outline-none focus:border-info-600 focus:ring ring-blue-200 disabled:opacity-25 transition ease-in-out duration-150">
             Voltar
         </a>
     </div>
@@ -15,12 +15,12 @@
 
             <div class="mb-4">
                 <label class="block text-neutral-300 text-sm font-bold mb-2">Nome</label>
-                <input type="text" name="name" value="{{ old('name', $deploymentStrategy->name) }}" required class="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 text-white rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                <input type="text" name="name" value="{{ old('name', $deploymentStrategy->name) }}" required class="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 text-white rounded-md focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50">
             </div>
 
             <div class="mb-4">
                 <label class="block text-neutral-300 text-sm font-bold mb-2">Descrição</label>
-                <textarea name="description" rows="3" class="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 text-white rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">{{ old('description', $deploymentStrategy->description) }}</textarea>
+                <textarea name="description" rows="3" class="w-full px-3 py-2 bg-neutral-700 border border-neutral-600 text-white rounded-md focus:border-primary-500 focus:ring focus:ring-primary-500 focus:ring-opacity-50">{{ old('description', $deploymentStrategy->description) }}</textarea>
             </div>
 
             <div class="mb-4">
@@ -87,10 +87,10 @@
             </div>
 
             <div class="flex justify-between items-center">
-                <button type="button" onclick="if(confirm('Tem certeza?')) document.getElementById('delete-form').submit();" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                <button type="button" onclick="if(confirm('Tem certeza?')) document.getElementById('delete-form').submit();" class="px-4 py-2 bg-error-500 text-white rounded-md hover:bg-error-700">
                     Excluir Estratégia
                 </button>
-                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                <button type="submit" class="px-4 py-2 bg-info-600 text-white rounded-md hover:bg-info-700">
                     Atualizar Estratégia
                 </button>
             </div>

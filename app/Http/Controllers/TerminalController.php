@@ -30,6 +30,8 @@ class TerminalController extends Controller
      */
     public function show(Server $server)
     {
+        $this->authorize('manage', $server);
+
         return view('servers.terminal', compact('server'));
     }
 
@@ -38,6 +40,8 @@ class TerminalController extends Controller
      */
     public function execute(Server $server, Request $request)
     {
+        $this->authorize('manage', $server);
+
         $request->validate([
             'command' => 'required|string|max:5000',
         ]);
@@ -90,6 +94,8 @@ class TerminalController extends Controller
      */
     public function stream(Server $server, Request $request)
     {
+        $this->authorize('manage', $server);
+
         $request->validate([
             'command' => 'required|string|max:5000',
         ]);
@@ -124,6 +130,8 @@ class TerminalController extends Controller
      */
     public function info(Server $server)
     {
+        $this->authorize('view', $server);
+
         $terminal = new TerminalService($server);
         return response()->json($terminal->getServerInfo());
     }

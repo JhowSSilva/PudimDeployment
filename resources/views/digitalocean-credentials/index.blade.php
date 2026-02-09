@@ -29,7 +29,7 @@
             @if($credentials->isEmpty())
                 <x-empty-state title="Nenhuma credencial DigitalOcean">
                     <x-slot:icon>
-                        <svg class="w-12 h-12 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                        <svg class="w-12 h-12 text-info-400" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 24v-5.294h5.294C17.294 23.988 12 24 12 24zm0-5.294H6.706v-5.294H12v5.294zM6.706 13.412H1.412v-5.294h5.294v5.294zm5.294-5.294H6.706V2.824h5.294v5.294z"/>
                         </svg>
                     </x-slot:icon>
@@ -49,13 +49,13 @@
                             @endif
                             
                             <div class="flex items-center mb-4">
-                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                                    <svg class="w-6 h-6 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                                <div class="w-10 h-10 bg-info-900/30 rounded-lg flex items-center justify-center mr-3">
+                                    <svg class="w-6 h-6 text-info-400" viewBox="0 0 24 24" fill="currentColor">
                                         <path d="M12 24v-5.294h5.294C17.294 23.988 12 24 12 24zm0-5.294H6.706v-5.294H12v5.294zM6.706 13.412H1.412v-5.294h5.294v5.294zm5.294-5.294H6.706V2.824h5.294v5.294z"/>
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold text-neutral-900">{{ $credential->name }}</h3>
+                                    <h3 class="font-semibold text-neutral-100">{{ $credential->name }}</h3>
                                     <p class="text-sm text-neutral-500">{{ $credential->region_name }}</p>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                             </div>
 
                             <div class="flex gap-2">
-                                <a href="{{ route('digitalocean-credentials.edit', $credential) }}" class="flex-1 text-center bg-neutral-100 hover:bg-neutral-200 text-neutral-700 px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                                <a href="{{ route('digitalocean-credentials.edit', $credential) }}" class="flex-1 text-center bg-neutral-700 hover:bg-neutral-200 text-neutral-300 px-4 py-2 rounded-lg text-sm font-medium transition-all">
                                     Editar
                                 </a>
                                 <form action="{{ route('digitalocean-credentials.destroy', $credential) }}" method="POST" class="flex-1" onsubmit="return confirm('Tem certeza?')">

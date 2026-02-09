@@ -140,7 +140,7 @@ class AlertController extends Controller
      */
     public function destroyRule(AlertRule $rule)
     {
-        $this->authorize('view', $rule->team);
+        $this->authorize('delete', $rule->team);
 
         $rule->delete();
 
@@ -152,7 +152,7 @@ class AlertController extends Controller
      */
     public function toggleRule(AlertRule $rule)
     {
-        $this->authorize('view', $rule->team);
+        $this->authorize('update', $rule->team);
 
         $rule->update(['is_active' => !$rule->is_active]);
 

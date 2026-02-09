@@ -12,12 +12,40 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class FileTransferController extends Controller
 {
     /**
+     * Allowed MIME types for file uploads
+     */
+    private const ALLOWED_MIMETYPES = [
+        'text/plain', 'text/html', 'text/css', 'text/javascript', 'text/csv', 'text/xml',
+        'application/json', 'application/xml', 'application/zip', 'application/gzip',
+        'application/x-tar', 'application/pdf', 'application/sql',
+        'application/x-yaml', 'application/x-sh', 'application/x-php',
+        'image/png', 'image/jpeg', 'image/gif', 'image/svg+xml', 'image/webp',
+    ];
+
+    /**
+     * Validate and sanitize a remote path to prevent command injection.
+     */
+    private function sanitizeRemotePath(string $path): string
+    {
+        // Block path traversal and shell metacharacters
+        if (preg_match('/[;&|`$(){}\[\]!<>\\]/', $path)) {
+            abort(422, 'Invalid characters in remote path');
+        }
+        if (str_contains($path, '..')) {
+            abort(422, 'Path traversal is not allowed');
+        }
+        return $path;
+    }
+
+    /**
      * Upload file to server
      */
     public function upload(Server $server, Request $request)
     {
+        $this->authorize('update', $server);
+
         $request->validate([
-            'file' => 'required|file|max:102400', // 100MB max
+            'file' => 'required|file|max:102400|mimetypes:' . implode(',', self::ALLOWED_MIMETYPES),
             'remote_path' => 'required|string|max:500',
         ]);
 
@@ -33,11 +61,11 @@ class FileTransferController extends Controller
 
             $file = $request->file('file');
             $localPath = $file->getRealPath();
-            $remotePath = $request->remote_path;
+            $remotePath = $this->sanitizeRemotePath($request->remote_path);
             
             // Ensure remote directory exists
             $remoteDir = dirname($remotePath);
-            $terminal->execute("mkdir -p {$remoteDir}");
+            $terminal->execute('mkdir -p ' . escapeshellarg($remoteDir));
             
             // Upload via SFTP
             $sftp = $terminal->getSftp();
@@ -45,7 +73,7 @@ class FileTransferController extends Controller
             
             if ($success) {
                 // Set proper permissions
-                $terminal->execute("chmod 644 {$remotePath}");
+                $terminal->execute('chmod 644 ' . escapeshellarg($remotePath));
                 
                 $terminal->disconnect();
                 
@@ -77,6 +105,8 @@ class FileTransferController extends Controller
      */
     public function download(Server $server, Request $request)
     {
+        $this->authorize('view', $server);
+
         $request->validate([
             'remote_path' => 'required|string|max:500',
         ]);
@@ -91,10 +121,10 @@ class FileTransferController extends Controller
                 ], 500);
             }
 
-            $remotePath = $request->remote_path;
+            $remotePath = $this->sanitizeRemotePath($request->remote_path);
             
             // Get file info
-            $fileInfo = $terminal->execute("stat -c '%s %n' {$remotePath}");
+            $fileInfo = $terminal->execute('stat -c \'%s %n\' ' . escapeshellarg($remotePath));
             if (empty($fileInfo)) {
                 throw new \Exception('File not found');
             }
@@ -133,6 +163,8 @@ class FileTransferController extends Controller
      */
     public function list(Server $server, Request $request)
     {
+        $this->authorize('view', $server);
+
         $request->validate([
             'path' => 'string|max:500',
         ]);
@@ -147,10 +179,10 @@ class FileTransferController extends Controller
                 ], 500);
             }
 
-            $path = $request->get('path', '~');
+            $path = $this->sanitizeRemotePath($request->get('path', '~'));
             
             // List files with details
-            $output = $terminal->execute("ls -lAh --time-style=long-iso {$path}");
+            $output = $terminal->execute('ls -lAh --time-style=long-iso ' . escapeshellarg($path));
             
             $lines = explode("\n", trim($output));
             $files = [];
@@ -199,6 +231,8 @@ class FileTransferController extends Controller
      */
     public function delete(Server $server, Request $request)
     {
+        $this->authorize('delete', $server);
+
         $request->validate([
             'remote_path' => 'required|string|max:500',
         ]);
@@ -213,10 +247,10 @@ class FileTransferController extends Controller
                 ], 500);
             }
 
-            $remotePath = $request->remote_path;
+            $remotePath = $this->sanitizeRemotePath($request->remote_path);
             
             // Delete file
-            $output = $terminal->execute("rm -f {$remotePath}");
+            $output = $terminal->execute('rm -f ' . escapeshellarg($remotePath));
             
             $terminal->disconnect();
             

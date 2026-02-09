@@ -1,5 +1,5 @@
-<div class="bg-white shadow rounded-lg">
-    <ul role="list" class="divide-y divide-neutral-200">
+<div class="bg-neutral-800 shadow rounded-lg">
+    <ul role="list" class="divide-y divide-neutral-700">
         @forelse($deployments as $deployment)
             <li class="px-6 py-4">
                 <div class="flex items-center justify-between">
@@ -34,7 +34,7 @@
                             @endif
                             
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-medium text-neutral-900 truncate">
+                                <p class="text-sm font-medium text-neutral-100 truncate">
                                     {{ $deployment->site->domain ?? 'Site desconhecido' }}
                                 </p>
                                 <p class="text-sm text-neutral-500 truncate">
@@ -61,11 +61,11 @@
                     </div>
                     <div class="ml-4 flex-shrink-0">
                         <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
-                            @if($deployment->status === 'success') bg-green-100 text-green-800
-                            @elseif($deployment->status === 'failed') bg-red-100 text-red-800
-                            @elseif($deployment->status === 'running') bg-blue-100 text-blue-800
-                            @elseif($deployment->status === 'pending') bg-yellow-100 text-yellow-800
-                            @else bg-neutral-100 text-neutral-800
+                            @if($deployment->status === 'success') bg-success-900/30 text-success-400
+                            @elseif($deployment->status === 'failed') bg-error-900/30 text-error-400
+                            @elseif($deployment->status === 'running') bg-info-900/30 text-info-400
+                            @elseif($deployment->status === 'pending') bg-warning-900/30 text-warning-400
+                            @else bg-neutral-700 text-neutral-800
                             @endif">
                             {{ ucfirst($deployment->status) }}
                         </span>
@@ -77,14 +77,14 @@
                 <svg class="mx-auto h-12 w-12 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                <h3 class="mt-2 text-sm font-semibold text-neutral-900">Nenhum deployment</h3>
+                <h3 class="mt-2 text-sm font-semibold text-neutral-100">Nenhum deployment</h3>
                 <p class="mt-1 text-sm text-neutral-500">Comece fazendo deploy de um site.</p>
             </li>
         @endforelse
     </ul>
 
     @if($deployments->count() > 0)
-        <div class="bg-neutral-50 px-6 py-3">
+        <div class="bg-neutral-900 px-6 py-3">
             <a href="#" class="text-sm font-medium text-primary-600 hover:text-primary-500">
                 Ver todos os deployments
                 <span aria-hidden="true"> &rarr;</span>

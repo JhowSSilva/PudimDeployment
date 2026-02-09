@@ -30,6 +30,11 @@ class ServerPool extends Model
     ];
 
     protected $casts = [
+        'min_servers' => 'integer',
+        'max_servers' => 'integer',
+        'desired_servers' => 'integer',
+        'current_servers' => 'integer',
+        'health_check_interval' => 'integer',
         'auto_healing' => 'boolean',
         'last_scaled_at' => 'datetime',
     ];

@@ -8,12 +8,11 @@ use App\Http\Controllers\GitHubWorkflowController;
 use App\Http\Middleware\EnsureGitHubTokenValid;
 use Illuminate\Support\Facades\Route;
 
-// GitHub Webhook (no auth required)
+// GitHub Webhook (no auth required - validated by signature)
 Route::post('/webhook/github', [GitHubWebhookController::class, 'handle'])->name('github.webhook');
-Route::get('/webhook/github/test', [GitHubWebhookController::class, 'test'])->name('github.webhook.test');
 
 // GitHub OAuth Routes
-Route::prefix('github')->name('github.')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('github')->name('github.')->group(function () {
     Route::get('/settings', [GitHubAuthController::class, 'settings'])->name('settings');
     Route::get('/connect', [GitHubAuthController::class, 'redirectToGitHub'])->name('connect');
     Route::get('/callback', [GitHubAuthController::class, 'handleGitHubCallback'])->name('callback');

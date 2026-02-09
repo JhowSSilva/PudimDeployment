@@ -61,7 +61,7 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold text-neutral-900">{{ $credential->name }}</h3>
+                                    <h3 class="font-semibold text-neutral-100">{{ $credential->name }}</h3>
                                     <p class="text-sm text-neutral-500">{{ $credential->region_name }}</p>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
                             </div>
 
                             <div class="flex gap-2">
-                                <a href="{{ route('gcp-credentials.edit', $credential) }}" class="flex-1 text-center bg-neutral-100 hover:bg-neutral-200 text-neutral-700 px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                                <a href="{{ route('gcp-credentials.edit', $credential) }}" class="flex-1 text-center bg-neutral-700 hover:bg-neutral-200 text-neutral-300 px-4 py-2 rounded-lg text-sm font-medium transition-all">
                                     Editar
                                 </a>
                                 <form action="{{ route('gcp-credentials.destroy', $credential) }}" method="POST" class="flex-1" onsubmit="return confirm('Tem certeza?')">

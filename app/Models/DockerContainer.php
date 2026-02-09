@@ -32,6 +32,10 @@ class DockerContainer extends Model
         'stats_updated_at',
     ];
 
+    protected $hidden = [
+        'environment',
+    ];
+
     protected $casts = [
         'ports' => 'array',
         'volumes' => 'array',

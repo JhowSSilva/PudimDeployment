@@ -46,6 +46,12 @@ class UptimeCheck extends Model
     ];
     
     protected $casts = [
+        'interval' => 'integer',
+        'timeout' => 'integer',
+        'expected_status_code' => 'integer',
+        'response_time' => 'integer',
+        'total_checks' => 'integer',
+        'failed_checks' => 'integer',
         'alert_channels' => 'array',
         'last_checked_at' => 'datetime',
         'last_downtime_at' => 'datetime',
@@ -101,7 +107,9 @@ class UptimeCheck extends Model
         return $query->active()
             ->where(function ($q) {
                 $q->whereNull('last_checked_at')
-                  ->orWhereRaw('last_checked_at <= NOW() - INTERVAL \'' . '1 second\' * interval');
+                  ->orWhereRaw('last_checked_at <= NOW() - INTERVAL ? SECOND', [
+                      \DB::raw('`interval`')
+                  ]);
             });
     }
     

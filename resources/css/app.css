@@ -1,3 +1,82 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════════
+   Design System — Base Layer
+   Standardized tokens for the dark-first PudimDeployment UI
+   ═══════════════════════════════════════════════════════════════ */
+
+@layer base {
+    /* ── Typography ────────────────────────────────────────────── */
+    h1 { @apply text-3xl font-bold text-neutral-100; }
+    h2 { @apply text-2xl font-semibold text-neutral-100; }
+    h3 { @apply text-xl font-semibold text-neutral-200; }
+    h4 { @apply text-lg font-medium text-neutral-200; }
+    h5 { @apply text-base font-medium text-neutral-300; }
+    h6 { @apply text-sm font-medium text-neutral-400; }
+}
+
+@layer components {
+    /* ── Surface Tokens (dark-first) ───────────────────────────── */
+    .surface-base      { @apply bg-neutral-900 text-neutral-100; }
+    .surface-raised    { @apply bg-neutral-800 text-neutral-100; }
+    .surface-overlay   { @apply bg-neutral-800/95 backdrop-blur-sm text-neutral-100; }
+    .surface-sunken    { @apply bg-neutral-950 text-neutral-300; }
+
+    /* ── Text Tokens ───────────────────────────────────────────── */
+    .text-heading      { @apply text-neutral-100; }
+    .text-body         { @apply text-neutral-300; }
+    .text-muted        { @apply text-neutral-500; }
+    .text-link         { @apply text-primary-400 hover:text-primary-300 transition-colors duration-200; }
+
+    /* ── Border Tokens ─────────────────────────────────────────── */
+    .border-default    { @apply border-neutral-700; }
+    .border-subtle     { @apply border-neutral-800; }
+
+    /* ── Focus Ring (consistent across entire app) ─────────────── */
+    .focus-ring {
+        @apply focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-2 focus:ring-offset-neutral-900;
+    }
+
+    /* ── Card (standardized) ───────────────────────────────────── */
+    .card {
+        @apply bg-neutral-800 border border-neutral-700 rounded-lg;
+    }
+    .card-body {
+        @apply p-6;
+    }
+
+    /* ── Form Controls ─────────────────────────────────────────── */
+    .form-input {
+        @apply w-full rounded-md bg-neutral-900 border-neutral-600 text-neutral-100
+               placeholder:text-neutral-500
+               focus:border-primary-500 focus:ring-primary-500
+               transition duration-200;
+    }
+    .form-input-error {
+        @apply border-error-500 focus:border-error-500 focus:ring-error-500;
+    }
+    .form-label {
+        @apply block text-sm font-medium text-neutral-200 mb-1.5;
+    }
+    .form-hint {
+        @apply mt-1 text-xs text-neutral-500;
+    }
+    .form-error {
+        @apply mt-1 text-sm text-error-400;
+    }
+
+    /* ── Status Badges ─────────────────────────────────────────── */
+    .badge-success { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success-900/50 text-success-400 ring-1 ring-success-500/30; }
+    .badge-error   { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-error-900/50 text-error-400 ring-1 ring-error-500/30; }
+    .badge-warning { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-warning-900/50 text-warning-400 ring-1 ring-warning-500/30; }
+    .badge-info    { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-info-900/50 text-info-400 ring-1 ring-info-500/30; }
+    .badge-neutral { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-neutral-700/50 text-neutral-400 ring-1 ring-neutral-600/30; }
+
+    /* ── Scrollbar (dark theme) ─────────────────────────────────── */
+    .scrollbar-thin::-webkit-scrollbar { width: 6px; }
+    .scrollbar-thin::-webkit-scrollbar-track { background: #262626; }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: #404040; border-radius: 3px; }
+    .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #525252; }
+}

@@ -16,8 +16,9 @@ class ProvisionServerJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $timeout = 2400; // 40 minutes
-    public $tries = 1;
+    public int $tries = 3;
+    public int $timeout = 1800;
+    public array $backoff = [60, 120, 300];
 
     public function __construct(public Server $server, public array $config = []) {}
 

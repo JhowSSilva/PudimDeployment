@@ -26,7 +26,7 @@ $variantClasses = [
 
 // Dot colors
 $dotColors = [
-    'neutral' => 'bg-neutral-500',
+    'neutral' => 'bg-neutral-9000',
     'success' => 'bg-success-500',
     'error' => 'bg-error-500',
     'warning' => 'bg-warning-500',

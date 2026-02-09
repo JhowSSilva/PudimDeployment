@@ -1,10 +1,10 @@
 @props(['comment', 'depth' => 0])
 
 <div class="comment-item {{ $depth > 0 ? 'ml-12' : '' }}" data-comment-id="{{ $comment->id }}">
-    <div class="flex gap-3 p-4 bg-white rounded-lg border border-neutral-200 hover:border-neutral-300 transition">
+    <div class="flex gap-3 p-4 bg-neutral-800 rounded-lg border border-neutral-700 hover:border-neutral-600 transition">
         <!-- Avatar -->
         <div class="flex-shrink-0">
-            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-semibold">
                 {{ strtoupper(substr($comment->user->name, 0, 1)) }}
             </div>
         </div>
@@ -14,7 +14,7 @@
             <!-- Header -->
             <div class="flex items-center justify-between mb-2">
                 <div class="flex items-center gap-2">
-                    <span class="font-medium text-neutral-900">{{ $comment->user->name }}</span>
+                    <span class="font-medium text-neutral-100">{{ $comment->user->name }}</span>
                     <span class="text-xs text-neutral-500">{{ $comment->created_at->diffForHumans() }}</span>
                     @if($comment->is_edited)
                         <span class="text-xs text-neutral-400 italic">(editado)</span>
@@ -26,14 +26,14 @@
                         @if($comment->canBeEditedBy(auth()->user()))
                             <button 
                                 onclick="editComment({{ $comment->id }})"
-                                class="text-xs text-blue-600 hover:text-blue-800 transition"
+                                class="text-xs text-primary-400 hover:text-primary-300 transition"
                             >
                                 Editar
                             </button>
                         @endif
                         <button 
                             onclick="deleteComment({{ $comment->id }})"
-                            class="text-xs text-red-600 hover:text-red-800 transition"
+                            class="text-xs text-error-400 hover:text-error-300 transition"
                         >
                             Excluir
                         </button>
@@ -42,7 +42,7 @@
             </div>
 
             <!-- Body -->
-            <div class="comment-body text-sm text-neutral-700 whitespace-pre-wrap">{{ $comment->body }}</div>
+            <div class="comment-body text-sm text-neutral-300 whitespace-pre-wrap">{{ $comment->body }}</div>
 
             <!-- Edit Form (hidden by default) -->
             <form 
@@ -53,19 +53,19 @@
                 <textarea 
                     id="edit-textarea-{{ $comment->id }}"
                     rows="3"
-                    class="w-full rounded-md border-neutral-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+                    class="w-full rounded-md bg-neutral-900 border-neutral-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-neutral-100 text-sm"
                 >{{ $comment->body }}</textarea>
                 <div class="flex items-center gap-2 mt-2">
                     <button 
                         type="submit"
-                        class="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded transition"
+                        class="px-3 py-1.5 text-xs font-medium text-neutral-100 bg-primary-500 hover:bg-primary-400 rounded transition"
                     >
                         Salvar
                     </button>
                     <button 
                         type="button"
                         onclick="cancelEdit({{ $comment->id }})"
-                        class="px-3 py-1.5 text-xs font-medium text-neutral-700 bg-neutral-100 hover:bg-neutral-200 rounded transition"
+                        class="px-3 py-1.5 text-xs font-medium text-neutral-300 bg-neutral-700 hover:bg-neutral-600 rounded transition"
                     >
                         Cancelar
                     </button>
@@ -86,7 +86,7 @@
             @if($depth < 2)
                 <button 
                     onclick="toggleReplyForm({{ $comment->id }})"
-                    class="mt-2 text-xs text-blue-600 hover:text-blue-800 transition"
+                    class="mt-2 text-xs text-primary-400 hover:text-primary-300 transition"
                 >
                     Responder
                 </button>

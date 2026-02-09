@@ -7,27 +7,27 @@
 
     <!-- Tabs -->
     <div class="mb-4 flex gap-2">
-        <a href="{{ route('cicd.deployment-approvals.index') }}" class="px-4 py-2 rounded {{ request('status') === null ? 'bg-blue-600 text-white' : 'bg-neutral-800 text-neutral-300' }}">
+        <a href="{{ route('cicd.deployment-approvals.index') }}" class="px-4 py-2 rounded {{ request('status') === null ? 'bg-info-600 text-white' : 'bg-neutral-800 text-neutral-300' }}">
             Todas
         </a>
-        <a href="{{ route('cicd.deployment-approvals.index', ['status' => 'pending']) }}" class="px-4 py-2 rounded {{ request('status') === 'pending' ? 'bg-yellow-600 text-white' : 'bg-neutral-800 text-neutral-300' }}">
+        <a href="{{ route('cicd.deployment-approvals.index', ['status' => 'pending']) }}" class="px-4 py-2 rounded {{ request('status') === 'pending' ? 'bg-warning-500 text-white' : 'bg-neutral-800 text-neutral-300' }}">
             Pendentes
             @if($pendingCount > 0)
-                <span class="ml-2 px-2 py-0.5 bg-yellow-900 text-yellow-200 rounded-full text-xs font-medium">
+                <span class="ml-2 px-2 py-0.5 bg-warning-900 text-warning-300 rounded-full text-xs font-medium">
                     {{ $pendingCount }}
                 </span>
             @endif
         </a>
-        <a href="{{ route('cicd.deployment-approvals.index', ['status' => 'approved']) }}" class="px-4 py-2 rounded {{ request('status') === 'approved' ? 'bg-green-600 text-white' : 'bg-neutral-800 text-neutral-300' }}">
+        <a href="{{ route('cicd.deployment-approvals.index', ['status' => 'approved']) }}" class="px-4 py-2 rounded {{ request('status') === 'approved' ? 'bg-success-500 text-white' : 'bg-neutral-800 text-neutral-300' }}">
             Aprovadas
         </a>
-        <a href="{{ route('cicd.deployment-approvals.index', ['status' => 'rejected']) }}" class="px-4 py-2 rounded {{ request('status') === 'rejected' ? 'bg-red-600 text-white' : 'bg-neutral-800 text-neutral-300' }}">
+        <a href="{{ route('cicd.deployment-approvals.index', ['status' => 'rejected']) }}" class="px-4 py-2 rounded {{ request('status') === 'rejected' ? 'bg-error-500 text-white' : 'bg-neutral-800 text-neutral-300' }}">
             Rejeitadas
         </a>
     </div>
 
     @if(session('success'))
-        <div class="mb-4 p-4 bg-green-900/50 border border-green-500 text-green-200 rounded-lg">
+        <div class="mb-4 p-4 bg-success-900/50 border border-green-500 text-success-300 rounded-lg">
             {{ session('success') }}
         </div>
     @endif
@@ -41,9 +41,9 @@
                             <div class="flex items-center gap-2 mb-2">
                                 <h3 class="text-lg font-semibold text-white">Aprovação #{{ $approval->id }}</h3>
                                 <span class="px-3 py-1 rounded text-xs font-semibold
-                                    {{ $approval->status === 'pending' ? 'bg-yellow-900 text-yellow-300' : '' }}
-                                    {{ $approval->status === 'approved' ? 'bg-green-900 text-green-300' : '' }}
-                                    {{ $approval->status === 'rejected' ? 'bg-red-900 text-red-300' : '' }}
+                                    {{ $approval->status === 'pending' ? 'bg-warning-900 text-warning-300' : '' }}
+                                    {{ $approval->status === 'approved' ? 'bg-success-900 text-success-300' : '' }}
+                                    {{ $approval->status === 'rejected' ? 'bg-error-900 text-error-300' : '' }}
                                     {{ $approval->status === 'expired' ? 'bg-neutral-600 text-neutral-400' : '' }}">
                                     {{ ucfirst($approval->status) }}
                                 </span>
@@ -83,18 +83,18 @@
                             @if($approval->status === 'pending' && $approval->canUserApprove(auth()->user()))
                                 <form action="{{ route('cicd.deployment-approvals.approve', $approval) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="px-3 py-1 bg-green-600 text-white rounded text-sm hover:bg-green-700">
+                                    <button type="submit" class="px-3 py-1 bg-success-500 text-white rounded text-sm hover:bg-success-700">
                                         Aprovar
                                     </button>
                                 </form>
                                 <form action="{{ route('cicd.deployment-approvals.reject', $approval) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700">
+                                    <button type="submit" class="px-3 py-1 bg-error-500 text-white rounded text-sm hover:bg-error-700">
                                         Rejeitar
                                     </button>
                                 </form>
                             @endif
-                            <a href="{{ route('cicd.deployment-approvals.show', $approval) }}" class="px-3 py-1 bg-neutral-600 text-white rounded text-sm hover:bg-neutral-500">
+                            <a href="{{ route('cicd.deployment-approvals.show', $approval) }}" class="px-3 py-1 bg-neutral-600 text-white rounded text-sm hover:bg-neutral-7000">
                                 Detalhes
                             </a>
                         </div>

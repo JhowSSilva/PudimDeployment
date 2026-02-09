@@ -12,7 +12,7 @@
                     </p>
                 </div>
                 <a href="{{ route('backups.create') }}" 
-                   class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-sm transition">
+                   class="inline-flex items-center px-4 py-2 bg-info-600 hover:bg-info-700 text-white font-semibold rounded-lg shadow-sm transition">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                     </svg>
@@ -28,7 +28,7 @@
                                name="search"
                                value="{{ request('search') }}"
                                placeholder="Buscar backups..." 
-                               class="w-full px-4 py-2 border border-neutral-600 rounded-lg focus:ring-2 focus:ring-blue-500 bg-neutral-900 text-neutral-100">
+                               class="w-full px-4 py-2 border border-neutral-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-neutral-900 text-neutral-100">
                     </div>
                     <select name="status" class="px-4 py-2 border border-neutral-600 rounded-lg bg-neutral-900 text-neutral-100">
                         <option value="">Todos os Status</option>
@@ -55,19 +55,19 @@
                                         {{ $backup->name }}
                                     </h3>
                                     @if($backup->status === 'active')
-                                        <span class="px-2 py-1 text-xs font-semibold bg-green-900 text-green-200 rounded-full">
+                                        <span class="px-2 py-1 text-xs font-semibold bg-success-900 text-success-300 rounded-full">
                                             Ativo
                                         </span>
                                     @elseif($backup->status === 'paused')
-                                        <span class="px-2 py-1 text-xs font-semibold bg-yellow-900 text-yellow-200 rounded-full">
+                                        <span class="px-2 py-1 text-xs font-semibold bg-warning-900 text-warning-300 rounded-full">
                                             Pausado
                                         </span>
                                     @elseif($backup->status === 'running')
-                                        <span class="px-2 py-1 text-xs font-semibold bg-blue-900 text-blue-200 rounded-full">
+                                        <span class="px-2 py-1 text-xs font-semibold bg-info-900 text-info-300 rounded-full">
                                             Executando
                                         </span>
                                     @else
-                                        <span class="px-2 py-1 text-xs font-semibold bg-red-900 text-red-200 rounded-full">
+                                        <span class="px-2 py-1 text-xs font-semibold bg-error-900 text-error-300 rounded-full">
                                             Falhou
                                         </span>
                                     @endif
@@ -135,7 +135,7 @@
                                     <form action="{{ route('backups.resume', $backup) }}" method="POST">
                                         @csrf
                                         <button type="submit" 
-                                                class="p-2 text-green-400 hover:text-green-300 hover:bg-green-900/40 rounded-lg"
+                                                class="p-2 text-success-400 hover:text-success-300 hover:bg-success-900/40 rounded-lg"
                                                 title="Retomar">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
@@ -147,7 +147,7 @@
                                 <form action="{{ route('backups.run', $backup) }}" method="POST">
                                     @csrf
                                     <button type="submit" 
-                                            class="px-3 py-2 text-sm font-medium text-blue-400 hover:text-blue-300 hover:bg-blue-900/40 rounded-lg"
+                                            class="px-3 py-2 text-sm font-medium text-info-400 hover:text-info-300 hover:bg-info-900/40 rounded-lg"
                                             title="Executar Agora"
                                             {{ $backup->status === 'running' ? 'disabled' : '' }}>
                                         Executar
@@ -170,7 +170,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" 
-                                            class="px-3 py-2 text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-900/40 rounded-lg">
+                                            class="px-3 py-2 text-sm font-medium text-error-400 hover:text-error-300 hover:bg-error-900/40 rounded-lg">
                                         Deletar
                                     </button>
                                 </form>
@@ -186,7 +186,7 @@
                         <p class="mt-1 text-sm text-neutral-400">Comece criando sua primeira configuração de backup.</p>
                         <div class="mt-6">
                             <a href="{{ route('backups.create') }}" 
-                               class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                               class="inline-flex items-center px-4 py-2 bg-info-600 text-white rounded-lg hover:bg-info-700 transition">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                 </svg>

@@ -1,29 +1,27 @@
 <!-- Loading Spinner Component -->
-<div {{ $attributes->merge(['class' => 'inline-flex items-center justify-center']) }}>
-    @if($attributes->get('type') === 'dots')
-        <!-- Dots Spinner -->
+@props(['type' => 'circle', 'size' => 'md'])
+
+<div {{ $attributes->merge(['class' => 'inline-flex items-center justify-center']) }} role="status" aria-label="Carregando">
+    @if($type === 'dots')
         <div class="flex space-x-2">
-            <div class="w-2 h-2 bg-amber-600 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
-            <div class="w-2 h-2 bg-amber-600 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
-            <div class="w-2 h-2 bg-amber-600 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+            <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+            <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+            <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
         </div>
-    @elseif($attributes->get('type') === 'pulse')
-        <!-- Pulse Spinner -->
+    @elseif($type === 'pulse')
         <div class="relative">
-            <div class="w-8 h-8 bg-amber-600 rounded-full animate-ping opacity-75"></div>
-            <div class="absolute top-0 left-0 w-8 h-8 bg-amber-600 rounded-full"></div>
+            <div class="w-8 h-8 bg-primary-500 rounded-full animate-ping opacity-75"></div>
+            <div class="absolute top-0 left-0 w-8 h-8 bg-primary-500 rounded-full"></div>
         </div>
-    @elseif($attributes->get('type') === 'bars')
-        <!-- Bars Spinner -->
+    @elseif($type === 'bars')
         <div class="flex space-x-1">
-            <div class="w-1 h-6 bg-amber-600 animate-pulse" style="animation-delay: 0ms"></div>
-            <div class="w-1 h-6 bg-amber-600 animate-pulse" style="animation-delay: 100ms"></div>
-            <div class="w-1 h-6 bg-amber-600 animate-pulse" style="animation-delay: 200ms"></div>
-            <div class="w-1 h-6 bg-amber-600 animate-pulse" style="animation-delay: 300ms"></div>
+            <div class="w-1 h-6 bg-primary-500 animate-pulse" style="animation-delay: 0ms"></div>
+            <div class="w-1 h-6 bg-primary-500 animate-pulse" style="animation-delay: 100ms"></div>
+            <div class="w-1 h-6 bg-primary-500 animate-pulse" style="animation-delay: 200ms"></div>
+            <div class="w-1 h-6 bg-primary-500 animate-pulse" style="animation-delay: 300ms"></div>
         </div>
     @else
-        <!-- Default Circle Spinner -->
-        <svg class="{{ $attributes->get('size') === 'sm' ? 'w-4 h-4' : ($attributes->get('size') === 'lg' ? 'w-12 h-12' : 'w-8 h-8') }} animate-spin text-amber-600" 
+        <svg class="{{ $size === 'sm' ? 'w-4 h-4' : ($size === 'lg' ? 'w-12 h-12' : 'w-8 h-8') }} animate-spin text-primary-500" 
              fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" 
@@ -32,7 +30,7 @@
     @endif
     
     @if($slot->isNotEmpty())
-        <span class="ml-3 {{ $attributes->get('text-size') ?? 'text-sm' }} {{ $attributes->get('text-color') ?? 'text-neutral-600' }}">
+        <span class="ml-3 text-sm text-neutral-400">
             {{ $slot }}
         </span>
     @endif

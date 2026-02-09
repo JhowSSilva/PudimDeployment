@@ -27,6 +27,8 @@ class PipelineStage extends Model
         'commands' => 'array',
         'artifacts' => 'array',
         'environment_variables' => 'array',
+        'order' => 'integer',
+        'timeout_minutes' => 'integer',
         'parallel' => 'boolean',
         'allow_failure' => 'boolean',
     ];

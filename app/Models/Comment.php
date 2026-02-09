@@ -138,7 +138,7 @@ class Comment extends Model
     public function canBeDeletedBy(User $user): bool
     {
         return $this->user_id === $user->id || 
-               $user->ownsTeam($this->team);
+               ($this->team && $this->team->isOwner($user));
     }
 
     /**

@@ -33,6 +33,13 @@ class ScalingPolicy extends Model
     protected $casts = [
         'threshold_up' => 'decimal:2',
         'threshold_down' => 'decimal:2',
+        'evaluation_periods' => 'integer',
+        'period_duration' => 'integer',
+        'scale_up_by' => 'integer',
+        'scale_down_by' => 'integer',
+        'min_servers' => 'integer',
+        'max_servers' => 'integer',
+        'cooldown_minutes' => 'integer',
         'schedule' => 'array',
         'is_active' => 'boolean',
         'last_triggered_at' => 'datetime',
@@ -98,7 +105,7 @@ class ScalingPolicy extends Model
             return now();
         }
 
-        return$this->last_scaled_at->addMinutes($this->cooldown_minutes);
+        return $this->last_scaled_at->addMinutes($this->cooldown_minutes);
     }
 
     /**

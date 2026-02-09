@@ -41,6 +41,9 @@ class AlertRule extends Model
     protected $casts = [
         'channels' => 'array',
         'threshold' => 'decimal:2',
+        'duration' => 'integer',
+        'cooldown' => 'integer',
+        'trigger_count' => 'integer',
         'is_active' => 'boolean',
         'last_triggered_at' => 'datetime',
     ];

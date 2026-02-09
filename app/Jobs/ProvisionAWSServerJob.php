@@ -13,8 +13,9 @@ class ProvisionAWSServerJob implements ShouldQueue
 {
     use Queueable;
 
-    public $tries = 1;
-    public $timeout = 1800; // 30 minutes
+    public int $tries = 3;
+    public int $timeout = 1800;
+    public array $backoff = [60, 120, 300];
 
     /**
      * Create a new job instance.

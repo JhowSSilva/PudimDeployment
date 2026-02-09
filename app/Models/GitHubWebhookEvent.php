@@ -21,6 +21,10 @@ class GitHubWebhookEvent extends Model
         'processed_at',
     ];
 
+    protected $hidden = [
+        'signature',
+    ];
+
     protected $casts = [
         'payload' => 'array',
         'processed_at' => 'datetime',

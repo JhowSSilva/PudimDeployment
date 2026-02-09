@@ -17,7 +17,7 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'commentable_type' => 'required|string',
+            'commentable_type' => 'required|string|in:App\\Models\\Server,App\\Models\\Site,App\\Models\\Alert,App\\Models\\Pipeline',
             'commentable_id' => 'required|integer',
             'body' => 'required|string|max:5000',
             'parent_id' => 'nullable|exists:comments,id',

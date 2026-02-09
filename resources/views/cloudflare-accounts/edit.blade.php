@@ -8,80 +8,80 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                 </a>
-                <h1 class="text-3xl font-bold text-neutral-900">Editar Conta Cloudflare</h1>
+                <h1 class="text-3xl font-bold text-neutral-100">Editar Conta Cloudflare</h1>
             </div>
-            <p class="text-sm text-neutral-700">{{ $cloudflareAccount->name }}</p>
+            <p class="text-sm text-neutral-300">{{ $cloudflareAccount->name }}</p>
         </div>
 
         <!-- Form -->
-        <div class="bg-white shadow sm:rounded-lg">
+        <div class="bg-neutral-800 shadow sm:rounded-lg">
             <form action="{{ route('cloudflare-accounts.update', $cloudflareAccount) }}" method="POST" class="space-y-6 p-6">
                 @csrf
                 @method('PUT')
 
                 <!-- Name -->
                 <div>
-                    <label for="name" class="block text-sm font-medium text-neutral-700">
+                    <label for="name" class="block text-sm font-medium text-neutral-300">
                         Nome da Conta <span class="text-red-500">*</span>
                     </label>
                     <p class="mt-1 text-sm text-neutral-500">Um nome descritivo para identificar esta conta</p>
                     <input type="text" name="name" id="name" value="{{ old('name', $cloudflareAccount->name) }}" required
-                        class="mt-2 block w-full rounded-md border-neutral-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm @error('name') border-red-300 @enderror">
+                        class="mt-2 block w-full rounded-md border-neutral-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm @error('name') border-error-600 @enderror">
                     @error('name')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-error-400">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- API Token -->
                 <div>
-                    <label for="api_token" class="block text-sm font-medium text-neutral-700">
+                    <label for="api_token" class="block text-sm font-medium text-neutral-300">
                         API Token
                     </label>
                     <p class="mt-1 text-sm text-neutral-500">Deixe em branco para manter o token atual</p>
                     <input type="text" name="api_token" id="api_token" value="{{ old('api_token') }}"
-                        class="mt-2 block w-full rounded-md border-neutral-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm font-mono @error('api_token') border-red-300 @enderror"
+                        class="mt-2 block w-full rounded-md border-neutral-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm font-mono @error('api_token') border-error-600 @enderror"
                         placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx">
                     @error('api_token')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-error-400">{{ $message }}</p>
                     @enderror
                     <p class="mt-1 text-xs text-neutral-500">🔒 Token atual está criptografado e oculto por segurança</p>
                 </div>
 
                 <!-- Account ID -->
                 <div>
-                    <label for="account_id" class="block text-sm font-medium text-neutral-700">
+                    <label for="account_id" class="block text-sm font-medium text-neutral-300">
                         Account ID
                     </label>
                     <p class="mt-1 text-sm text-neutral-500">ID da conta Cloudflare (opcional)</p>
                     <input type="text" name="account_id" id="account_id" value="{{ old('account_id', $cloudflareAccount->account_id) }}"
-                        class="mt-2 block w-full rounded-md border-neutral-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm font-mono @error('account_id') border-red-300 @enderror">
+                        class="mt-2 block w-full rounded-md border-neutral-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm font-mono @error('account_id') border-error-600 @enderror">
                     @error('account_id')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-error-400">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Zone ID -->
                 <div>
-                    <label for="zone_id" class="block text-sm font-medium text-neutral-700">
+                    <label for="zone_id" class="block text-sm font-medium text-neutral-300">
                         Zone ID
                     </label>
                     <p class="mt-1 text-sm text-neutral-500">ID da zona padrão (opcional)</p>
                     <input type="text" name="zone_id" id="zone_id" value="{{ old('zone_id', $cloudflareAccount->zone_id) }}"
-                        class="mt-2 block w-full rounded-md border-neutral-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm font-mono @error('zone_id') border-red-300 @enderror">
+                        class="mt-2 block w-full rounded-md border-neutral-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm font-mono @error('zone_id') border-error-600 @enderror">
                     @error('zone_id')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-error-400">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Description -->
                 <div>
-                    <label for="description" class="block text-sm font-medium text-neutral-700">
+                    <label for="description" class="block text-sm font-medium text-neutral-300">
                         Descrição
                     </label>
                     <textarea name="description" id="description" rows="3"
-                        class="mt-2 block w-full rounded-md border-neutral-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm @error('description') border-red-300 @enderror">{{ old('description', $cloudflareAccount->description) }}</textarea>
+                        class="mt-2 block w-full rounded-md border-neutral-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm @error('description') border-error-600 @enderror">{{ old('description', $cloudflareAccount->description) }}</textarea>
                     @error('description')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-error-400">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -89,17 +89,17 @@
                 <div class="flex items-start">
                     <div class="flex items-center h-5">
                         <input type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', $cloudflareAccount->is_active) ? 'checked' : '' }}
-                            class="rounded border-neutral-300 text-primary-600 focus:ring-primary-500">
+                            class="rounded border-neutral-600 text-primary-600 focus:ring-primary-500">
                     </div>
                     <div class="ml-3 text-sm">
-                        <label for="is_active" class="font-medium text-neutral-700">Conta ativa</label>
+                        <label for="is_active" class="font-medium text-neutral-300">Conta ativa</label>
                         <p class="text-neutral-500">Desmarque para desativar temporariamente esta conta</p>
                     </div>
                 </div>
 
                 <!-- Sites Count -->
                 @if($cloudflareAccount->sites_count > 0)
-                    <div class="rounded-md bg-yellow-50 p-4">
+                    <div class="rounded-md bg-warning-900/20 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
                                 <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
@@ -107,7 +107,7 @@
                                 </svg>
                             </div>
                             <div class="ml-3">
-                                <p class="text-sm text-yellow-700">
+                                <p class="text-sm text-warning-400">
                                     Esta conta está sendo usada por <strong>{{ $cloudflareAccount->sites_count }} {{ Str::plural('site', $cloudflareAccount->sites_count) }}</strong>.
                                     Alterações podem afetar esses sites.
                                 </p>
@@ -118,7 +118,7 @@
 
                 <!-- Actions -->
                 <div class="flex items-center justify-end space-x-3 pt-4 border-t">
-                    <a href="{{ route('cloudflare-accounts.index') }}" class="px-4 py-2 border border-neutral-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-neutral-50 transition-colors">
+                    <a href="{{ route('cloudflare-accounts.index') }}" class="px-4 py-2 border border-neutral-600 rounded-md shadow-sm text-sm font-medium text-neutral-300 bg-neutral-800 hover:bg-neutral-700 transition-colors">
                         Cancelar
                     </a>
                     <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 transition-colors">

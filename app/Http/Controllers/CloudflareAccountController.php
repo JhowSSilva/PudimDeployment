@@ -35,6 +35,8 @@ class CloudflareAccountController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', CloudflareAccount::class);
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'api_token' => 'required|string',
@@ -63,6 +65,8 @@ class CloudflareAccountController extends Controller
      */
     public function edit(CloudflareAccount $cloudflareAccount)
     {
+        $this->authorize('view', $cloudflareAccount);
+
         return view('cloudflare-accounts.edit', compact('cloudflareAccount'));
     }
 
@@ -71,6 +75,8 @@ class CloudflareAccountController extends Controller
      */
     public function update(Request $request, CloudflareAccount $cloudflareAccount)
     {
+        $this->authorize('update', $cloudflareAccount);
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'api_token' => 'nullable|string',
@@ -104,6 +110,8 @@ class CloudflareAccountController extends Controller
      */
     public function destroy(CloudflareAccount $cloudflareAccount)
     {
+        $this->authorize('delete', $cloudflareAccount);
+
         $sitesCount = $cloudflareAccount->sites()->count();
         
         if ($sitesCount > 0) {

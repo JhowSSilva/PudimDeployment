@@ -6,17 +6,17 @@
             </a>
             <div class="mt-2 md:flex md:items-center md:justify-between">
                 <div class="flex-1 min-w-0">
-                    <h1 class="text-3xl font-bold text-neutral-900">{{ $site->name }}</h1>
-                    <p class="mt-2 text-sm text-neutral-700">{{ $site->domain }}</p>
+                    <h1 class="text-3xl font-bold text-neutral-100">{{ $site->name }}</h1>
+                    <p class="mt-2 text-sm text-neutral-300">{{ $site->domain }}</p>
                 </div>
                 <div class="mt-4 flex space-x-3 md:mt-0 md:ml-4">
-                    <a href="{{ route('sites.edit', $site) }}" class="inline-flex items-center px-4 py-2 border border-neutral-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-neutral-50">
+                    <a href="{{ route('sites.edit', $site) }}" class="inline-flex items-center px-4 py-2 border border-neutral-600 rounded-md shadow-sm text-sm font-medium text-neutral-300 bg-neutral-800 hover:bg-neutral-700">
                         Editar
                     </a>
                     <form action="{{ route('sites.destroy', $site) }}" method="POST" class="inline" onsubmit="return confirm('Tem certeza que deseja deletar este site?')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-red-300 rounded-md shadow-sm text-sm font-medium text-red-700 bg-white hover:bg-red-50">
+                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-error-600 rounded-md shadow-sm text-sm font-medium text-error-400 bg-neutral-800 hover:bg-error-900/30">
                             Deletar
                         </button>
                     </form>
@@ -28,13 +28,13 @@
             <!-- Informações Principais -->
             <div class="lg:col-span-2 space-y-6">
                 <!-- Info Card -->
-                <div class="bg-white shadow sm:rounded-lg">
+                <div class="bg-neutral-800 shadow sm:rounded-lg">
                     <div class="px-4 py-5 sm:p-6">
-                        <h3 class="text-lg font-medium leading-6 text-neutral-900 mb-4">Informações do Site</h3>
+                        <h3 class="text-lg font-medium leading-6 text-neutral-100 mb-4">Informações do Site</h3>
                         <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
                             <div>
                                 <dt class="text-sm font-medium text-neutral-500">Servidor</dt>
-                                <dd class="mt-1 text-sm text-neutral-900">
+                                <dd class="mt-1 text-sm text-neutral-100">
                                     <a href="{{ route('servers.show', $site->server) }}" class="text-primary-600 hover:text-primary-500">
                                         {{ $site->server->name }}
                                     </a>
@@ -44,9 +44,9 @@
                                 <dt class="text-sm font-medium text-neutral-500">Status</dt>
                                 <dd class="mt-1">
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                        @if($site->status === 'active') bg-green-100 text-green-800
-                                        @elseif($site->status === 'inactive') bg-neutral-100 text-neutral-800
-                                        @else bg-yellow-100 text-yellow-800
+                                        @if($site->status === 'active') bg-success-900/30 text-success-400
+                                        @elseif($site->status === 'inactive') bg-neutral-700 text-neutral-800
+                                        @else bg-warning-900/30 text-warning-400
                                         @endif">
                                         {{ ucfirst($site->status) }}
                                     </span>
@@ -54,7 +54,7 @@
                             </div>
                             <div>
                                 <dt class="text-sm font-medium text-neutral-500">Domínio</dt>
-                                <dd class="mt-1 text-sm text-neutral-900">
+                                <dd class="mt-1 text-sm text-neutral-100">
                                     <a href="http://{{ $site->domain }}" target="_blank" class="text-primary-600 hover:text-primary-500">
                                         {{ $site->domain }} ↗
                                     </a>
@@ -62,40 +62,40 @@
                             </div>
                             <div>
                                 <dt class="text-sm font-medium text-neutral-500">Versão PHP</dt>
-                                <dd class="mt-1 text-sm text-neutral-900">{{ $site->php_version }}</dd>
+                                <dd class="mt-1 text-sm text-neutral-100">{{ $site->php_version }}</dd>
                             </div>
                             @if($site->git_repository)
                                 <div class="sm:col-span-2">
                                     <dt class="text-sm font-medium text-neutral-500">Repositório Git</dt>
-                                    <dd class="mt-1 text-sm text-neutral-900 break-all">{{ $site->git_repository }}</dd>
+                                    <dd class="mt-1 text-sm text-neutral-100 break-all">{{ $site->git_repository }}</dd>
                                 </div>
                                 <div>
                                     <dt class="text-sm font-medium text-neutral-500">Branch</dt>
-                                    <dd class="mt-1 text-sm text-neutral-900">{{ $site->git_branch ?? 'main' }}</dd>
+                                    <dd class="mt-1 text-sm text-neutral-100">{{ $site->git_branch ?? 'main' }}</dd>
                                 </div>
                             @endif
                             @if($site->document_root)
                                 <div>
                                     <dt class="text-sm font-medium text-neutral-500">Document Root</dt>
-                                    <dd class="mt-1 text-sm text-neutral-900">{{ $site->document_root }}</dd>
+                                    <dd class="mt-1 text-sm text-neutral-100">{{ $site->document_root }}</dd>
                                 </div>
                             @endif
                             <div>
                                 <dt class="text-sm font-medium text-neutral-500">Criado em</dt>
-                                <dd class="mt-1 text-sm text-neutral-900">{{ $site->created_at->format('d/m/Y H:i') }}</dd>
+                                <dd class="mt-1 text-sm text-neutral-100">{{ $site->created_at->format('d/m/Y H:i') }}</dd>
                             </div>
                             <div>
                                 <dt class="text-sm font-medium text-neutral-500">Atualizado em</dt>
-                                <dd class="mt-1 text-sm text-neutral-900">{{ $site->updated_at->format('d/m/Y H:i') }}</dd>
+                                <dd class="mt-1 text-sm text-neutral-100">{{ $site->updated_at->format('d/m/Y H:i') }}</dd>
                             </div>
                         </dl>
                     </div>
                 </div>
 
                 <!-- Deployments -->
-                <div class="bg-white shadow sm:rounded-lg">
+                <div class="bg-neutral-800 shadow sm:rounded-lg">
                     <div class="px-4 py-5 sm:p-6">
-                        <h3 class="text-lg font-medium leading-6 text-neutral-900 mb-4">Deployments Recentes</h3>
+                        <h3 class="text-lg font-medium leading-6 text-neutral-100 mb-4">Deployments Recentes</h3>
                         @if($site->deployments->count() > 0)
                             <div class="flow-root">
                                 <ul role="list" class="-mb-8">
@@ -103,15 +103,15 @@
                                         <li>
                                             <div class="relative pb-8">
                                                 @if(!$loop->last)
-                                                    <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-neutral-200" aria-hidden="true"></span>
+                                                    <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-neutral-700" aria-hidden="true"></span>
                                                 @endif
                                                 <div class="relative flex space-x-3">
                                                     <div>
-                                                        <span class="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white
-                                                            @if($deployment->status === 'success') bg-green-500
-                                                            @elseif($deployment->status === 'failed') bg-red-500
-                                                            @elseif($deployment->status === 'running') bg-blue-500
-                                                            @else bg-yellow-500
+                                                        <span class="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-neutral-800
+                                                            @if($deployment->status === 'success') bg-success-500
+                                                            @elseif($deployment->status === 'failed') bg-error-500
+                                                            @elseif($deployment->status === 'running') bg-info-500
+                                                            @else bg-warning-500
                                                             @endif">
                                                             @if($deployment->status === 'success')
                                                                 <svg class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -130,7 +130,7 @@
                                                     </div>
                                                     <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
                                                         <div>
-                                                            <p class="text-sm text-neutral-900">
+                                                            <p class="text-sm text-neutral-100">
                                                                 {{ $deployment->commit_message ?? 'Deploy #' . $deployment->id }}
                                                             </p>
                                                             <p class="text-xs text-neutral-500">
@@ -159,9 +159,9 @@
 
             <!-- Ações Rápidas -->
             <div class="space-y-6">
-                <div class="bg-white shadow sm:rounded-lg">
+                <div class="bg-neutral-800 shadow sm:rounded-lg">
                     <div class="px-4 py-5 sm:p-6">
-                        <h3 class="text-lg font-medium leading-6 text-neutral-900 mb-4">Ações Rápidas</h3>
+                        <h3 class="text-lg font-medium leading-6 text-neutral-100 mb-4">Ações Rápidas</h3>
                         <div class="space-y-3">
                             <button type="button" class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700">
                                 <svg class="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -169,13 +169,13 @@
                                 </svg>
                                 Deploy
                             </button>
-                            <button type="button" class="w-full inline-flex items-center justify-center px-4 py-2 border border-neutral-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-neutral-50">
+                            <button type="button" class="w-full inline-flex items-center justify-center px-4 py-2 border border-neutral-600 rounded-md shadow-sm text-sm font-medium text-neutral-300 bg-neutral-800 hover:bg-neutral-700">
                                 <svg class="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                 </svg>
                                 Reiniciar
                             </button>
-                            <a href="http://{{ $site->domain }}" target="_blank" class="w-full inline-flex items-center justify-center px-4 py-2 border border-neutral-300 rounded-md shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-neutral-50">
+                            <a href="http://{{ $site->domain }}" target="_blank" class="w-full inline-flex items-center justify-center px-4 py-2 border border-neutral-600 rounded-md shadow-sm text-sm font-medium text-neutral-300 bg-neutral-800 hover:bg-neutral-700">
                                 <svg class="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                 </svg>
@@ -189,9 +189,9 @@
 
         <!-- Comments Section -->
         <div class="mt-8">
-            <div class="bg-white shadow sm:rounded-lg">
+            <div class="bg-neutral-800 shadow sm:rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
-                    <h3 class="text-lg font-medium leading-6 text-neutral-900 mb-6">Comentários</h3>
+                    <h3 class="text-lg font-medium leading-6 text-neutral-100 mb-6">Comentários</h3>
                     
                     <!-- Comment Form -->
                     <div class="mb-6">
@@ -216,6 +216,12 @@
     </div>
 
     <script>
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
         function loadComments(commentableType, commentableId) {
             fetch(`/comments/get?commentable_type=${commentableType}&commentable_id=${commentableId}`)
                 .then(response => response.json())
@@ -249,19 +255,19 @@
             
             return `
                 <div class="comment-item ${marginLeft}" data-comment-id="${comment.id}">
-                    <div class="flex gap-3 p-4 bg-white rounded-lg border border-neutral-200 hover:border-neutral-300 transition">
+                    <div class="flex gap-3 p-4 bg-neutral-800 rounded-lg border border-neutral-700 hover:border-neutral-600 transition">
                         <div class="flex-shrink-0">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold">
-                                ${comment.user.name.charAt(0).toUpperCase()}
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-semibold">
+                                ${escapeHtml(comment.user.name.charAt(0).toUpperCase())}
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-2 mb-2">
-                                <span class="font-medium text-neutral-900">${comment.user.name}</span>
-                                <span class="text-xs text-neutral-500">${comment.time_since}</span>
+                                <span class="font-medium text-neutral-100">${escapeHtml(comment.user.name)}</span>
+                                <span class="text-xs text-neutral-500">${escapeHtml(comment.time_since)}</span>
                                 ${comment.is_edited ? '<span class="text-xs text-neutral-400 italic">(editado)</span>' : ''}
                             </div>
-                            <div class="comment-body text-sm text-neutral-700 whitespace-pre-wrap">${comment.body}</div>
+                            <div class="comment-body text-sm text-neutral-300 whitespace-pre-wrap">${escapeHtml(comment.body)}</div>
                         </div>
                     </div>
                     ${replies}

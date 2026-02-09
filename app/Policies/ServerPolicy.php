@@ -83,6 +83,21 @@ class ServerPolicy
     }
 
     /**
+     * Determine whether the user can manage the server (monitoring, firewall, etc.).
+     */
+    public function manage(User $user, Server $server): bool
+    {
+        $currentTeam = $user->getCurrentTeam();
+        
+        if (!$currentTeam) {
+            return false;
+        }
+        
+        return $server->team_id === $currentTeam->id 
+            && $currentTeam->userCan($user, 'create-resources');
+    }
+
+    /**
      * Determine whether the user can permanently delete the model.
      */
     public function forceDelete(User $user, Server $server): bool
